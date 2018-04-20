@@ -1,7 +1,11 @@
+# files
 *.class
 *.log
 
-# sbt specific
+# editors
+.idea
+
+# sbt
 .cache
 .history
 .lib/
@@ -12,5 +16,5 @@ src_managed/
 project/boot/
 project/plugins/project/
 
-# Serverless directories
+# serverless
 .serverless

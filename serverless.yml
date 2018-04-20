@@ -1,0 +1,16 @@
+service: unmediumed
+
+provider:
+  name: aws
+  runtime: java8
+  stage: dev
+  region: us-east-1
+
+package:
+  artifact: target/scala-2.12/hello.jar
+
+functions:
+  hello:
+    handler: hello.ApiGatewayHandler
+    events:
+      - http: ANY /{proxy+}

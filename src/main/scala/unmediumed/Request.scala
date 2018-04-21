@@ -1,11 +1,9 @@
 package unmediumed
 
-import scala.beans.BeanProperty
-
-class Request(
-    @BeanProperty var key1: String,
-    @BeanProperty var key2: String,
-    @BeanProperty var key3: String) {
-
-  def this() = this("", "", "")
-}
+case class Request(
+    httpMethod: String,
+    path: String,
+    body: String,
+    headers: Map[String, Object],
+    pathParameters: Map[String, Object],
+    queryStringParameters: Map[String, Object])

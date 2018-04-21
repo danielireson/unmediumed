@@ -11,6 +11,6 @@ package:
 
 functions:
   unmediumed:
-    handler: unmediumed.ApiGatewayHandler
+    handler: unmediumed.Handler
     events:
       - http: ANY /{proxy+}

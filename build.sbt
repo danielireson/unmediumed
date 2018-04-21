@@ -2,12 +2,12 @@ import sbt.Keys._
 import sbt._
 import sbtrelease.Version
 
-name := "hello"
+name := "unmediumed"
 
 resolvers += Resolver.sonatypeRepo("public")
 scalaVersion := "2.12.2"
 releaseNextVersion := { ver => Version(ver).map(_.bumpMinor.string).getOrElse("Error") }
-assemblyJarName in assembly := "hello.jar"
+assemblyJarName in assembly := "unmediumed.jar"
 
 libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-lambda-java-events" % "1.3.0",

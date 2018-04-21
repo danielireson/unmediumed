@@ -7,10 +7,10 @@ provider:
   region: us-east-1
 
 package:
-  artifact: target/scala-2.12/hello.jar
+  artifact: target/scala-2.12/unmediumed.jar
 
 functions:
-  hello:
-    handler: hello.ApiGatewayHandler
+  unmediumed:
+    handler: unmediumed.ApiGatewayHandler
     events:
       - http: ANY /{proxy+}

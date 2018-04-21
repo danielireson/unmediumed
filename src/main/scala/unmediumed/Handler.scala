@@ -1,4 +1,4 @@
-package hello
+package unmediumed
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import scala.collection.JavaConverters

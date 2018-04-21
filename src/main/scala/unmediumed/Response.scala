@@ -3,17 +3,21 @@ package unmediumed
 import java.{util => ju}
 
 import scala.beans.BeanProperty
+import scala.collection.JavaConverters
 
-case class ApiGatewayResponse(
+case class Response(
     @BeanProperty statusCode: Integer,
     @BeanProperty body: String,
     @BeanProperty headers: ju.Map[String, Object],
-    @BeanProperty base64Encoded: Boolean = true)
+    @BeanProperty base64Encoded: Boolean)
 
+object Response {
+  def apply(
+      statusCode: Integer,
+      body: String,
+      headers: Map[String, Object] = Map(),
+      base64Encoded: Boolean = true): Response = {
 
-object ApiGatewayResponse {
-  def apply(statusCode: Integer, body: String, headers: Map[String, Object] = Map()) {
-    new ApiGatewayResponse(statusCode, body, headers)
-
+    new Response(statusCode, body, JavaConverters.mapAsJavaMap[String, Object](headers), base64Encoded)
   }
 }

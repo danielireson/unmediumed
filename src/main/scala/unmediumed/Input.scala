@@ -13,14 +13,7 @@ class Input(
     @BeanProperty val pathParameters: ju.Map[String, Object],
     @BeanProperty val queryStringParameters: ju.Map[String, Object]) {
 
-  def this() =
-    this(
-      httpMethod = "",
-      path = "",
-      body = "",
-      headers = new ju.HashMap(),
-      pathParameters = new ju.HashMap(),
-      queryStringParameters = new ju.HashMap())
+  def this() = this("", "", "", new ju.HashMap(), new ju.HashMap(), new ju.HashMap())
 
   def toRequest: Request =
     Request(

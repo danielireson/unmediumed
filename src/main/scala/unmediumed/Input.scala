@@ -5,7 +5,7 @@ import java.{util => ju}
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
 
-class ApiGatewayRequest(
+class Input(
     @BeanProperty val httpMethod: String,
     @BeanProperty val path: String,
     @BeanProperty val body: String,

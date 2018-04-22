@@ -8,11 +8,5 @@ case class Response(
     headers: Map[String, String] = Map(),
     base64Encoded: Boolean = true) {
 
-  def toApiGatewayResponse: ApiGatewayResponse =
-    new ApiGatewayResponse(
-      statusCode,
-      body,
-      headers.asJava,
-      base64Encoded
-    )
+  def toOutput: Output = new Output(statusCode, body, headers.asJava, base64Encoded)
 }

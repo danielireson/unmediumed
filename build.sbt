@@ -11,7 +11,8 @@ assemblyJarName in assembly := "unmediumed.jar"
 
 libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-lambda-java-events" % "1.3.0",
-  "com.amazonaws" % "aws-lambda-java-core" % "1.1.0"
+  "com.amazonaws" % "aws-lambda-java-core" % "1.1.0",
+  "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 
 scalacOptions ++= Seq(

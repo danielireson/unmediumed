@@ -3,6 +3,7 @@ package unmediumed
 import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 
+import scala.util.Try
 import scala.util.matching.Regex
 
 trait WebsiteScraperComponent {
@@ -28,18 +29,25 @@ trait WebsiteScraper extends WebsiteScraperComponent {
     }
 
     private def scrapeWebsiteWithBufferedReader(url: String): String = {
-      val inputStream = createInputStream(url)
-      val html = io.Source.fromInputStream(inputStream).mkString
-      if (inputStream != null) inputStream.close()
-      html
+      createInputStream(url) match {
+        case Some(is) =>
+          try {
+            io.Source.fromInputStream(is).mkString
+          } finally {
+            is.close()
+          }
+        case None => ""
+      }
     }
 
-    private def createInputStream(url: String): InputStream = {
-      val connection = new URL(url).openConnection.asInstanceOf[HttpURLConnection]
-      connection.setRequestMethod("GET")
-      connection.setConnectTimeout(timeout)
-      connection.setReadTimeout(timeout)
-      connection.getInputStream
+    private def createInputStream(url: String): Option[InputStream] = {
+      Try {
+        val connection = new URL(url).openConnection.asInstanceOf[HttpURLConnection]
+        connection.setRequestMethod("GET")
+        connection.setConnectTimeout(timeout)
+        connection.setReadTimeout(timeout)
+        Some(connection.getInputStream)
+      }.getOrElse(None)
     }
   }
 }

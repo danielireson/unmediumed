@@ -1,12 +1,24 @@
 package unmediumed
 
-class MediumService {
-  val websiteScraper: WebsiteScraper = new WebsiteScraper
+trait MediumServiceComponent {
+  def mediumService: MediumServiceLocal
 
-  def getPost(url: String): MediumPost = {
-    websiteScraper.scrape(url) match {
-      case h: String if h != "" => new MediumPost(h)
-      case _ => throw new IllegalArgumentException("Creating MediumPost with invalid HTML")
+  trait MediumServiceLocal {
+    def getPost(url: String): MediumPost
+  }
+}
+
+trait MediumService extends MediumServiceComponent {
+  this: WebsiteScraperComponent =>
+
+  def mediumService: MediumService
+
+  class MediumService extends MediumServiceLocal {
+    def getPost(url: String): MediumPost = {
+      websiteScraper.scrape(url) match {
+        case h: String if h != "" => new MediumPost(h)
+        case _ => throw new IllegalArgumentException("Creating MediumPost with invalid HTML")
+      }
     }
   }
 }

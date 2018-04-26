@@ -1,13 +1,10 @@
 package unmediumed
 
-import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.mockito.MockitoSugar
-
-class MediumServiceUnitSpec extends FlatSpec with Matchers with MockitoSugar {
+class MediumServiceUnitSpec extends UnitSpec {
   "MediumService" should "throw an IllegalArgumentException when the scraper returns null" in {
     // given
-    val testSubject = new MediumService
-    val html = null
+    val testSubject: MediumServiceLocal = new MediumService
+    val html: String = null
 
     // then
     intercept[IllegalArgumentException] {
@@ -17,8 +14,8 @@ class MediumServiceUnitSpec extends FlatSpec with Matchers with MockitoSugar {
 
   it should "throw an IllegalArgumentException when the scraper returns an empty string" in {
     // given
-    val testSubject = new MediumService
-    val html = ""
+    val testSubject: MediumServiceLocal = new MediumService
+    val html: String = ""
 
     // then
     intercept[IllegalArgumentException] {

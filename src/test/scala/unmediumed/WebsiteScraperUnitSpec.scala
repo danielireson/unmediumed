@@ -1,13 +1,10 @@
 package unmediumed
 
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{FlatSpec, Matchers}
-
-class WebsiteScraperUnitSpec extends FlatSpec with Matchers with MockitoSugar {
+class WebsiteScraperUnitSpec extends UnitSpec {
   "WebsiteScraper" should "throw an IllegalArgumentException when url is null" in {
     // given
-    val testSubject = new WebsiteScraper
-    val url = null
+    val testSubject: WebsiteScraperLocal = new WebsiteScraper
+    val url: String = null
 
     // then
     intercept[IllegalArgumentException] {
@@ -17,8 +14,8 @@ class WebsiteScraperUnitSpec extends FlatSpec with Matchers with MockitoSugar {
 
   it should "throw an IllegalArgumentException when url is an empty string" in {
     // given
-    val testSubject = new WebsiteScraper
-    val url = ""
+    val testSubject: WebsiteScraperLocal = new WebsiteScraper
+    val url: String = ""
 
     // then
     intercept[IllegalArgumentException] {

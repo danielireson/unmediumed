@@ -5,7 +5,7 @@ import java.net.{HttpURLConnection, URL}
 
 import scala.util.matching.Regex
 
-trait WebsiteScraperComponentLocal {
+trait WebsiteScraperComponent {
   def websiteScraper: WebsiteScraperLocal
 
   trait WebsiteScraperLocal {
@@ -13,10 +13,10 @@ trait WebsiteScraperComponentLocal {
   }
 }
 
-trait WebsiteScraperComponent extends WebsiteScraperComponentLocal {
-  def websiteScraper = new WebsiteScraperComponent
+trait WebsiteScraper extends WebsiteScraperComponent {
+  def websiteScraper: WebsiteScraper
 
-  class WebsiteScraperComponent extends WebsiteScraperLocal {
+  class WebsiteScraper extends WebsiteScraperLocal {
     val timeout: Int = 5000
     val ValidWebsite: Regex = "(a-zA-Z0-9)+".r
 
@@ -28,27 +28,10 @@ trait WebsiteScraperComponent extends WebsiteScraperComponentLocal {
     }
 
     private def scrapeWebsiteWithBufferedReader(url: String): String = {
-
-      val inputStream = try {
-        createInputStream(url)
-      }
-
-      try {
-        io.Source.fromInputStream(inputStream).mkString
-      } catch {
-
-      } finally  {
-
-      }
-
-
-      val inputStream = try {
-        createInputStream(url)
-        val html = io.Source.fromInputStream(inputStream).mkString
-        html
-      } finally {
-        if (inputStream != null) inputStream.close()
-      }
+      val inputStream = createInputStream(url)
+      val html = io.Source.fromInputStream(inputStream).mkString
+      if (inputStream != null) inputStream.close()
+      html
     }
 
     private def createInputStream(url: String): InputStream = {

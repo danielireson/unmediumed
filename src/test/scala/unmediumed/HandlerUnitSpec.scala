@@ -3,10 +3,8 @@ package unmediumed
 import java.{util => ju}
 
 import com.amazonaws.services.lambda.runtime.Context
-import org.scalatest._
-import org.scalatest.mockito.MockitoSugar
 
-class HandlerUnitSpec extends FlatSpec with Matchers with MockitoSugar {
+class HandlerUnitSpec extends UnitSpec {
   "Handler" should "return an api gateway formatted output" in {
     // given
     val testSubject = new Handler

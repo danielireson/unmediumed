@@ -20,7 +20,7 @@ class HandlerUnitSpec extends UnitSpec {
     output.getBody shouldBe a[String]
   }
 
-  it should "throw an IllegalArgumentException for a null input" in {
+  it should "throw an IllegalArgumentException when input is null" in {
     // given
     val testSubject = new Handler
     val input = null

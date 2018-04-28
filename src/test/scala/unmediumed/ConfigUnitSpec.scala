@@ -8,8 +8,10 @@ class ConfigUnitSpec extends UnitSpec {
     val key: String = "invalid"
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.get(key)
     }
+
+    error.getMessage shouldBe "Invalid configuration key"
   }
 }

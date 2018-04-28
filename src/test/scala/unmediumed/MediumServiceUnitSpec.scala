@@ -7,9 +7,11 @@ class MediumServiceUnitSpec extends UnitSpec {
     val html: String = null
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.getPost(html)
     }
+
+    error.getMessage shouldBe "Creating MediumPost with invalid HTML"
   }
 
   it should "throw an IllegalArgumentException when the scraper returns an empty string" in {
@@ -18,8 +20,10 @@ class MediumServiceUnitSpec extends UnitSpec {
     val html: String = ""
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.getPost(html)
     }
+
+    error.getMessage shouldBe "Creating MediumPost with invalid HTML"
   }
 }

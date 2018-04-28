@@ -7,9 +7,11 @@ class WebsiteScraperUnitSpec extends UnitSpec {
     val url: String = null
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.scrape(url)
     }
+
+    error.getMessage shouldBe "Creating input stream from invalid URL"
   }
 
   it should "throw an IllegalArgumentException when url is an empty string" in {
@@ -18,8 +20,10 @@ class WebsiteScraperUnitSpec extends UnitSpec {
     val url: String = ""
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.scrape(url)
     }
+
+    error.getMessage shouldBe "Creating input stream from invalid URL"
   }
 }

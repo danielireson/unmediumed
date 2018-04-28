@@ -14,7 +14,7 @@ trait Config extends ConfigComponent {
   class Config(store: Map[String, Any]) extends ConfigLocal {
     def get(key: String): Any = {
       store.get(key).orElse {
-        throw new IllegalArgumentException("Invalid configuration value found")
+        throw new IllegalArgumentException("Invalid configuration key")
       }
     }
   }

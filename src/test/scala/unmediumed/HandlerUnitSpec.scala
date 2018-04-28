@@ -27,8 +27,10 @@ class HandlerUnitSpec extends UnitSpec {
     val context = mock[Context]
 
     // then
-    intercept[IllegalArgumentException] {
+    val error = the[IllegalArgumentException] thrownBy {
       testSubject.handleRequest(input, context)
     }
+
+    error.getMessage shouldBe "Request input is invalid"
   }
 }

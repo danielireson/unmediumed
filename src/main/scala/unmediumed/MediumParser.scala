@@ -42,4 +42,4 @@ class MediumParser {
   }
 }
 
-case class HtmlTag(name: String, isSelfClosing: Boolean)
+sealed case class HtmlTag(name: String, isSelfClosing: Boolean)

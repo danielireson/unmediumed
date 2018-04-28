@@ -4,13 +4,13 @@ import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 
 import scala.util.Try
-import scala.util.matching.Regex
 
 trait WebsiteScraperComponent {
   def websiteScraper: WebsiteScraperLocal
 
   trait WebsiteScraperLocal {
     def scrape(url: String): String
+    def scrapeFromInputStream(inputStream: InputStream): String
   }
 }
 
@@ -19,24 +19,19 @@ trait WebsiteScraper extends WebsiteScraperComponent {
 
   class WebsiteScraper extends WebsiteScraperLocal {
     val timeout: Int = 5000
-    val ValidWebsite: Regex = "(http|https):\\/\\/[\\w.]+".r
 
     def scrape(url: String): String = {
-      url match {
-        case ValidWebsite(u) => scrapeWebsiteWithBufferedReader(u)
-        case _ => throw new IllegalArgumentException("Creating input stream from invalid URL")
+      createInputStream(url) match {
+        case Some(is) => scrapeFromInputStream(is)
+        case None => throw new WebsiteScrapeFailedException("Unable to create input stream")
       }
     }
 
-    private def scrapeWebsiteWithBufferedReader(url: String): String = {
-      createInputStream(url) match {
-        case Some(is) =>
-          try {
-            io.Source.fromInputStream(is).mkString
-          } finally {
-            is.close()
-          }
-        case None => throw new WebsiteScrapeFailedException("Unable to create input stream")
+    def scrapeFromInputStream(inputStream: InputStream): String = {
+      try {
+        io.Source.fromInputStream(inputStream).mkString
+      } finally {
+        inputStream.close()
       }
     }
 

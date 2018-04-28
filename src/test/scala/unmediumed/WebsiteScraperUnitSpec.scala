@@ -1,49 +1,12 @@
 package unmediumed
 
+import java.io.ByteArrayInputStream
+
 class WebsiteScraperUnitSpec extends UnitSpec {
-  "WebsiteScraper" should "throw an IllegalArgumentException when url is null" in {
+  "WebsiteScraper" should "throw a WebsiteScrapeFailedException when url is null" in {
     // given
     val testSubject: WebsiteScraperLocal = new WebsiteScraper
     val url: String = null
-
-    // then
-    val error = the[IllegalArgumentException] thrownBy {
-      testSubject.scrape(url)
-    }
-
-    error.getMessage shouldBe "Creating input stream from invalid URL"
-  }
-
-  it should "throw an IllegalArgumentException when url is an empty string" in {
-    // given
-    val testSubject: WebsiteScraperLocal = new WebsiteScraper
-    val url: String = ""
-
-    // then
-    val error = the[IllegalArgumentException] thrownBy {
-      testSubject.scrape(url)
-    }
-
-    error.getMessage shouldBe "Creating input stream from invalid URL"
-  }
-
-  it should "throw an IllegalArgumentException when url is invalid" in {
-    // given
-    val testSubject: WebsiteScraperLocal = new WebsiteScraper
-    val url: String = "example.com"
-
-    // then
-    val error = the[IllegalArgumentException] thrownBy {
-      testSubject.scrape(url)
-    }
-
-    error.getMessage shouldBe "Creating input stream from invalid URL"
-  }
-
-  it should "throw a WebsiteScrapeFailedException when an input stream can't be created" in {
-    // given
-    val testSubject: WebsiteScraperLocal = new WebsiteScraper
-    val url: String = "http://example.com"
 
     // then
     val error = the[WebsiteScrapeFailedException] thrownBy {
@@ -51,5 +14,16 @@ class WebsiteScraperUnitSpec extends UnitSpec {
     }
 
     error.getMessage shouldBe "Unable to create input stream"
+  }
+
+  it should "scrape the html for a valid input stream" in {
+    // given
+    val testSubject: WebsiteScraperLocal = new WebsiteScraper
+    val inputStream = new ByteArrayInputStream("abcdef".getBytes)
+
+    // then
+    val html = testSubject.scrapeFromInputStream(inputStream)
+
+    html shouldBe "abcdef"
   }
 }

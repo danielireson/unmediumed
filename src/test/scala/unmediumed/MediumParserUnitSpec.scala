@@ -25,7 +25,7 @@ class MediumParserUnitSpec extends UnitSpec {
   it should "throw an IllegalArgumentException when there's no doctype tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = "invalid"
+    val html: String = "<html><html><body></body></html>"
 
     // then
     intercept[IllegalArgumentException] {
@@ -33,10 +33,10 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "throw an IllegalArgumentException when there's no <html> tags" in new MediumParserFixture {
+  it should "throw an IllegalArgumentException when there's no opening html tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = "<!DOCTYPE html><body></body>"
+    val html: String = "<!DOCTYPE html><body></body></html>"
 
     // then
     intercept[IllegalArgumentException] {
@@ -44,10 +44,32 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "throw an IllegalArgumentException when there's no <body> tags" in new MediumParserFixture {
+  it should "throw an IllegalArgumentException when there's no closing html tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = "<!DOCTYPE html><html></html>"
+    val html: String = "<!DOCTYPE html><html><body></body>"
+
+    // then
+    intercept[IllegalArgumentException] {
+      testSubject.parse(html)
+    }
+  }
+
+  it should "throw an IllegalArgumentException when there's no opening body tag" in new MediumParserFixture {
+    // given
+    val testSubject = new MediumParser
+    val html: String = "<!DOCTYPE html><html></body></html>"
+
+    // then
+    intercept[IllegalArgumentException] {
+      testSubject.parse(html)
+    }
+  }
+
+  it should "throw an IllegalArgumentException when there's no closing body tag" in new MediumParserFixture {
+    // given
+    val testSubject = new MediumParser
+    val html: String = "<!DOCTYPE html><html><body></html>"
 
     // then
     intercept[IllegalArgumentException] {

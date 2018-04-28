@@ -15,15 +15,16 @@ class MediumParser {
   }
 
   private def isValidMediumPost(html: String): Boolean = {
-    hasTags(
-      html,
+    val tags = List(
       HtmlTag("!DOCTYPE html", isSelfClosing = true),
       HtmlTag("html", isSelfClosing = false),
       HtmlTag("body", isSelfClosing = false)
     )
+
+    hasTags(html, tags)
   }
 
-  def hasTags(html: String, tags: HtmlTag*): Boolean = {
+  def hasTags(html: String, tags: Seq[HtmlTag]): Boolean = {
     tags.forall(tag => {
       if (tag.isSelfClosing) {
         exists(html, s"<${tag.name}(.?)+>")

@@ -6,9 +6,9 @@ class MediumParserUnitSpec extends UnitSpec {
       """
         |<!DOCTYPE html>
         |<html>
-        |<title></title>
-        |<meta name="description" content="">
-        |<link rel="canonical" href="">
+        |<title>This is the title</title>
+        |<meta name="description" content="This is the description">
+        |<link rel="canonical" href="http://example.com">
         |<body></body>
         |</html>
       """.stripMargin
@@ -124,14 +124,47 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "return a list of MarkdownElement" in new MediumParserFixture {
+  it should "return a MediumPost" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
 
     // when
-    val elements: List[MarkdownElement] = testSubject.parse(validHtml)
+    val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    elements shouldBe List()
+    post shouldBe a[MediumPost]
+  }
+
+  it should "extract the title" in new MediumParserFixture {
+    // given
+    val testSubject = new MediumParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.meta.get("title") shouldBe Some("This is the title")
+  }
+
+  it should "extract the description" in new MediumParserFixture {
+    // given
+    val testSubject = new MediumParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.meta.get("description") shouldBe Some("This is the description")
+  }
+
+  it should "extract the canonical link" in new MediumParserFixture {
+    // given
+    val testSubject = new MediumParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.meta.get("canonical") shouldBe Some("http://example.com")
   }
 }

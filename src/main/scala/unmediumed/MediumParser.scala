@@ -3,11 +3,23 @@ package unmediumed
 import scala.util.matching.Regex
 
 class MediumParser {
-  def parse(html: String): List[MarkdownElement] = {
+  def parse(html: String): MediumPost = {
     Option(html) match {
-      case Some(h) if isValid(h) => extractMarkdownElements(h.trim)
+      case Some(h) if isValid(h) => extractMediumPost(h.trim)
       case _ => throw new IllegalArgumentException("HTML is not a recognised medium post")
     }
+  }
+
+  private def extractMediumPost(html: String): MediumPost = {
+    new MediumPost(extractMetaInformation(html), extractMarkdownElements(html), html)
+  }
+
+  private def extractMetaInformation(html: String): Map[String, String] = {
+    Map(
+      "title" -> "This is the title",
+      "description" -> "This is the description",
+      "canonical" -> "http://example.com"
+    )
   }
 
   private def extractMarkdownElements(html: String): List[MarkdownElement] = {

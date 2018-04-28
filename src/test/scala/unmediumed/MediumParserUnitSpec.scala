@@ -36,10 +36,10 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "throw an IllegalArgumentException when there's no opening html tag" in new MediumParserFixture {
+  it should "throw an IllegalArgumentException when there's no html tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<html>", "")
+    val html: String = validHtml.replaceFirst("<html>", "").replaceFirst("</html>", "")
 
     // then
     intercept[IllegalArgumentException] {
@@ -47,10 +47,10 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "throw an IllegalArgumentException when there's no closing html tag" in new MediumParserFixture {
+  it should "throw an IllegalArgumentException when there's no body tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("</html>", "")
+    val html: String = validHtml.replaceFirst("<body>", "").replaceFirst("</body>", "")
 
     // then
     intercept[IllegalArgumentException] {
@@ -58,43 +58,10 @@ class MediumParserUnitSpec extends UnitSpec {
     }
   }
 
-  it should "throw an IllegalArgumentException when there's no opening body tag" in new MediumParserFixture {
+  it should "throw an IllegalArgumentException when there's no title tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<body>", "")
-
-    // then
-    intercept[IllegalArgumentException] {
-      testSubject.parse(html)
-    }
-  }
-
-  it should "throw an IllegalArgumentException when there's no closing body tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("</body>", "")
-
-    // then
-    intercept[IllegalArgumentException] {
-      testSubject.parse(html)
-    }
-  }
-
-  it should "throw an IllegalArgumentException when there's no opening title tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<title>", "")
-
-    // then
-    intercept[IllegalArgumentException] {
-      testSubject.parse(html)
-    }
-  }
-
-  it should "throw an IllegalArgumentException when there's no closing title tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("</title>", "")
+    val html: String = validHtml.replaceFirst("<title>", "").replaceFirst("</title>", "")
 
     // then
     intercept[IllegalArgumentException] {

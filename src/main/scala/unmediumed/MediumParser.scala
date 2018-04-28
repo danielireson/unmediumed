@@ -28,18 +28,18 @@ class MediumParser {
 
   private def isValid(html: String): Boolean = {
     val tags = List(
-      HtmlTag("!DOCTYPE html", isSelfClosing = true),
-      HtmlTag("html", isSelfClosing = false),
-      HtmlTag("body", isSelfClosing = false),
-      HtmlTag("title", isSelfClosing = false),
-      HtmlTag("meta name=\"description\"", isSelfClosing = true),
-      HtmlTag("link rel=\"canonical\"", isSelfClosing = true)
+      HtmlTagSearch("!DOCTYPE html", isSelfClosing = true),
+      HtmlTagSearch("html", isSelfClosing = false),
+      HtmlTagSearch("body", isSelfClosing = false),
+      HtmlTagSearch("title", isSelfClosing = false),
+      HtmlTagSearch("meta name=\"description\"", isSelfClosing = true),
+      HtmlTagSearch("link rel=\"canonical\"", isSelfClosing = true)
     )
 
     hasTags(html, tags)
   }
 
-  private def hasTags(html: String, tags: Seq[HtmlTag]): Boolean = {
+  private def hasTags(html: String, tags: Seq[HtmlTagSearch]): Boolean = {
     tags.forall(tag => {
       if (tag.isSelfClosing) {
         exists(html, s"<${tag.name}(.?)+>")
@@ -54,4 +54,4 @@ class MediumParser {
   }
 }
 
-sealed case class HtmlTag(name: String, isSelfClosing: Boolean)
+sealed case class HtmlTagSearch(name: String, isSelfClosing: Boolean)

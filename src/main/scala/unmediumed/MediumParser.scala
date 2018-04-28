@@ -6,7 +6,7 @@ class MediumParser {
   def parse(html: String): MediumPost = {
     Option(html) match {
       case Some(h) if isValid(h) => extractMediumPost(h.trim)
-      case _ => throw new IllegalArgumentException("HTML is not a recognised medium post")
+      case _ => throw new IllegalArgumentException("HTML is not a valid medium post")
     }
   }
 

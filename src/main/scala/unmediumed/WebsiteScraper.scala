@@ -19,7 +19,7 @@ trait WebsiteScraper extends WebsiteScraperComponent {
 
   class WebsiteScraper extends WebsiteScraperLocal {
     val timeout: Int = 5000
-    val ValidWebsite: Regex = "(a-zA-Z0-9)+".r
+    val ValidWebsite: Regex = "(http|https):\\/\\/[\\w.]+".r
 
     def scrape(url: String): String = {
       url match {
@@ -36,7 +36,7 @@ trait WebsiteScraper extends WebsiteScraperComponent {
           } finally {
             is.close()
           }
-        case None => ""
+        case None => throw new WebsiteScrapeFailedException("Unable to create input stream")
       }
     }
 
@@ -51,3 +51,5 @@ trait WebsiteScraper extends WebsiteScraperComponent {
     }
   }
 }
+
+class WebsiteScrapeFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

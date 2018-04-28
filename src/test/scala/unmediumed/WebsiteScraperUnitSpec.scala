@@ -27,6 +27,19 @@ class WebsiteScraperUnitSpec extends UnitSpec {
     error.getMessage shouldBe "Creating input stream from invalid URL"
   }
 
+  it should "throw an IllegalArgumentException when url is invalid" in {
+    // given
+    val testSubject: WebsiteScraperLocal = new WebsiteScraper
+    val url: String = "example.com"
+
+    // then
+    val error = the[IllegalArgumentException] thrownBy {
+      testSubject.scrape(url)
+    }
+
+    error.getMessage shouldBe "Creating input stream from invalid URL"
+  }
+
   it should "throw a WebsiteScrapeFailedException when an input stream can't be created" in {
     // given
     val testSubject: WebsiteScraperLocal = new WebsiteScraper

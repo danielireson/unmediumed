@@ -16,7 +16,7 @@ trait MediumService extends MediumServiceComponent {
   class MediumService extends MediumServiceLocal {
     def getPost(url: String): MediumPost = {
       websiteScraper.scrape(url) match {
-        case h: String if h != "" => new MediumPost(h)
+        case h: String if h != "" => new MediumParser().parse(h)
         case _ => throw new IllegalArgumentException("Creating MediumPost with invalid HTML")
       }
     }

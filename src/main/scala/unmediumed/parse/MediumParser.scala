@@ -1,4 +1,6 @@
-package unmediumed
+package unmediumed.parse
+
+import unmediumed.models.MediumPost
 
 import scala.util.matching.Regex
 

@@ -1,4 +1,4 @@
-package unmediumed
+package unmediumed.components
 
 import java.io.{IOException, InputStream}
 import java.net.{HttpURLConnection, URL}

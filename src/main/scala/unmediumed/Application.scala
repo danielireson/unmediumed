@@ -1,6 +1,8 @@
 package unmediumed
 
-object Application extends Config
+import unmediumed.components.{MediumService, WebsiteScraper}
+
+object Application extends components.Config
   with MediumService
   with WebsiteScraper {
 

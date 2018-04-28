@@ -3,6 +3,7 @@ package unmediumed
 import java.{util => ju}
 
 import com.amazonaws.services.lambda.runtime.Context
+import unmediumed.request.Input
 
 class HandlerUnitSpec extends UnitSpec {
   "Handler" should "return an api gateway formatted output" in {

@@ -1,9 +1,10 @@
 package unmediumed
 
 import org.scalatest.mockito.MockitoSugar
+import unmediumed.components.{MediumService, WebsiteScraper}
 
 trait TestApplication extends MockitoSugar
-  with Config
+  with components.Config
   with MediumService
   with WebsiteScraper {
 

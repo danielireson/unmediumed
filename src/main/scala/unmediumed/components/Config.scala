@@ -1,4 +1,4 @@
-package unmediumed
+package unmediumed.components
 
 trait ConfigComponent {
   def config: ConfigLocal

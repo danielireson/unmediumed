@@ -1,4 +1,6 @@
-package unmediumed
+package unmediumed.components
+
+import unmediumed.UnitSpec
 
 class MediumServiceUnitSpec extends UnitSpec {
   "MediumService" should "throw an IllegalArgumentException when the scraper returns null" in {

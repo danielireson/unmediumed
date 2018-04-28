@@ -1,4 +1,4 @@
-package unmediumed
+package unmediumed.request
 
 case class Request(
     httpMethod: String,

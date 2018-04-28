@@ -1,4 +1,6 @@
-package unmediumed
+package unmediumed.models
+
+import unmediumed.UnitSpec
 
 class MediumPostUnitSpec extends UnitSpec {
   "MediumPost" should "return the post in html" in {

@@ -1,8 +1,9 @@
-package unmediumed
+package unmediumed.components
 
 import java.io.ByteArrayInputStream
 
 import org.mockito.Mockito.doThrow
+import unmediumed.UnitSpec
 
 class WebsiteScraperUnitSpec extends UnitSpec {
   "WebsiteScraper" should "throw a WebsiteScrapeFailedException when url is null" in {

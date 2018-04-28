@@ -1,6 +1,8 @@
 package unmediumed
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
+import unmediumed.request.Input
+import unmediumed.response.{Output, Response}
 
 class Handler extends RequestHandler[Input, Output] {
   def handleRequest(input: Input, context: Context): Output = {

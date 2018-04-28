@@ -1,4 +1,7 @@
-package unmediumed
+package unmediumed.parse
+
+import unmediumed.UnitSpec
+import unmediumed.models.MediumPost
 
 class MediumParserUnitSpec extends UnitSpec {
   trait MediumParserFixture {

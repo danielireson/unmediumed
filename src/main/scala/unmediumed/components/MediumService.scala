@@ -1,4 +1,7 @@
-package unmediumed
+package unmediumed.components
+
+import unmediumed.models.MediumPost
+import unmediumed.parse.MediumParser
 
 trait MediumServiceComponent {
   def mediumService: MediumServiceLocal

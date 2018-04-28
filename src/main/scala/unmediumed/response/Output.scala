@@ -1,4 +1,4 @@
-package unmediumed
+package unmediumed.response
 
 import java.{util => ju}
 

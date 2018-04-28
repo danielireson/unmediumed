@@ -1,3 +1,3 @@
-package unmediumed
+package unmediumed.parse
 
 case class MarkdownElement()

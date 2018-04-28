@@ -1,4 +1,6 @@
-package unmediumed
+package unmediumed.components
+
+import unmediumed.UnitSpec
 
 class ConfigUnitSpec extends UnitSpec {
   "Config" should "throw an IllegalArgumentException when looking up a key with no value" in {

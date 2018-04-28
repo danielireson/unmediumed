@@ -1,10 +1,14 @@
 package unmediumed.parse
 
 import unmediumed.models.MediumPost
+import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl
 
 import scala.util.matching.Regex
+import scala.xml.{Elem, SAXParser, Source, XML}
 
 class MediumParser {
+  val parser: SAXParser = SAXParserImpl.newInstance(null)
+
   def parse(html: String): MediumPost = {
     Option(html) match {
       case Some(h) if isValid(h) => extractMediumPost(h.trim)
@@ -13,15 +17,27 @@ class MediumParser {
   }
 
   private def extractMediumPost(html: String): MediumPost = {
-    new MediumPost(extractMetaInformation(html), extractMarkdownElements(html), html)
+    val rootElement = XML.loadXML(Source.fromString(html), parser)
+    val metaInformation = extractMetaInformation(rootElement)
+    val markdownElements = extractMarkdownElements(html)
+
+    new MediumPost(metaInformation, markdownElements, html)
   }
 
-  private def extractMetaInformation(html: String): Map[String, String] = {
-    Map(
-      "title" -> "This is the title",
-      "description" -> "This is the description",
-      "canonical" -> "http://example.com"
-    )
+  private def extractMetaInformation(rootElement: Elem): Map[String, String] = {
+    val title = (rootElement \\ "title").head.text
+
+    val description = (rootElement \\ "meta")
+      .find(_.attribute("name").map(_.text).contains("description"))
+      .flatMap(_.attribute("content").map(_.text))
+      .getOrElse("")
+
+    val canonical = (rootElement \\ "link")
+      .find(_.attribute("rel").map(_.text).contains("canonical"))
+      .flatMap(_.attribute("href").map(_.text))
+      .getOrElse("")
+
+    Map("title" -> title, "description" -> description, "canonical" -> canonical)
   }
 
   private def extractMarkdownElements(html: String): List[MarkdownElement] = {

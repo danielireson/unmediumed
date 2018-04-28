@@ -1,6 +1,6 @@
 package unmediumed
 
-import java.io.InputStream
+import java.io.{IOException, InputStream}
 import java.net.{HttpURLConnection, URL}
 
 import scala.util.Try
@@ -30,6 +30,8 @@ trait WebsiteScraper extends WebsiteScraperComponent {
     def scrapeFromInputStream(inputStream: InputStream): String = {
       try {
         io.Source.fromInputStream(inputStream).mkString
+      } catch {
+        case e: IOException => throw new WebsiteScrapeFailedException("Unable to read input stream", e)
       } finally {
         inputStream.close()
       }

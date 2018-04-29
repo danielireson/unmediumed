@@ -1,12 +1,25 @@
 package unmediumed
 
-import unmediumed.components.{MediumService, WebsiteScraper}
+import java.io.FileNotFoundException
+
+import unmediumed.components.{MediumService, TemplateBuilder, WebsiteScraper}
+
+import scala.io.Source
+import scala.util.Try
 
 object Application extends components.Config
   with MediumService
+  with TemplateBuilder
   with WebsiteScraper {
 
-  val config = new Config(Map())
-  val mediumService = new MediumService
-  val websiteScraper = new WebsiteScraper
+  lazy val config = new Config(Map())
+  lazy val mediumService = new MediumService
+  lazy val templateBuilder = new TemplateBuilder(loadBaseTemplate())
+  lazy val websiteScraper = new WebsiteScraper
+
+  private def loadBaseTemplate(): String = {
+    Try(Source.fromResource("template.html").mkString).getOrElse {
+      throw new FileNotFoundException("Unable to load base template")
+    }
+  }
 }

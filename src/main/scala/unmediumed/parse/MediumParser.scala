@@ -3,73 +3,42 @@ package unmediumed.parse
 import unmediumed.models.MediumPost
 import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl
 
-import scala.util.matching.Regex
-import scala.xml.{Elem, SAXParser, Source, XML}
+import scala.xml._
 
 class MediumParser {
   val parser: SAXParser = SAXParserImpl.newInstance(null)
 
   def parse(html: String): MediumPost = {
-    Option(html) match {
-      case Some(h) if isValid(h) => extractMediumPost(h.trim)
-      case _ => throw new IllegalArgumentException("HTML is not a valid medium post")
+    try {
+      val source: InputSource = Source.fromString(Option(html).getOrElse(""))
+      val rootElement: Elem = XML.loadXML(source, parser)
+      new MediumPost(extractMeta(rootElement), extractMarkdown(rootElement), html)
+    } catch {
+      case e: NoSuchElementException => throw new ParseFailedException("HTML is not a valid medium post", e)
     }
   }
 
-  private def extractMediumPost(html: String): MediumPost = {
-    val rootElement = XML.loadXML(Source.fromString(html), parser)
-    val metaInformation = extractMetaInformation(rootElement)
-    val markdownElements = extractMarkdownElements(html)
-
-    new MediumPost(metaInformation, markdownElements, html)
-  }
-
-  private def extractMetaInformation(rootElement: Elem): Map[String, String] = {
-    val title = (rootElement \\ "title").head.text
+  private def extractMeta(rootElement: Elem): Map[String, String] = {
+    val title = (rootElement \\ "title").headOption
+      .map(_.text)
+      .getOrElse(throw new NoSuchElementException("Title not found"))
 
     val description = (rootElement \\ "meta")
       .find(_.attribute("name").map(_.text).contains("description"))
       .flatMap(_.attribute("content").map(_.text))
-      .getOrElse("")
+      .getOrElse(throw new NoSuchElementException("Description not found"))
 
     val canonical = (rootElement \\ "link")
       .find(_.attribute("rel").map(_.text).contains("canonical"))
       .flatMap(_.attribute("href").map(_.text))
-      .getOrElse("")
+      .getOrElse(throw new NoSuchElementException("Canonical link not found"))
 
     Map("title" -> title, "description" -> description, "canonical" -> canonical)
   }
 
-  private def extractMarkdownElements(html: String): List[MarkdownElement] = {
+  private def extractMarkdown(rootElement: Elem): List[MarkdownElement] = {
     List()
-  }
-
-  private def isValid(html: String): Boolean = {
-    val tags = List(
-      HtmlTagSearch("!DOCTYPE html", isSelfClosing = true),
-      HtmlTagSearch("html", isSelfClosing = false),
-      HtmlTagSearch("body", isSelfClosing = false),
-      HtmlTagSearch("title", isSelfClosing = false),
-      HtmlTagSearch("meta name=\"description\"", isSelfClosing = true),
-      HtmlTagSearch("link rel=\"canonical\"", isSelfClosing = true)
-    )
-
-    hasTags(html, tags)
-  }
-
-  private def hasTags(html: String, tags: Seq[HtmlTagSearch]): Boolean = {
-    tags.forall(tag => {
-      if (tag.isSelfClosing) {
-        exists(html, s"<${tag.name}(.?)+>")
-      } else {
-        exists(html, s"<${tag.name}(.?)+>") && exists(html, s"</${tag.name}(.?)+>")
-      }
-    })
-  }
-
-  private def exists(html: String, regex: String): Boolean = {
-    new Regex(regex).findFirstIn(html).isDefined
   }
 }
 
-sealed case class HtmlTagSearch(name: String, isSelfClosing: Boolean)
+class ParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

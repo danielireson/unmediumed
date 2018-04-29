@@ -7,7 +7,6 @@ class MediumParserUnitSpec extends UnitSpec {
   trait MediumParserFixture {
     val validHtml: String =
       """
-        |<!DOCTYPE html>
         |<html>
         |<title>This is the title</title>
         |<meta name="description" content="This is the description">
@@ -17,91 +16,52 @@ class MediumParserUnitSpec extends UnitSpec {
       """.stripMargin
   }
 
-  "MediumParser" should "throw an IllegalArgumentException when html is null" in new MediumParserFixture {
+  "MediumParser" should "throw a ParseFailedException when html is null" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
     val html: String = null
 
     // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
+    val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw an IllegalArgumentException when there's no doctype tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<!DOCTYPE html>", "")
-
-    // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
-      testSubject.parse(html)
-    }
-
-    error.getMessage shouldBe "HTML is not a valid medium post"
-  }
-
-  it should "throw an IllegalArgumentException when there's no html tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<html>", "").replaceFirst("</html>", "")
-
-    // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
-      testSubject.parse(html)
-    }
-
-    error.getMessage shouldBe "HTML is not a valid medium post"
-  }
-
-  it should "throw an IllegalArgumentException when there's no body tag" in new MediumParserFixture {
-    // given
-    val testSubject = new MediumParser
-    val html: String = validHtml.replaceFirst("<body>", "").replaceFirst("</body>", "")
-
-    // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
-      testSubject.parse(html)
-    }
-
-    error.getMessage shouldBe "HTML is not a valid medium post"
-  }
-
-  it should "throw an IllegalArgumentException when there's no title tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no title tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<title>", "").replaceFirst("</title>", "")
 
     // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
+    val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw an IllegalArgumentException when there's no opening description meta tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no opening description meta tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<meta name=\"description\"", "")
 
     // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
+    val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw an IllegalArgumentException when there's no canonical link tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no canonical link tag" in new MediumParserFixture {
     // given
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<link rel=\"canonical\"", "")
 
     // then
-    val error: Exception = the[IllegalArgumentException] thrownBy {
+    val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 

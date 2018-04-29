@@ -35,7 +35,7 @@ class HandlerUnitSpec extends UnitSpec {
     error.getMessage shouldBe "Request input is invalid"
   }
 
-  it should "return a http 200 html response for the base route" in {
+  it should "return a http 200 html response with the homepage" in {
     // given
     val testSubject = new Handler
     val input = new Input
@@ -45,5 +45,8 @@ class HandlerUnitSpec extends UnitSpec {
     val output = testSubject.handleRequest(input, context)
 
     output.headers.get("content-type") shouldBe "text/html"
+
+    List("<!DOCTYPE html>", "<html>", "</html>", "<body>", "</body>")
+      .foreach(tag => output.body should contain (tag))
   }
 }

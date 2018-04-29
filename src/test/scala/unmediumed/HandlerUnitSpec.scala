@@ -34,4 +34,16 @@ class HandlerUnitSpec extends UnitSpec {
 
     error.getMessage shouldBe "Request input is invalid"
   }
+
+  it should "return a http 200 html response for the base route" in {
+    // given
+    val testSubject = new Handler
+    val input = new Input
+    val context = mock[Context]
+
+    // then
+    val output = testSubject.handleRequest(input, context)
+
+    output.headers.get("content-type") shouldBe "text/html"
+  }
 }

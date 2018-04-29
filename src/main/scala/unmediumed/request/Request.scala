@@ -1,6 +1,6 @@
 package unmediumed.request
 
-case class Request(
+sealed case class Request(
     httpMethod: String,
     path: String,
     body: String,

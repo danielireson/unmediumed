@@ -12,7 +12,7 @@ class Handler extends RequestHandler[Input, Output] {
     }
 
     val response = Response(200, "Go Serverless v1.0! Your function executed successfully!", Map(
-      "x-extra-header" -> "abc"
+      "content-type" -> "text/html"
     ))
 
     response.toOutput

@@ -2,7 +2,7 @@ package unmediumed.response
 
 import scala.collection.JavaConverters._
 
-case class Response(
+sealed case class Response(
     statusCode: Integer,
     body: String,
     headers: Map[String, String] = Map(),

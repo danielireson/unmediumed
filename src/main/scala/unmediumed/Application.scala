@@ -9,13 +9,14 @@ import scala.util.Try
 
 object Application extends Config
   with MediumService
-  with TemplateBuilder
-  with WebsiteScraper {
+  with WebsiteScraper
+  with TemplateBuilder {
 
-  lazy val config = new Config(Map())
-  lazy val mediumService = new MediumService
+  val config = new Config(Map())
+  val mediumService = new MediumService
+  val websiteScraper = new WebsiteScraper
+
   lazy val templateBuilder = new TemplateBuilder(loadBaseTemplate())
-  lazy val websiteScraper = new WebsiteScraper
 
   private def loadBaseTemplate(): String = {
     Try(Source.fromResource("template.html").mkString).getOrElse {

@@ -41,9 +41,10 @@ class HandlerUnitSpec extends UnitSpec {
     val input = Request("GET", "/").toInput
     val context = mock[Context]
 
-    // then
+    // when
     val output = testSubject.handleRequest(input, context)
 
+    // then
     output.headers.get("content-type") shouldBe "text/html"
 
     List("<!DOCTYPE html>", "<html>", "</html>", "<body>", "</body>")
@@ -56,7 +57,12 @@ class HandlerUnitSpec extends UnitSpec {
     val input = Request("GET", "/other").toInput
     val context = mock[Context]
 
+    // when
+    val output = testSubject.handleRequest(input, context)
+
     // then
+    output.headers.get("content-type") shouldBe "text/markdown"
+  }
     val output = testSubject.handleRequest(input, context)
 
     output.headers.get("content-type") shouldBe "text/markdown"

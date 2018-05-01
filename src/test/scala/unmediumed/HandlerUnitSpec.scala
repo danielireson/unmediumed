@@ -21,20 +21,6 @@ class HandlerUnitSpec extends UnitSpec {
     output.getBody shouldBe a[String]
   }
 
-  it should "throw an IllegalArgumentException when input is null" in {
-    // given
-    val testSubject = new Handler
-    val input = null
-    val context = mock[Context]
-
-    // then
-    val error = the[IllegalArgumentException] thrownBy {
-      testSubject.handleRequest(input, context)
-    }
-
-    error.getMessage shouldBe "Request input is invalid"
-  }
-
   it should "return a http 200 html response for index requests" in {
     // given
     val testSubject = new Handler
@@ -45,6 +31,7 @@ class HandlerUnitSpec extends UnitSpec {
     val output = testSubject.handleRequest(input, context)
 
     // then
+    output.statusCode shouldBe 200
     output.headers.get("content-type") shouldBe "text/html"
 
     List("<!DOCTYPE html>", "<html>", "</html>", "<body>", "</body>")
@@ -61,10 +48,20 @@ class HandlerUnitSpec extends UnitSpec {
     val output = testSubject.handleRequest(input, context)
 
     // then
+    output.statusCode shouldBe 200
     output.headers.get("content-type") shouldBe "text/markdown"
   }
+
+  it should "return a http 500 internal server error when input is null" in {
+    // given
+    val testSubject = new Handler
+    val input = null
+    val context = mock[Context]
+
+    // when
     val output = testSubject.handleRequest(input, context)
 
+    output.statusCode shouldBe 500
     output.headers.get("content-type") shouldBe "text/markdown"
   }
 }

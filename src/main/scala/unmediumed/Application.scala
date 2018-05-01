@@ -2,12 +2,12 @@ package unmediumed
 
 import java.io.FileNotFoundException
 
-import unmediumed.components.{MediumService, TemplateBuilder, WebsiteScraper}
+import unmediumed.components.{Config, MediumService, TemplateBuilder, WebsiteScraper}
 
 import scala.io.Source
 import scala.util.Try
 
-object Application extends components.Config
+object Application extends Config
   with MediumService
   with TemplateBuilder
   with WebsiteScraper {

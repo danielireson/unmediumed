@@ -1,17 +1,9 @@
-package unmediumed.components
+package unmediumed.response
 
 trait TemplateBuilderComponent {
-  def templateBuilder: TemplateBuilderLocal
+  val templateBuilder: TemplateBuilder
 
-  trait TemplateBuilderLocal {
-    def build(params: Map[String, String]): String
-  }
-}
-
-trait TemplateBuilder extends TemplateBuilderComponent {
-  def templateBuilder: TemplateBuilder
-
-  class TemplateBuilder(baseTemplate: String) extends TemplateBuilderLocal {
+  class TemplateBuilder(baseTemplate: String) {
     def build(params: Map[String, String] = Map()): String = {
       Option(baseTemplate) match {
         case Some(bt) => params.keys.foldLeft(bt)((html, param) => {

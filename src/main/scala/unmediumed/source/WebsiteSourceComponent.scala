@@ -1,23 +1,14 @@
-package unmediumed.components
+package unmediumed.source
 
 import java.io.{IOException, InputStream}
 import java.net.{HttpURLConnection, URL}
 
 import scala.util.Try
 
-trait WebsiteScraperComponent {
-  def websiteScraper: WebsiteScraperLocal
+trait WebsiteSourceComponent {
+  val websiteSource: WebsiteSource
 
-  trait WebsiteScraperLocal {
-    def scrape(url: String): String
-    def scrapeFromInputStream(inputStream: InputStream): String
-  }
-}
-
-trait WebsiteScraper extends WebsiteScraperComponent {
-  def websiteScraper: WebsiteScraper
-
-  class WebsiteScraper extends WebsiteScraperLocal {
+  class WebsiteSource {
     val timeout: Int = 5000
 
     def scrape(url: String): String = {

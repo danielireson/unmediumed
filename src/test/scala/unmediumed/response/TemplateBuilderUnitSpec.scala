@@ -1,4 +1,4 @@
-package unmediumed.components
+package unmediumed.response
 
 import unmediumed.UnitSpec
 

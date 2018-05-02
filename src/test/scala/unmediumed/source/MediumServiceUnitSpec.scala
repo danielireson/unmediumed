@@ -1,11 +1,11 @@
-package unmediumed.components
+package unmediumed.source
 
 import unmediumed.UnitSpec
 
 class MediumServiceUnitSpec extends UnitSpec {
   "MediumService" should "throw an IllegalArgumentException when the scraper returns null" in {
     // given
-    val testSubject: MediumServiceLocal = new MediumService
+    val testSubject = new MediumService
     val html: String = null
 
     // then
@@ -18,7 +18,7 @@ class MediumServiceUnitSpec extends UnitSpec {
 
   it should "throw an IllegalArgumentException when the scraper returns an empty string" in {
     // given
-    val testSubject: MediumServiceLocal = new MediumService
+    val testSubject = new MediumService
     val html: String = ""
 
     // then

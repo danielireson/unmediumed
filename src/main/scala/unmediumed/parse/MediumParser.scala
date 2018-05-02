@@ -1,6 +1,5 @@
 package unmediumed.parse
 
-import unmediumed.models.MediumPost
 import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl
 
 import scala.xml._

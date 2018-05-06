@@ -6,13 +6,13 @@ import unmediumed.UnitSpec
 import unmediumed.response.TemplateBuilderComponent
 
 class RouterUnitSpec extends UnitSpec {
-  trait RouterComponentRegistry extends TemplateBuilderComponent {
+  private trait ComponentRegistry extends TemplateBuilderComponent {
     val templateBuilder = new TemplateBuilder("<!DOCTYPE html><html><body></body></html>")
   }
 
   "Router" should "return an api gateway formatted output" in {
     // given
-    val testSubject = new Router with RouterComponentRegistry
+    val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/")
 
     // when
@@ -26,7 +26,7 @@ class RouterUnitSpec extends UnitSpec {
 
   it should "return a http 200 html response for index requests" in {
     // given
-    val testSubject = new Router with RouterComponentRegistry
+    val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/")
 
     // when
@@ -42,7 +42,7 @@ class RouterUnitSpec extends UnitSpec {
 
   it should "return a http 200 markdown response for non-index requests" in {
     // given
-    val testSubject = new Router with RouterComponentRegistry
+    val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/other")
 
     // when
@@ -55,7 +55,7 @@ class RouterUnitSpec extends UnitSpec {
 
   it should "return a http 500 internal server error when request is null" in {
     // given
-    val testSubject = new Router with RouterComponentRegistry
+    val testSubject = new Router with ComponentRegistry
     val request = null
 
     // when

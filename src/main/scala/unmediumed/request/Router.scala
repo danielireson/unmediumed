@@ -17,9 +17,12 @@ class Router {
   private def getResponse(request: Request): Response = {
     Option(request) match {
       case Some(r) if r.path == "/" =>
-        new HtmlResponse(templateBuilder.build())
-      case Some(r) => new MarkdownResponse
-      case None => throw new IllegalArgumentException("Invalid request passed to router")
+        val responseBody = templateBuilder.build()
+        new HtmlResponse(responseBody)
+      case Some(r) =>
+        new MarkdownResponse
+      case None =>
+        throw new IllegalArgumentException("Invalid request passed to router")
     }
   }
 

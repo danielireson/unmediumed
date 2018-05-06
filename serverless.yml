@@ -13,4 +13,5 @@ functions:
   unmediumed:
     handler: unmediumed.Handler
     events:
+      - http: ANY /
       - http: ANY /{proxy+}

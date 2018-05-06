@@ -8,7 +8,7 @@ class Router {
   this: TemplateBuilderComponent =>
 
   def routeRequest(request: Request): Output = {
-    Try (getResponse(request)) match {
+    Try(getResponse(request)) match {
       case Success(response) => response.toOutput
       case Failure(t) => failureResponse(t).toOutput
     }

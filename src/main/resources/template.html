@@ -15,17 +15,18 @@
   }
 
   body {
+    align-items: center;
     background: #16a085;
     color: white;
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: 'Space Mono', monospace;
     font-weight: 300;
+    justify-content: center;
     letter-spacing: -0.025em;
     line-height: 1.625;
     margin: 0;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   a {
@@ -63,27 +64,30 @@
   }
 
   input {
-    border: none;
     border-radius: 5px;
-    font-size: 1em;
+    border: none;
     font-family: 'Space Mono', monospace;
+    font-size: 1em;
     outline: none;
-  }
-
-  input[type="text"] {
     padding: 1em;
     width: 100%;
   }
-
-  input[type="submit"] {
-    background: rgba(255,255,255,0.2);
-    color: white;
+  
+  .markdown-link {
+    border: none;
+    display: inline-block;
     margin-top: 1em;
-    padding: 0.5em 1em;
   }
 
-  input[type="submit"]:hover {
+  .button {
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    border: none;
+    color: white;
     cursor: pointer;
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.5em 1em;
   }
 
   @media(min-width:768px) {
@@ -109,11 +113,32 @@
     <h1><a href="/">unmediumed.com</a></h1>
     <h2>An api to access <a href="https://medium.com" target="blank">medium</a> posts in markdown format</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur repudiandae quia fugiat deserunt debitis vel laudantium.</p>
-    <form action="{{formAction}}">
+    <form>
       <input type="text" placeholder="URL to medium post" autofocus>
-      <input type="submit" value="Get markdown">
+      <a class="markdown-link">unmediumed.com/posturl</a>
     </form>
     <p><a href="https://github.com/danielireson/unmediumed" target="blank">Source code</a></p>
   </div>
+  <script>
+    var form = document.getElementsByTagName('form')[0];
+    var input = document.getElementsByTagName('input')[0];
+    var link = document.getElementsByClassName('markdown-link')[0];
+
+    if (form && input && link) {
+      input.addEventListener('keyup', function (event) {
+        var url = event.target.value;
+        url = url.replace('https://', '');
+        url = url.replace('http://', '');
+        url = url.replace('medium.com/', '');
+
+        if (event.target.value !== '') {
+          link.innerHTML = 'unmediumed.com/' + url;
+          link.href = 'https://unmediumed.com/' + url;
+
+          form.action = 'https://unmediumed.com/' + url;
+        }
+      });
+    }
+  </script>
 </body>
 </html>

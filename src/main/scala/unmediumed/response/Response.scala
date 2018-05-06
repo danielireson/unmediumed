@@ -11,8 +11,8 @@ sealed case class Response(
   def toOutput: Output = new Output(statusCode, body, headers.asJava, base64Encoded)
 }
 
-class HtmlResponse
-  extends Response(200, "<!DOCTYPE html><html><body></body></html>", Map("content-type" -> "text/html"))
+class HtmlResponse(body: String)
+  extends Response(200, body, Map("content-type" -> "text/html"))
 
 class MarkdownResponse
   extends Response(200, "", Map("content-type" -> "text/markdown"))

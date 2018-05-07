@@ -1,6 +1,6 @@
 package unmediumed.request
 
-import unmediumed.response.{TemplateBuilderComponent, _}
+import unmediumed.response._
 
 import scala.util.{Failure, Success, Try}
 

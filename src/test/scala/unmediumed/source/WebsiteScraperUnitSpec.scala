@@ -5,10 +5,10 @@ import java.io.ByteArrayInputStream
 import org.mockito.Mockito.doThrow
 import unmediumed.UnitSpec
 
-class WebsiteSourceUnitSpec extends UnitSpec {
+class WebsiteScraperUnitSpec extends UnitSpec {
   "WebsiteSource" should "throw a WebsiteScrapeFailedException when url is null" in {
     // given
-    val testSubject = new WebsiteSource
+    val testSubject = new WebsiteScraper
     val url: String = null
 
     // when
@@ -22,7 +22,7 @@ class WebsiteSourceUnitSpec extends UnitSpec {
 
   it should "scrape the html from an input stream" in {
     // given
-    val testSubject = new WebsiteSource
+    val testSubject = new WebsiteScraper
     val inputStream = new ByteArrayInputStream("abcdef".getBytes)
 
     // when
@@ -33,7 +33,7 @@ class WebsiteSourceUnitSpec extends UnitSpec {
 
   it should "throw a WebsiteScrapeFailedException when the input stream can't be read" in {
     // given
-    val testSubject = new WebsiteSource
+    val testSubject = new WebsiteScraper
     val inputStream = mock[ByteArrayInputStream]
 
     doThrow(new RuntimeException).when(inputStream).read()

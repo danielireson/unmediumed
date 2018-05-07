@@ -5,10 +5,10 @@ import java.net.{HttpURLConnection, URL}
 
 import scala.util.Try
 
-trait WebsiteSourceComponent {
-  val websiteSource: WebsiteSource
+trait WebsiteScraperComponent {
+  val websiteScraper: WebsiteScraper
 
-  class WebsiteSource {
+  class WebsiteScraper {
     val timeout: Int = 5000
 
     def scrape(url: String): String = {

@@ -10,12 +10,12 @@ import scala.util.Try
 
 trait ComponentRegistry extends ConfigComponent
   with MediumServiceComponent
-  with WebsiteSourceComponent
+  with WebsiteScraperComponent
   with TemplateBuilderComponent {
 
   val config = new Config(Map())
   val mediumService = new MediumService
-  val websiteSource = new WebsiteSource
+  val websiteScraper = new WebsiteScraper
 
   lazy val templateBuilder = new TemplateBuilder(
     Try(Source.fromResource("template.html").mkString).getOrElse {

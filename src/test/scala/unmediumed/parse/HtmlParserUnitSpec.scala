@@ -2,7 +2,7 @@ package unmediumed.parse
 
 import unmediumed.UnitSpec
 
-class MediumParserUnitSpec extends UnitSpec {
+class HtmlParserUnitSpec extends UnitSpec {
   trait MediumParserFixture {
     val validHtml: String =
       """
@@ -17,7 +17,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   "MediumParser" should "throw a ParseFailedException when html is null" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
     val html: String = null
 
     // when
@@ -31,7 +31,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "throw a ParseFailedException when there's no title tag" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<title>", "").replaceFirst("</title>", "")
 
     // when
@@ -45,7 +45,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "throw a ParseFailedException when there's no opening description meta tag" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<meta name=\"description\"", "")
 
     // when
@@ -59,7 +59,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "throw a ParseFailedException when there's no canonical link tag" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<link rel=\"canonical\"", "")
 
     // when
@@ -73,7 +73,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "return a MediumPost" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
 
     // when
     val post: MediumPost = testSubject.parse(validHtml)
@@ -84,7 +84,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "extract the title" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
 
     // when
     val post: MediumPost = testSubject.parse(validHtml)
@@ -95,7 +95,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "extract the description" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
 
     // when
     val post: MediumPost = testSubject.parse(validHtml)
@@ -106,7 +106,7 @@ class MediumParserUnitSpec extends UnitSpec {
 
   it should "extract the canonical link" in new MediumParserFixture {
     // given
-    val testSubject = new MediumParser
+    val testSubject = new HtmlParser
 
     // when
     val post: MediumPost = testSubject.parse(validHtml)

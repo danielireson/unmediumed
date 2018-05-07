@@ -4,7 +4,7 @@ import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl
 
 import scala.xml._
 
-class MediumParser {
+class HtmlParser {
   val parser: SAXParser = SAXParserImpl.newInstance(null)
 
   def parse(html: String): MediumPost = {

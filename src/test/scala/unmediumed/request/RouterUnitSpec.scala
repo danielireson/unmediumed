@@ -22,7 +22,19 @@ class RouterUnitSpec extends UnitSpec {
     output.getBody shouldBe a[String]
   }
 
-  it should "return a http 200 html response for index requests" in {
+  it should "return a http 500 internal server error when request is null" in {
+    // given
+    val testSubject = new Router with ComponentRegistry
+    val request = null
+
+    // when
+    val output = testSubject.routeRequest(request)
+
+    output.statusCode shouldBe 500
+    output.headers.get("content-type") shouldBe "text/markdown"
+  }
+
+  it should "return a html response for the index route" in {
     // given
     val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/")
@@ -38,7 +50,7 @@ class RouterUnitSpec extends UnitSpec {
       .foreach(tag => output.body should include (tag))
   }
 
-  it should "return a http 200 markdown response for non-index requests" in {
+  it should "return a markdown response for valid medium urls" in {
     // given
     val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/other")
@@ -48,18 +60,6 @@ class RouterUnitSpec extends UnitSpec {
 
     // then
     output.statusCode shouldBe 200
-    output.headers.get("content-type") shouldBe "text/markdown"
-  }
-
-  it should "return a http 500 internal server error when request is null" in {
-    // given
-    val testSubject = new Router with ComponentRegistry
-    val request = null
-
-    // when
-    val output = testSubject.routeRequest(request)
-
-    output.statusCode shouldBe 500
     output.headers.get("content-type") shouldBe "text/markdown"
   }
 }

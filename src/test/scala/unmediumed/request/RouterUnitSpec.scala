@@ -1,7 +1,5 @@
 package unmediumed.request
 
-import java.{util => ju}
-
 import unmediumed.UnitSpec
 import unmediumed.response.TemplateBuilderComponent
 
@@ -20,7 +18,7 @@ class RouterUnitSpec extends UnitSpec {
 
     // then
     output.getStatusCode shouldBe a[Integer]
-    output.getHeaders shouldBe a[ju.Map[_, _]]
+    output.getHeaders shouldBe a[java.util.Map[_, _]]
     output.getBody shouldBe a[String]
   }
 

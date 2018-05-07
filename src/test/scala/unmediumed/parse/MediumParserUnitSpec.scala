@@ -20,11 +20,12 @@ class MediumParserUnitSpec extends UnitSpec {
     val testSubject = new MediumParser
     val html: String = null
 
-    // then
+    // when
     val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
+    // then
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
@@ -33,11 +34,12 @@ class MediumParserUnitSpec extends UnitSpec {
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<title>", "").replaceFirst("</title>", "")
 
-    // then
+    // when
     val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
+    // then
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
@@ -46,11 +48,12 @@ class MediumParserUnitSpec extends UnitSpec {
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<meta name=\"description\"", "")
 
-    // then
+    // when
     val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
+    // then
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
@@ -59,11 +62,12 @@ class MediumParserUnitSpec extends UnitSpec {
     val testSubject = new MediumParser
     val html: String = validHtml.replaceFirst("<link rel=\"canonical\"", "")
 
-    // then
+    // when
     val error: Exception = the[ParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
+    // then
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 

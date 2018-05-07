@@ -19,9 +19,10 @@ class TemplateBuilderUnitSpec extends UnitSpec {
     // given
     val testSubject = new TemplateBuilder("")
 
-    // then
+    // when
     val html = testSubject.build()
 
+    // then
     html shouldBe ""
   }
 
@@ -30,9 +31,10 @@ class TemplateBuilderUnitSpec extends UnitSpec {
     val testSubject = new TemplateBuilder("{{content}}")
     val params = Map("content" -> "testing")
 
-    // then
+    // when
     val html = testSubject.build(params)
 
+    // then
     html shouldBe "testing"
   }
 
@@ -41,9 +43,10 @@ class TemplateBuilderUnitSpec extends UnitSpec {
     val testSubject = new TemplateBuilder("{{one}},{{two}}")
     val params = Map("one" -> "hello", "two" -> "world")
 
-    // then
+    // when
     val html = testSubject.build(params)
 
+    // then
     html shouldBe "hello,world"
   }
 }

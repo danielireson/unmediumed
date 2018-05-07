@@ -8,11 +8,12 @@ class MediumServiceUnitSpec extends UnitSpec {
     val testSubject = new MediumService
     val html: String = null
 
-    // then
+    // when
     val error = the[IllegalArgumentException] thrownBy {
       testSubject.getPost(html)
     }
 
+    // then
     error.getMessage shouldBe "Creating MediumPost with invalid HTML"
   }
 
@@ -21,11 +22,12 @@ class MediumServiceUnitSpec extends UnitSpec {
     val testSubject = new MediumService
     val html: String = ""
 
-    // then
+    // when
     val error = the[IllegalArgumentException] thrownBy {
       testSubject.getPost(html)
     }
 
+    // then
     error.getMessage shouldBe "Creating MediumPost with invalid HTML"
   }
 }

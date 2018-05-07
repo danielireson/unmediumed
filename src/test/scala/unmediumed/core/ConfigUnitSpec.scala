@@ -9,11 +9,12 @@ class ConfigUnitSpec extends UnitSpec {
     val testSubject = new Config(store)
     val key: String = "invalid"
 
-    // then
+    // when
     val error = the[IllegalArgumentException] thrownBy {
       testSubject.get(key)
     }
 
+    // then
     error.getMessage shouldBe "Invalid configuration key"
   }
 }

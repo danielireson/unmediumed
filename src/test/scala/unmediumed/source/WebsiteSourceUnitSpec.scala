@@ -11,11 +11,12 @@ class WebsiteSourceUnitSpec extends UnitSpec {
     val testSubject = new WebsiteSource
     val url: String = null
 
-    // then
+    // when
     val error = the[WebsiteScrapeFailedException] thrownBy {
       testSubject.scrape(url)
     }
 
+    // then
     error.getMessage shouldBe "Unable to create input stream"
   }
 
@@ -24,7 +25,7 @@ class WebsiteSourceUnitSpec extends UnitSpec {
     val testSubject = new WebsiteSource
     val inputStream = new ByteArrayInputStream("abcdef".getBytes)
 
-    // then
+    // when
     val html = testSubject.scrapeFromInputStream(inputStream)
 
     html shouldBe "abcdef"
@@ -37,11 +38,12 @@ class WebsiteSourceUnitSpec extends UnitSpec {
 
     doThrow(new RuntimeException).when(inputStream).read()
 
-    // then
+    // when
     val error = the[WebsiteScrapeFailedException] thrownBy {
       testSubject.scrapeFromInputStream(inputStream)
     }
 
+    // then
     error.getMessage shouldBe "Unable to read input stream"
   }
 }

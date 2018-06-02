@@ -20,6 +20,7 @@ class Router {
         val responseBody = templateBuilder.build()
         new HtmlResponse(responseBody)
       case Some(r) =>
+        val url = new RequestParser().getPostUrl(request)
         new MarkdownResponse
       case None =>
         throw new IllegalArgumentException("Invalid request passed to router")
@@ -29,6 +30,7 @@ class Router {
   private def failureResponse(caught: Throwable): Response = {
     caught match {
       case _: IllegalArgumentException => new InternalServerErrorResponse
+      case _: RequestParseFailedException => new UnprocessableEntityResponse
     }
   }
 }

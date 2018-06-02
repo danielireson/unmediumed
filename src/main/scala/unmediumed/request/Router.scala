@@ -8,23 +8,28 @@ class Router {
   this: TemplateBuilderComponent =>
 
   def routeRequest(request: Request): Output = {
-    Try(getResponse(request)) match {
-      case Success(response) => response.toOutput
+    val response = Try {
+      Option(request) match {
+        case Some(r) if r.path == "/" => buildHomepage(r)
+        case Some(r) => buildMarkdownPost(r)
+        case None => throw new IllegalArgumentException("Invalid request passed to router")
+      }
+    }
+
+    response match {
+      case Success(r) => r.toOutput
       case Failure(t) => failureResponse(t).toOutput
     }
   }
 
-  private def getResponse(request: Request): Response = {
-    Option(request) match {
-      case Some(r) if r.path == "/" =>
-        val responseBody = templateBuilder.build()
-        new HtmlResponse(responseBody)
-      case Some(r) =>
-        val url = new RequestParser().getPostUrl(request)
-        new MarkdownResponse
-      case None =>
-        throw new IllegalArgumentException("Invalid request passed to router")
-    }
+  private def buildHomepage(request: Request): Response = {
+    val responseBody = templateBuilder.build()
+    new HtmlResponse(responseBody)
+  }
+
+  private def buildMarkdownPost(request: Request): Response = {
+    val url = new RequestParser().getPostUrl(request)
+    new MarkdownResponse
   }
 
   private def failureResponse(caught: Throwable): Response = {

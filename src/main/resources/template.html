@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>unmediumed</title>
+  <title>{{domain}}</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Space+Mono" rel="stylesheet">
 </head>
 <style>
@@ -109,13 +109,13 @@
 </style>
 <body>
   <div class="container">
-    <h1><a href="/">unmediumed.com</a></h1>
+    <h1><a href="/">{{domain}}</a></h1>
     <h2>an api to access medium posts in markdown format</h2>
     <form>
       <input type="text" placeholder="url to medium post" autofocus>
-      <a class="markdown-link">unmediumed.com/</a>
+      <a class="markdown-link">{{domain}}/</a>
     </form>
-    <p><a href="https://github.com/danielireson/unmediumed" target="blank">source code</a></p>
+    <p><a href="{{sourceCodeLink}}" target="blank">source code</a></p>
   </div>
   <script>
     var form = document.getElementsByTagName('form')[0];
@@ -131,9 +131,9 @@
         url = url.replace(/[^\w\d:/\._-]/g, '');
 
         if (event.target.value !== '') {
-          link.innerHTML = 'unmediumed.com/' + url;
-          link.href = 'https://unmediumed.com/' + url;
-          form.action = 'https://unmediumed.com/' + url;
+          link.innerHTML = '{{domain}}' + url;
+          link.href = 'https://{{domain}}/' + url;
+          form.action = 'https://{{domain}}/' + url;
         }
       });
     }

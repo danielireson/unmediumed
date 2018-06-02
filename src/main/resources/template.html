@@ -129,6 +129,7 @@
         url = url.replace('https://', '');
         url = url.replace('http://', '');
         url = url.replace('medium.com/', '');
+        url = url.replace(/[^\w\d:/\._-]/g, '');
 
         if (event.target.value !== '') {
           link.innerHTML = 'unmediumed.com/' + url;

@@ -10,7 +10,7 @@ trait TestComponentRegistry extends MockitoSugar
   with WebsiteScraperComponent
   with TemplateBuilderComponent {
 
-  val config: Config = new Config(Map())
+  val config: Config = new Config
   val mediumService: MediumService = mock[MediumService]
   val websiteScraper: WebsiteScraper = mock[WebsiteScraper]
   val templateBuilder: TemplateBuilder = new TemplateBuilder("<!DOCTYPE html><html><body></body></html>")

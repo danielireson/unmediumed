@@ -13,7 +13,7 @@ trait ComponentRegistry extends ConfigComponent
   with WebsiteScraperComponent
   with TemplateBuilderComponent {
 
-  val config = new Config(Map())
+  val config = new Config("key1=value1,key2=value2,key3=value3")
   val mediumService = new MediumService
   val websiteScraper = new WebsiteScraper
 

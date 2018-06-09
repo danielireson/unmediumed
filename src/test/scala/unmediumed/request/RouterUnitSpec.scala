@@ -31,7 +31,7 @@ class RouterUnitSpec extends UnitSpec {
     val output = testSubject.routeRequest(request)
 
     output.statusCode shouldBe 500
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/html"
   }
 
   it should "return a html response for the index route" in {
@@ -50,7 +50,7 @@ class RouterUnitSpec extends UnitSpec {
       .foreach(tag => output.body should include (tag))
   }
 
-  it should "return a markdown response for a non-index route" in {
+  it should "return a markdown response for a post route" in {
     // given
     val testSubject = new Router with ComponentRegistry
     val request = Request("GET", "/author/title")
@@ -73,6 +73,6 @@ class RouterUnitSpec extends UnitSpec {
 
     // then
     output.statusCode shouldBe 422
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/html"
   }
 }

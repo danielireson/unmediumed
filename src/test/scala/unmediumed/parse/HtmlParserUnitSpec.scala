@@ -3,7 +3,7 @@ package unmediumed.parse
 import unmediumed.UnitSpec
 
 class HtmlParserUnitSpec extends UnitSpec {
-  trait MediumParserFixture {
+  trait HtmlParserFixture {
     val validHtml: String =
       """
         |<html>
@@ -15,7 +15,7 @@ class HtmlParserUnitSpec extends UnitSpec {
       """.stripMargin
   }
 
-  "MediumParser" should "throw a ParseFailedException when html is null" in new MediumParserFixture {
+  "MediumParser" should "throw a ParseFailedException when html is null" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
     val html: String = null
@@ -29,7 +29,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw a ParseFailedException when there's no title tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no title tag" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<title>", "").replaceFirst("</title>", "")
@@ -43,7 +43,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw a ParseFailedException when there's no opening description meta tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no opening description meta tag" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<meta name=\"description\"", "")
@@ -57,7 +57,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "throw a ParseFailedException when there's no canonical link tag" in new MediumParserFixture {
+  it should "throw a ParseFailedException when there's no canonical link tag" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
     val html: String = validHtml.replaceFirst("<link rel=\"canonical\"", "")
@@ -71,7 +71,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     error.getMessage shouldBe "HTML is not a valid medium post"
   }
 
-  it should "return a MediumPost" in new MediumParserFixture {
+  it should "return a MediumPost" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
 
@@ -82,7 +82,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     post shouldBe a[MediumPost]
   }
 
-  it should "extract the title" in new MediumParserFixture {
+  it should "extract the title" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
 
@@ -93,7 +93,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     post.meta.get("title") shouldBe Some("This is the title")
   }
 
-  it should "extract the description" in new MediumParserFixture {
+  it should "extract the description" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
 
@@ -104,7 +104,7 @@ class HtmlParserUnitSpec extends UnitSpec {
     post.meta.get("description") shouldBe Some("This is the description")
   }
 
-  it should "extract the canonical link" in new MediumParserFixture {
+  it should "extract the canonical link" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
 

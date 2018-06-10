@@ -7,10 +7,20 @@ class HtmlParserUnitSpec extends UnitSpec {
     val validHtml: String =
       """
         |<html>
-        |<title>This is the title</title>
-        |<meta name="description" content="This is the description">
-        |<link rel="canonical" href="http://example.com">
-        |<body></body>
+        |<head>
+        |  <title>This is the title</title>
+        |  <meta name="description" content="This is the description">
+        |  <link rel="canonical" href="http://example.com">
+        |</head>
+        |<body>
+        |  <h1>Header one</h1>
+        |  <h2>Header two</h2>
+        |  <h3>Header three</h3>
+        |  <h4>Header four</h4>
+        |  <h5>Header five</h5>
+        |  <h6>Header six</h6>
+        |  <p>Paragraph</p>
+        |</body>
         |</html>
       """.stripMargin
   }
@@ -113,5 +123,82 @@ class HtmlParserUnitSpec extends UnitSpec {
 
     // then
     post.meta.get("canonical") shouldBe Some("http://example.com")
+  }
+
+  it should "parse h1 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(1, "Header one"))
+  }
+
+  it should "parse h2 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(2, "Header two"))
+  }
+
+  it should "parse h3 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(3, "Header three"))
+  }
+
+  it should "parse h4 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(4, "Header four"))
+  }
+
+  it should "parse h5 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(5, "Header five"))
+  }
+
+  it should "parse h6 elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (HeaderMarkdownElement(6, "Header six"))
+  }
+
+  it should "parse paragraph elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown should contain (ParagraphMarkdownElement("Paragraph"))
   }
 }

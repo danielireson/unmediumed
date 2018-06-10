@@ -35,8 +35,16 @@ class HtmlParser {
     Map("title" -> title, "description" -> description, "canonical" -> canonical)
   }
 
-  private def extractMarkdown(rootElement: Elem): List[MarkdownElement] = {
-    List()
+  private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
+    (rootElement \\ "_").collect {
+      case e if e.label == "h1" => HeaderMarkdownElement(1, e.text)
+      case e if e.label == "h2" => HeaderMarkdownElement(2, e.text)
+      case e if e.label == "h3" => HeaderMarkdownElement(3, e.text)
+      case e if e.label == "h4" => HeaderMarkdownElement(4, e.text)
+      case e if e.label == "h5" => HeaderMarkdownElement(5, e.text)
+      case e if e.label == "h6" => HeaderMarkdownElement(6, e.text)
+      case e if e.label == "p" => ParagraphMarkdownElement(e.text)
+    }
   }
 }
 

@@ -1,3 +1,6 @@
 package unmediumed.parse
 
-sealed case class MarkdownElement()
+trait MarkdownElement
+
+sealed case class HeaderMarkdownElement(size: Int, content: String) extends MarkdownElement
+sealed case class ParagraphMarkdownElement(content: String) extends MarkdownElement

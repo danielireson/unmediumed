@@ -1,20 +1,20 @@
 package unmediumed.request
 
 import unmediumed.UnitSpec
-import unmediumed.response.TemplateBuilderComponent
+import unmediumed.response.{Output, TemplateBuilder}
 
 class RouterUnitSpec extends UnitSpec {
-  private trait ComponentRegistry extends TemplateBuilderComponent {
+  trait RouterFixture {
     val templateBuilder = new TemplateBuilder("<!DOCTYPE html><html><body></body></html>")
   }
 
-  "Router" should "return an api gateway formatted output" in {
+  "Router" should "return an api gateway formatted output" in new RouterFixture {
     // given
-    val testSubject = new Router with ComponentRegistry
+    val testSubject = new Router(templateBuilder)
     val request = Request("GET", "/")
 
     // when
-    val output = testSubject.routeRequest(request)
+    val output: Output = testSubject.routeRequest(request)
 
     // then
     output.getStatusCode shouldBe a[Integer]
@@ -22,25 +22,25 @@ class RouterUnitSpec extends UnitSpec {
     output.getBody shouldBe a[String]
   }
 
-  it should "return an internal server error response when request is null" in {
+  it should "return an internal server error response when request is null" in new RouterFixture {
     // given
-    val testSubject = new Router with ComponentRegistry
-    val request = null
+    val testSubject = new Router(templateBuilder)
+    val request: Request = null
 
     // when
-    val output = testSubject.routeRequest(request)
+    val output: Output = testSubject.routeRequest(request)
 
     output.statusCode shouldBe 500
     output.headers.get("content-type") shouldBe "text/html"
   }
 
-  it should "return a html response for the index route" in {
+  it should "return a html response for the index route" in new RouterFixture {
     // given
-    val testSubject = new Router with ComponentRegistry
+    val testSubject = new Router(templateBuilder)
     val request = Request("GET", "/")
 
     // when
-    val output = testSubject.routeRequest(request)
+    val output: Output = testSubject.routeRequest(request)
 
     // then
     output.statusCode shouldBe 200
@@ -50,26 +50,26 @@ class RouterUnitSpec extends UnitSpec {
       .foreach(tag => output.body should include (tag))
   }
 
-  it should "return a markdown response for a post route" in {
+  it should "return a markdown response for a post route" in new RouterFixture {
     // given
-    val testSubject = new Router with ComponentRegistry
+    val testSubject = new Router(templateBuilder)
     val request = Request("GET", "/author/title")
 
     // when
-    val output = testSubject.routeRequest(request)
+    val output: Output = testSubject.routeRequest(request)
 
     // then
     output.statusCode shouldBe 200
     output.headers.get("content-type") shouldBe "text/markdown"
   }
 
-  it should "return an unprocessable entity response for an invalid medium url" in {
+  it should "return an unprocessable entity response for an invalid medium url" in new RouterFixture {
     // given
-    val testSubject = new Router with ComponentRegistry
+    val testSubject = new Router(templateBuilder)
     val request = Request("GET", "/$$$")
 
     // when
-    val output = testSubject.routeRequest(request)
+    val output: Output = testSubject.routeRequest(request)
 
     // then
     output.statusCode shouldBe 422

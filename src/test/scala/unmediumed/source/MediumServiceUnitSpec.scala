@@ -5,7 +5,8 @@ import unmediumed.UnitSpec
 class MediumServiceUnitSpec extends UnitSpec {
   "MediumService" should "throw an IllegalArgumentException when the scraper returns null" in {
     // given
-    val testSubject = new MediumService
+    val websiteScraper = mock[WebsiteScraper]
+    val testSubject = new MediumService(websiteScraper)
     val html: String = null
 
     // when
@@ -19,7 +20,8 @@ class MediumServiceUnitSpec extends UnitSpec {
 
   it should "throw an IllegalArgumentException when the scraper returns an empty string" in {
     // given
-    val testSubject = new MediumService
+    val websiteScraper = mock[WebsiteScraper]
+    val testSubject = new MediumService(websiteScraper)
     val html: String = ""
 
     // when

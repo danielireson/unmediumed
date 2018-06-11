@@ -1,6 +1,8 @@
 package unmediumed.response
 
-class TemplateBuilder(baseTemplate: String) {
+import unmediumed.core.Config
+
+class TemplateBuilder(config: Config, baseTemplate: String) {
   def build(params: Map[String, String] = Map()): String = {
     Option(baseTemplate) match {
       case Some(bt) => params.keys.foldLeft(bt)((html, param) => {

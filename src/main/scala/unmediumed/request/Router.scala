@@ -1,11 +1,12 @@
 package unmediumed.request
 
+import unmediumed.core.Config
 import unmediumed.response._
 import unmediumed.source.MediumService
 
 import scala.util.{Failure, Success, Try}
 
-class Router(templateBuilder: TemplateBuilder, mediumService: MediumService) {
+class Router(config: Config, templateBuilder: TemplateBuilder, mediumService: MediumService) {
   def routeRequest(request: Request): Output = {
     val response = Try {
       Option(request) match {

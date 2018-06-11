@@ -4,9 +4,7 @@ import unmediumed.response._
 
 import scala.util.{Failure, Success, Try}
 
-class Router {
-  this: TemplateBuilderComponent =>
-
+class Router(templateBuilder: TemplateBuilder) {
   def routeRequest(request: Request): Output = {
     val response = Try {
       Option(request) match {

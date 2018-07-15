@@ -7,6 +7,7 @@ import scala.util.Try
 
 class WebsiteScraper {
   val Timeout: Int = 5000
+  val UserAgent: String = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"
 
   def scrape(url: String): String = {
     createInputStream(url) match {
@@ -31,6 +32,7 @@ class WebsiteScraper {
       connection.setRequestMethod("GET")
       connection.setConnectTimeout(Timeout)
       connection.setReadTimeout(Timeout)
+      connection.setRequestProperty("User-Agent", UserAgent)
       Some(connection.getInputStream)
     }.getOrElse(None)
   }

@@ -8,15 +8,14 @@ import scala.util.{Failure, Success, Try}
 class Router(mediumService: MediumService) {
   def routeRequest(request: Request): Output = {
     val response = Try {
-      Option(request) match {
-        case Some(r) => buildMarkdownPost(r)
-        case None => throw new IllegalArgumentException("Invalid request passed to router")
+      Option(request).map(buildMarkdownPost).getOrElse {
+        throw new IllegalArgumentException("Invalid request passed to router")
       }
     }
 
     response match {
       case Success(r) => r.toOutput
-      case Failure(t) => failureResponse(t).toOutput
+      case Failure(t) => mapFailure(t).toOutput
     }
   }
 
@@ -27,10 +26,10 @@ class Router(mediumService: MediumService) {
     new MarkdownResponse(post.markdown)
   }
 
-  private def failureResponse(caught: Throwable): Response = {
+  private def mapFailure(caught: Throwable): Response = {
     caught match {
-      case _: IllegalArgumentException => new InternalServerErrorResponse
       case _: RequestParseFailedException => new UnprocessableEntityResponse
+      case _ => new InternalServerErrorResponse
     }
   }
 }

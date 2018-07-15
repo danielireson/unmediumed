@@ -3,6 +3,9 @@ package unmediumed.request
 import unmediumed.TestHelpers
 import unmediumed.response.Output
 import unmediumed.source.MediumService
+import unmediumed.parse.MediumPost
+
+import org.mockito.Mockito._
 
 class RouterUnitSpec extends TestHelpers {
   "Router" should "return an api gateway formatted output" in {
@@ -30,14 +33,17 @@ class RouterUnitSpec extends TestHelpers {
     val output: Output = testSubject.routeRequest(request)
 
     output.statusCode shouldBe 500
-    output.headers.get("content-type") shouldBe "text/html"
+    output.headers.get("content-type") shouldBe "text/markdown"
   }
 
-  it should "return a markdown response for a post route" in {
+  it should "return a markdown response when request is valid" in {
     // given
     val mediumService = mock[MediumService]
     val testSubject = new Router(mediumService)
-    val request = Request("GET", "/author/title")
+    val request = Request("GET", "/@author/title")
+
+    val post = new MediumPost(Map(), List())
+    doReturn(post, post).when(mediumService).getPost("https://medium.com/@author/title")
 
     // when
     val output: Output = testSubject.routeRequest(request)
@@ -58,6 +64,6 @@ class RouterUnitSpec extends TestHelpers {
 
     // then
     output.statusCode shouldBe 422
-    output.headers.get("content-type") shouldBe "text/html"
+    output.headers.get("content-type") shouldBe "text/markdown"
   }
 }

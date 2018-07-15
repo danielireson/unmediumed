@@ -1,7 +1,8 @@
 package unmediumed.request
 
+import unmediumed.parse.ParseFailedException
 import unmediumed.response._
-import unmediumed.source.MediumService
+import unmediumed.source.{MediumService, WebsiteScrapeFailedException}
 
 import scala.util.{Failure, Success, Try}
 
@@ -29,7 +30,9 @@ class Router(mediumService: MediumService) {
   private def mapFailure(caught: Throwable): Response = {
     caught match {
       case t: RequestParseFailedException => new UnprocessableEntityResponse(t.getMessage)
-      case t => new InternalServerErrorResponse(t.getMessage)
+      case _: WebsiteScrapeFailedException => new BadGatewayResponse("Unable to fetch medium post")
+      case _: ParseFailedException => new InternalServerErrorResponse("Unable to parse medium post")
+      case _ => new InternalServerErrorResponse("An unexpected error occurred")
     }
   }
 }

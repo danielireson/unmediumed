@@ -19,3 +19,6 @@ class UnprocessableEntityResponse(message: String)
 
 class InternalServerErrorResponse(message: String)
   extends Response(500, message, Map("content-type" -> "text/markdown"))
+
+class BadGatewayResponse(message: String)
+  extends Response(500, message, Map("content-type" -> "text/markdown"))

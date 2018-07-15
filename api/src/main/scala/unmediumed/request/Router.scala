@@ -28,8 +28,8 @@ class Router(mediumService: MediumService) {
 
   private def mapFailure(caught: Throwable): Response = {
     caught match {
-      case _: RequestParseFailedException => new UnprocessableEntityResponse
-      case _ => new InternalServerErrorResponse
+      case t: RequestParseFailedException => new UnprocessableEntityResponse(t.getMessage)
+      case t => new InternalServerErrorResponse(t.getMessage)
     }
   }
 }

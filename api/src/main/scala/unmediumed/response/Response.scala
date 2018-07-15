@@ -14,8 +14,8 @@ sealed case class Response(
 class MarkdownResponse(body: String)
   extends Response(200, body, Map("content-type" -> "text/markdown"))
 
-class UnprocessableEntityResponse
-  extends Response(422, "", Map("content-type" -> "text/markdown"))
+class UnprocessableEntityResponse(message: String)
+  extends Response(422, message, Map("content-type" -> "text/markdown"))
 
-class InternalServerErrorResponse
-  extends Response(500, "", Map("content-type" -> "text/markdown"))
+class InternalServerErrorResponse(message: String)
+  extends Response(500, message, Map("content-type" -> "text/markdown"))

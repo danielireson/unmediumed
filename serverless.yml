@@ -7,7 +7,7 @@ provider:
   region: us-east-1
 
 package:
-  artifact: target/scala-2.12/unmediumed.jar
+  artifact: api/target/scala-2.12/unmediumed.jar
 
 functions:
   unmediumed:

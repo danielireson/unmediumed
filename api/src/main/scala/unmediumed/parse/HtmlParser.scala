@@ -11,7 +11,7 @@ class HtmlParser {
     try {
       val source: InputSource = Source.fromString(Option(html).getOrElse(""))
       val rootElement: Elem = XML.loadXML(source, parser)
-      new MediumPost(extractMeta(rootElement), extractMarkdown(rootElement), html)
+      new MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
     } catch {
       case e: NoSuchElementException => throw new ParseFailedException("HTML is not a valid medium post", e)
     }

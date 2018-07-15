@@ -22,7 +22,9 @@ class Router(mediumService: MediumService) {
 
   private def buildMarkdownPost(request: Request): Response = {
     val url = new RequestParser().getPostUrl(request)
-    new MarkdownResponse
+    val post = mediumService.getPost(url)
+
+    new MarkdownResponse(post.markdown)
   }
 
   private def failureResponse(caught: Throwable): Response = {

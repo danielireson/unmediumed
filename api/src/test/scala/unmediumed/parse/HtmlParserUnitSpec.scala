@@ -3,7 +3,7 @@ package unmediumed.parse
 import unmediumed.TestHelpers
 
 class HtmlParserUnitSpec extends TestHelpers {
-  trait HtmlParserFixture {
+  private trait HtmlParserFixture {
     val validHtml: String =
       """
         |<html>

@@ -6,7 +6,7 @@ import java.net.{HttpURLConnection, URL}
 import scala.util.Try
 
 class WebsiteScraper {
-  val timeout: Int = 5000
+  val Timeout: Int = 5000
 
   def scrape(url: String): String = {
     createInputStream(url) match {
@@ -29,8 +29,8 @@ class WebsiteScraper {
     Try {
       val connection = new URL(url).openConnection.asInstanceOf[HttpURLConnection]
       connection.setRequestMethod("GET")
-      connection.setConnectTimeout(timeout)
-      connection.setReadTimeout(timeout)
+      connection.setConnectTimeout(Timeout)
+      connection.setReadTimeout(Timeout)
       Some(connection.getInputStream)
     }.getOrElse(None)
   }

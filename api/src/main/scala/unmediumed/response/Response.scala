@@ -11,7 +11,7 @@ sealed case class Response(
   def toOutput: Output = new Output(statusCode, body, headers.asJava, base64Encoded)
 }
 
-class MarkdownResponse(body: String)
+class OkResponse(body: String)
   extends Response(200, body, Map("content-type" -> "text/markdown"))
 
 class UnprocessableEntityResponse(message: String)

@@ -23,7 +23,7 @@ class Router(mediumService: MediumService) {
     val url = new RequestParser().getPostUrl(request)
     val post = mediumService.getPost(url)
 
-    new MarkdownResponse(post.markdown)
+    new OkResponse(post.markdown)
   }
 
   private def mapFailure(caught: Throwable): Response = {

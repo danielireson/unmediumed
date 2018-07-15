@@ -3,11 +3,9 @@ package unmediumed.source
 import java.io.{IOException, InputStream}
 import java.net.{HttpURLConnection, URL}
 
-import unmediumed.core.Config
-
 import scala.util.Try
 
-class WebsiteScraper(config: Config) {
+class WebsiteScraper {
   val timeout: Int = 5000
 
   def scrape(url: String): String = {

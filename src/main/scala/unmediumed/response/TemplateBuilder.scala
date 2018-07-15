@@ -1,14 +1,26 @@
 package unmediumed.response
 
-import unmediumed.core.Config
+import java.io.FileNotFoundException
 
-class TemplateBuilder(config: Config, baseTemplate: String) {
-  def build(params: Map[String, String] = Map()): String = {
-    Option(baseTemplate) match {
-      case Some(bt) => params.keys.foldLeft(bt)((html, param) => {
-        html.replace(s"{{$param}}", params(param))
-      })
-      case _ => throw new IllegalArgumentException("Invalid base template")
+import scala.io.Source
+import scala.util.Try
+
+object TemplateBuilder {
+  val template: String = getTemplate
+
+  def main(args: Array[String]): Unit = {
+    println("test")
+  }
+
+  private def build(params: Map[String, String] = Map()): String = {
+    params.keys.foldLeft(template)((html, param) => {
+      html.replace(s"{{$param}}", params(param))
+    })
+  }
+
+  private def getTemplate: String = {
+    Try(Source.fromResource("template.html").mkString).getOrElse {
+      throw new FileNotFoundException("Unable to load base template")
     }
   }
 }

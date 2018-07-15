@@ -1,10 +1,10 @@
 package unmediumed.request
 
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 import unmediumed.response.Output
 import unmediumed.source.MediumService
 
-class RouterUnitSpec extends UnitSpec {
+class RouterUnitSpec extends TestHelpers {
   "Router" should "return an api gateway formatted output" in {
     // given
     val mediumService = mock[MediumService]

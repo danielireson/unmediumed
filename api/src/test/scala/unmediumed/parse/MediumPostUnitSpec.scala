@@ -1,8 +1,8 @@
 package unmediumed.parse
 
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 
-class MediumPostUnitSpec extends UnitSpec {
+class MediumPostUnitSpec extends TestHelpers {
   "MediumPost" should "return the post in html" in {
     // given
     val testSubject = new MediumPost(

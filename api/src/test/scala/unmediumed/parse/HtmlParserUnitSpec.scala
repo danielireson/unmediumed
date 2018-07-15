@@ -1,8 +1,8 @@
 package unmediumed.parse
 
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 
-class HtmlParserUnitSpec extends UnitSpec {
+class HtmlParserUnitSpec extends TestHelpers {
   trait HtmlParserFixture {
     val validHtml: String =
       """

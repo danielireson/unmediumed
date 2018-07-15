@@ -3,9 +3,9 @@ package unmediumed.source
 import java.io.ByteArrayInputStream
 
 import org.mockito.Mockito.doThrow
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 
-class WebsiteScraperUnitSpec extends UnitSpec {
+class WebsiteScraperUnitSpec extends TestHelpers {
   "WebsiteSource" should "throw a WebsiteScrapeFailedException when url is null" in {
     // given
     val testSubject = new WebsiteScraper

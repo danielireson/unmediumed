@@ -1,8 +1,8 @@
 package unmediumed.request
 
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 
-class RequestParserUnitSpec extends UnitSpec {
+class RequestParserUnitSpec extends TestHelpers {
   it should "throw a RequestParseFailedException for an invalid url" in {
     // given
     val testSubject = new RequestParser

@@ -1,8 +1,8 @@
 package unmediumed.source
 
-import unmediumed.UnitSpec
+import unmediumed.TestHelpers
 
-class MediumServiceUnitSpec extends UnitSpec {
+class MediumServiceUnitSpec extends TestHelpers {
   "MediumService" should "throw an IllegalArgumentException when the scraper returns null" in {
     // given
     val websiteScraper = mock[WebsiteScraper]

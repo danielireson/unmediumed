@@ -5,16 +5,12 @@ import unmediumed.request.Input
 import unmediumed.response.Output
 
 class ApplicationTest extends TestHelpers {
-  private trait ApplicationTestFixture {
-    val testPostPath: String = "/https://medium.design/logos-and-brand-guidelines-f1a01a733592"
-    val testPostMarkdown: String = getTestPostMarkdown
-  }
-
-  it should "return a 200 response for a valid medium post path" in new ApplicationTestFixture {
+  it should "return a 200 response for a valid medium post" in {
     // given
     val testSubject = new Handler
     val context: Context = mock[Context]
 
+    val testPostPath: String = "/https://medium.design/logos-and-brand-guidelines-f1a01a733592"
     val input = new Input
     input.setHttpMethod("GET")
     input.setPath(testPostPath)
@@ -23,7 +19,7 @@ class ApplicationTest extends TestHelpers {
     val output: Output = testSubject.handleRequest(input, context)
 
     // then
-    output.body shouldBe testPostMarkdown
+    output.body shouldBe getTestPostMarkdown
     output.statusCode shouldBe 200
     output.headers.get("content-type") shouldBe "text/markdown"
   }

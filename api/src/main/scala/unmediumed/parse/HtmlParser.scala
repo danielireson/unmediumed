@@ -44,7 +44,12 @@ class HtmlParser {
       case e if e.label == "h5" => HeaderMarkdownElement(5, e.text)
       case e if e.label == "h6" => HeaderMarkdownElement(6, e.text)
       case e if e.label == "p" => ParagraphMarkdownElement(e.text)
+      case e if e.label == "img" => ImageMarkdownElement(getAttribute("src", e))
     }
+  }
+
+  private def getAttribute(name: String, element: Node, default: String = ""): Any = {
+    element.attribute(name).getOrElse(default)
   }
 }
 

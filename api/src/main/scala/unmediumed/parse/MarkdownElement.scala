@@ -4,10 +4,14 @@ trait MarkdownElement {
   def markdown: String
 }
 
-sealed case class HeaderMarkdownElement(size: Int, content: String) extends MarkdownElement {
-  override def markdown: String = "#" * size + " " + content
+sealed case class HeaderMarkdownElement(size: Int, content: Any) extends MarkdownElement {
+  override def markdown: String = "#" * size + " " + content.toString
 }
 
-sealed case class ParagraphMarkdownElement(content: String) extends MarkdownElement {
-  override def markdown: String = content
+sealed case class ParagraphMarkdownElement(content: Any) extends MarkdownElement {
+  override def markdown: String = content.toString
+}
+
+sealed case class ImageMarkdownElement(src: Any) extends MarkdownElement {
+  override def markdown: String = "![](" + src.toString + ")"
 }

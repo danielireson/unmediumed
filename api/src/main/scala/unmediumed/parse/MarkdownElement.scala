@@ -29,3 +29,7 @@ sealed case class OrderedMarkdownElement(items: Seq[String]) extends MarkdownEle
       (i + 1) + ". " + item
     }.mkString("\n")
 }
+
+sealed case class BlockquoteMarkdownElement(content: String) extends MarkdownElement {
+  override def markdown: String = "> " + content
+}

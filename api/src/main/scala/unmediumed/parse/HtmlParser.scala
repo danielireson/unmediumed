@@ -36,7 +36,7 @@ class HtmlParser {
   }
 
   private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
-    (rootElement \\ "_").collect {
+    (rootElement \\ "main" \\ "article" \\ "section" \\ "_").collect {
       case e if e.label == "h1" => HeaderMarkdownElement(1, e.text)
       case e if e.label == "h2" => HeaderMarkdownElement(2, e.text)
       case e if e.label == "h3" => HeaderMarkdownElement(3, e.text)

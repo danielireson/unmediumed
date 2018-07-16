@@ -45,6 +45,8 @@ class HtmlParser {
       case e if e.label == "h6" => HeaderMarkdownElement(6, e.text)
       case e if e.label == "p" => ParagraphMarkdownElement(e.text)
       case e if e.label == "img" => ImageMarkdownElement(getAttribute("src", e))
+      case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(_.text))
+      case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(_.text))
     }
   }
 

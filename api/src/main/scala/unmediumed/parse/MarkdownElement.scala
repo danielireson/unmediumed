@@ -15,3 +15,17 @@ sealed case class ParagraphMarkdownElement(content: Any) extends MarkdownElement
 sealed case class ImageMarkdownElement(src: Any) extends MarkdownElement {
   override def markdown: String = "![](" + src.toString + ")"
 }
+
+sealed case class UnorderedMarkdownElement(items: Seq[Any]) extends MarkdownElement {
+  override def markdown: String =
+    items.map { item =>
+      "* " + item.toString
+    }.mkString
+}
+
+sealed case class OrderedMarkdownElement(items: Seq[Any]) extends MarkdownElement {
+  override def markdown: String =
+    items.zipWithIndex.map { case (item, i) =>
+      i + ". " + item.toString
+    }.mkString
+}

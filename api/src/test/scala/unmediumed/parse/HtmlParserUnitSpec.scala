@@ -13,13 +13,20 @@ class HtmlParserUnitSpec extends TestHelpers {
         |  <link rel="canonical" href="http://example.com">
         |</head>
         |<body>
-        |  <h1>Header one</h1>
-        |  <h2>Header two</h2>
-        |  <h3>Header three</h3>
-        |  <h4>Header four</h4>
-        |  <h5>Header five</h5>
-        |  <h6>Header six</h6>
-        |  <p>Paragraph</p>
+        |  <main>
+        |    <article>
+        |      <section>
+        |        <h1>Header one</h1>
+        |        <h2>Header two</h2>
+        |        <h3>Header three</h3>
+        |        <h4>Header four</h4>
+        |        <h5>Header five</h5>
+        |        <h6>Header six</h6>
+        |        <p>Paragraph</p>
+        |        <img src="http://example.com">Paragraph</img>
+        |      </section>
+        |    </article>
+        |  </main>
         |</body>
         |</html>
       """.stripMargin

@@ -24,6 +24,16 @@ class HtmlParserUnitSpec extends TestHelpers {
         |        <h6>Header six</h6>
         |        <p>Paragraph</p>
         |        <img src="http://example.com" />
+        |        <ul>
+        |          <li>One</li>
+        |          <li>Two</li>
+        |          <li>Three</li>
+        |        </ul>
+        |        <ol>
+        |          <li>One</li>
+        |          <li>Two</li>
+        |          <li>Three</li>
+        |        </ol>
         |      </section>
         |    </article>
         |  </main>
@@ -226,5 +236,39 @@ class HtmlParserUnitSpec extends TestHelpers {
     // then
     val el: MarkdownElement = post.findElement(ImageMarkdownElement("http://example.com")) getOrElse fail()
     el.markdown shouldBe "![](http://example.com)"
+  }
+
+  it should "parse unordered list elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    val el: MarkdownElement = post.findElement(UnorderedMarkdownElement(List("One", "Two", "Three"))) getOrElse fail()
+    el.markdown shouldBe
+      """
+        |* One
+        |* Two
+        |* Three
+      """.stripMargin.trim
+  }
+
+  it should "parse ordered list elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    val el: MarkdownElement = post.findElement(OrderedMarkdownElement(List("One", "Two", "Three"))) getOrElse fail()
+    el.markdown shouldBe
+      """
+        |1. One
+        |2. Two
+        |3. Three
+      """.stripMargin.trim
   }
 }

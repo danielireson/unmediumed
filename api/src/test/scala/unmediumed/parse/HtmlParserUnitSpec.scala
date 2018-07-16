@@ -23,7 +23,7 @@ class HtmlParserUnitSpec extends TestHelpers {
         |        <h5>Header five</h5>
         |        <h6>Header six</h6>
         |        <p>Paragraph</p>
-        |        <img src="http://example.com">Paragraph</img>
+        |        <img src="http://example.com" />
         |      </section>
         |    </article>
         |  </main>
@@ -214,5 +214,17 @@ class HtmlParserUnitSpec extends TestHelpers {
     // then
     val el: MarkdownElement = post.findElement(ParagraphMarkdownElement("Paragraph")) getOrElse fail()
     el.markdown shouldBe "Paragraph"
+  }
+
+  it should "parse image elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    val el: MarkdownElement = post.findElement(ImageMarkdownElement("http://example.com")) getOrElse fail()
+    el.markdown shouldBe "![](http://example.com)"
   }
 }

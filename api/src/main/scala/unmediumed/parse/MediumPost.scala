@@ -9,4 +9,6 @@ class MediumPost(val meta: Map[String, String], val elements: Seq[MarkdownElemen
 
     markdownOfElements.mkString("\n")
   }
+
+  def findElement(el: MarkdownElement): Option[MarkdownElement] = elements.find(_ == el)
 }

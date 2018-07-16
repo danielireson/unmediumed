@@ -140,7 +140,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(1, "Header one"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(1, "Header one")) getOrElse fail()
+    el.markdown shouldBe "# Header one"
   }
 
   it should "parse h2 elements" in new HtmlParserFixture {
@@ -151,7 +152,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(2, "Header two"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(2, "Header two")) getOrElse fail()
+    el.markdown shouldBe "## Header two"
   }
 
   it should "parse h3 elements" in new HtmlParserFixture {
@@ -162,7 +164,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(3, "Header three"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(3, "Header three")) getOrElse fail()
+    el.markdown shouldBe "### Header three"
   }
 
   it should "parse h4 elements" in new HtmlParserFixture {
@@ -173,7 +176,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(4, "Header four"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(4, "Header four")) getOrElse fail()
+    el.markdown shouldBe "#### Header four"
   }
 
   it should "parse h5 elements" in new HtmlParserFixture {
@@ -184,7 +188,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(5, "Header five"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(5, "Header five")) getOrElse fail()
+    el.markdown shouldBe "##### Header five"
   }
 
   it should "parse h6 elements" in new HtmlParserFixture {
@@ -195,7 +200,8 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (HeaderMarkdownElement(6, "Header six"))
+    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(6, "Header six")) getOrElse fail()
+    el.markdown shouldBe "###### Header six"
   }
 
   it should "parse paragraph elements" in new HtmlParserFixture {
@@ -206,6 +212,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(validHtml)
 
     // then
-    post.elements should contain (ParagraphMarkdownElement("Paragraph"))
+    val el: MarkdownElement = post.findElement(ParagraphMarkdownElement("Paragraph")) getOrElse fail()
+    el.markdown shouldBe "Paragraph"
   }
 }

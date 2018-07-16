@@ -26,6 +26,6 @@ sealed case class UnorderedMarkdownElement(items: Seq[String]) extends MarkdownE
 sealed case class OrderedMarkdownElement(items: Seq[String]) extends MarkdownElement {
   override def markdown: String =
     items.zipWithIndex.map { case (item, i) =>
-      i + ". " + item
+      (i + 1) + ". " + item
     }.mkString("\n")
 }

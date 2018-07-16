@@ -50,8 +50,8 @@ class HtmlParser {
     }
   }
 
-  private def getAttribute(name: String, element: Node, default: String = ""): Any = {
-    element.attribute(name).getOrElse(default)
+  private def getAttribute(name: String, element: Node, default: String = ""): String = {
+    element.attribute(name).map(_.toString).getOrElse(default)
   }
 }
 

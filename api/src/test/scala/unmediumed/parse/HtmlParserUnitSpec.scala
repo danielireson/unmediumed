@@ -4,44 +4,7 @@ import unmediumed.TestHelpers
 
 class HtmlParserUnitSpec extends TestHelpers {
   private trait HtmlParserFixture {
-    val validHtml: String =
-      """
-        |<html>
-        |<head>
-        |  <title>This is the title</title>
-        |  <meta name="description" content="This is the description">
-        |  <link rel="canonical" href="http://example.com">
-        |</head>
-        |<body>
-        |  <main>
-        |    <article>
-        |      <section>
-        |        <h1>Header one</h1>
-        |        <h2>Header two</h2>
-        |        <h3>Header three</h3>
-        |        <h4>Header four</h4>
-        |        <h5>Header five</h5>
-        |        <h6>Header six</h6>
-        |        <p>Paragraph</p>
-        |        <img src="http://example.com" />
-        |        <ul>
-        |          <li>One</li>
-        |          <li>Two</li>
-        |          <li>Three</li>
-        |        </ul>
-        |        <ol>
-        |          <li>One</li>
-        |          <li>Two</li>
-        |          <li>Three</li>
-        |        </ol>
-        |        <blockquote>Quote</blockquote>
-        |        <pre>Code</pre>
-        |      </section>
-        |    </article>
-        |  </main>
-        |</body>
-        |</html>
-      """.stripMargin
+    val validHtml: String = getValidHtml
   }
 
   "MediumParser" should "throw a ParseFailedException when html is null" in new HtmlParserFixture {
@@ -301,5 +264,47 @@ class HtmlParserUnitSpec extends TestHelpers {
         |Code
         |```
       """.stripMargin.trim
+  }
+
+  private def getValidHtml: String = {
+    """
+      |<html>
+      |<head>
+      |  <title>This is the title</title>
+      |  <meta name="description" content="This is the description">
+      |  <link rel="canonical" href="http://example.com">
+      |</head>
+      |<body>
+      |  <main>
+      |    <article>
+      |      <section>
+      |        <h1>Header one</h1>
+      |        <h2>Header two</h2>
+      |        <h3>Header three</h3>
+      |        <h4>Header four</h4>
+      |        <h5>Header five</h5>
+      |        <h6>Header six</h6>
+      |        <p>Paragraph</p>
+      |        <p><strong>Bold</strong></p>
+      |        <p><em>Italics</em></p>
+      |        <img src="http://example.com" />
+      |        <ul>
+      |          <li>One</li>
+      |          <li>Two</li>
+      |          <li>Three</li>
+      |        </ul>
+      |        <ol>
+      |          <li>One</li>
+      |          <li>Two</li>
+      |          <li>Three</li>
+      |        </ol>
+      |        <blockquote>Quote</blockquote>
+      |        <pre>Code</pre>
+      |      </section>
+      |    </article>
+      |  </main>
+      |</body>
+      |</html>
+    """.stripMargin
   }
 }

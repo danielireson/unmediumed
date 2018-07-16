@@ -48,6 +48,7 @@ class HtmlParser {
       case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(_.text))
       case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(_.text))
       case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
+      case e if e.label == "pre" => CodeblockMarkdownElement(e.text)
     }
   }
 

@@ -33,3 +33,7 @@ sealed case class OrderedMarkdownElement(items: Seq[String]) extends MarkdownEle
 sealed case class BlockquoteMarkdownElement(content: String) extends MarkdownElement {
   override def markdown: String = "> " + content
 }
+
+sealed case class CodeblockMarkdownElement(content: String) extends MarkdownElement {
+  override def markdown: String = "```\n" + content + "\n```"
+}

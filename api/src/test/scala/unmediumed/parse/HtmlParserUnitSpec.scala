@@ -35,6 +35,7 @@ class HtmlParserUnitSpec extends TestHelpers {
         |          <li>Three</li>
         |        </ol>
         |        <blockquote>Quote</blockquote>
+        |        <pre>Code</pre>
         |      </section>
         |    </article>
         |  </main>
@@ -283,5 +284,22 @@ class HtmlParserUnitSpec extends TestHelpers {
     // then
     val el: MarkdownElement = post.findElement(BlockquoteMarkdownElement("Quote")) getOrElse fail()
     el.markdown shouldBe "> Quote"
+  }
+
+  it should "parse code block elements" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    val el: MarkdownElement = post.findElement(CodeblockMarkdownElement("Code")) getOrElse fail()
+    el.markdown shouldBe
+      """
+        |```
+        |Code
+        |```
+      """.stripMargin.trim
   }
 }

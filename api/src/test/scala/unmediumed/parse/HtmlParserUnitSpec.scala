@@ -7,7 +7,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val validHtml: String = getValidHtml
   }
 
-  "MediumParser" should "throw a ParseFailedException when html is null" in new HtmlParserFixture {
+  "HtmlParser" should "throw a ParseFailedException when html is null" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
     val html: String = null

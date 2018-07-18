@@ -6,7 +6,7 @@ import org.mockito.Mockito.doThrow
 import unmediumed.TestHelpers
 
 class WebsiteScraperUnitSpec extends TestHelpers {
-  "WebsiteSource" should "throw a WebsiteScrapeFailedException when url is null" in {
+  "WebsiteScraper" should "throw a WebsiteScrapeFailedException when url is null" in {
     // given
     val testSubject = new WebsiteScraper
     val url: String = null

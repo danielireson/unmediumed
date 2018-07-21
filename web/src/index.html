@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>unmediumed</title>
+  <link href="//fonts.googleapis.com/css?family=Open+Sans|Space+Mono" rel="stylesheet">
+  <link href="main.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1><a href="/">unmediumed</a></h1>
+    <p>
+      The markdown API for Medium. Enter the post URL or path in the box below, or alternatively 
+      view a post on Medium and change the domain to unmediumed.com.
+    </p>
+    <form>
+      <input type="text" placeholder="URL or Path" autofocus>
+      <a class="markdown-link">unmediumed.com/</a>
+    </form>
+  </div>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementsByTagName('form')[0];
+    var input = document.getElementsByTagName('input')[0];
+    var link = document.getElementsByClassName('markdown-link')[0];
+
+    if (form && input && link) {
+      input.addEventListener('keyup', function (event) {
+        var url = event.target.value;
+        url = url.replace('https://', '');
+        url = url.replace('http://', '');
+        url = url.replace('medium.com/', '');
+        url = url.replace(/[^\w\d:/\._-]/g, '');
+
+        link.innerHTML = 'unmediumed.com/' + url;
+        link.href = 'https://unmediumed.com/' + url;
+        form.action = 'https://unmediumed.com/' + url;
+      });
+    }
+  });
+</script>
+</html>

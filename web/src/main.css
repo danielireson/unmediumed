@@ -1,0 +1,100 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  align-items: center;
+  background: #3c6382;
+  color: white;
+  display: flex;
+  font-family: 'Space Mono', monospace;
+  font-weight: 300;
+  justify-content: center;
+  letter-spacing: -0.025em;
+  line-height: 1.625;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: white;
+  border-bottom: dashed 2px rgba(255,255,255,0.5);
+  text-decoration: none;
+}
+
+h1 a {
+  border-bottom: none;
+}
+
+.container {
+  margin: 2em 0;
+  width: 90%;
+}
+
+.container > p {
+  color: rgba(255,255,255,0.7);
+}
+
+.box {
+  background: rgba(255,255,255,0.1);
+  border-radius: 5px;
+  margin-top: 2em;
+  padding: 1em;
+}
+
+.box ul {
+  margin: 0;
+}
+
+form {
+  margin: 2em 0;
+}
+
+input {
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+  outline: none;
+  padding: 1em;
+  width: 100%;
+}
+
+.markdown-link {
+  border: none;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.button {
+  background: rgba(255,255,255,0.2);
+  border-radius: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+}
+
+@media(min-width:768px) {
+  .container {
+    width: 70%;
+  }
+}
+
+@media(min-width:992px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media(min-width:1200px) {
+  .container {
+    width: 30%;
+  }
+}

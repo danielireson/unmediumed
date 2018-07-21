@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd api
+
+if sbt compile && sbt assembly; then
+    echo "API build succeeded"
+else
+    echo "API build failed"
+fi

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if "./scripts/build-api" && "./scripts/build-web" && sls deploy; then
+    echo "Deploy succeeded"
+else
+    echo "Deploy failed"
+fi

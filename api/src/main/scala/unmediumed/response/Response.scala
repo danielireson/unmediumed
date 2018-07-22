@@ -2,7 +2,7 @@ package unmediumed.response
 
 import scala.collection.JavaConverters._
 
-sealed case class Response(
+class Response(
     statusCode: Integer,
     body: String,
     customHeaders: Map[String, String] = Map(),
@@ -14,10 +14,10 @@ sealed case class Response(
   def toOutput: Output = new Output(statusCode, body, responseHeaders.asJava, base64Encoded)
 }
 
-class OkResponse(body: String) extends Response(200, body)
+case class OkResponse(body: String) extends Response(200, body)
 
-class UnprocessableEntityResponse(message: String) extends Response(422, message)
+case class UnprocessableEntityResponse(message: String) extends Response(422, message)
 
-class InternalServerErrorResponse(message: String) extends Response(500, message)
+case class InternalServerErrorResponse(message: String) extends Response(500, message)
 
-class BadGatewayResponse(message: String) extends Response(500, message)
+case class BadGatewayResponse(message: String) extends Response(500, message)

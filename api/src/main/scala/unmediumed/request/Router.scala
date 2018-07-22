@@ -24,15 +24,15 @@ class Router(mediumService: MediumService) {
     val url = new RequestParser().getPostUrl(request)
     val post = mediumService.getPost(url)
 
-    new OkResponse(post.markdown)
+    OkResponse(post.markdown)
   }
 
   private def mapFailure(caught: Throwable): Response = {
     caught match {
-      case t: RequestParseFailedException => new UnprocessableEntityResponse(t.getMessage)
-      case _: WebsiteScrapeFailedException => new BadGatewayResponse("Unable to fetch Medium post")
-      case _: ParseFailedException => new InternalServerErrorResponse("Unable to parse Medium post")
-      case _ => new InternalServerErrorResponse("An unexpected error occurred")
+      case t: RequestParseFailedException => UnprocessableEntityResponse(t.getMessage)
+      case _: WebsiteScrapeFailedException => BadGatewayResponse("Unable to fetch Medium post")
+      case _: ParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
+      case _ => InternalServerErrorResponse("An unexpected error occurred")
     }
   }
 }

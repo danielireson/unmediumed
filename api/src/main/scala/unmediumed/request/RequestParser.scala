@@ -14,11 +14,11 @@ class RequestParser {
     val path = request.path.substring(1)
 
     path match {
-      case p if p.length == 0 => throw new RequestParseFailedException("Please provide a medium url or path")
+      case p if p.length == 0 => throw new RequestParseFailedException("Please provide a Medium URL or path")
       case HttpUrl(_) | HttpsUrl(_) => path
       case PathWithMediumDomain(_) => "https://" + path
       case PathWithoutMediumDomain(_) => "https://medium.com/" + path
-      case _ => throw new RequestParseFailedException("Invalid medium url provided")
+      case _ => throw new RequestParseFailedException("Invalid Medium URL provided")
     }
   }
 }

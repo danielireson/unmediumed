@@ -30,8 +30,8 @@ class Router(mediumService: MediumService) {
   private def mapFailure(caught: Throwable): Response = {
     caught match {
       case t: RequestParseFailedException => new UnprocessableEntityResponse(t.getMessage)
-      case _: WebsiteScrapeFailedException => new BadGatewayResponse("Unable to fetch medium post")
-      case _: ParseFailedException => new InternalServerErrorResponse("Unable to parse medium post")
+      case _: WebsiteScrapeFailedException => new BadGatewayResponse("Unable to fetch Medium post")
+      case _: ParseFailedException => new InternalServerErrorResponse("Unable to parse Medium post")
       case _ => new InternalServerErrorResponse("An unexpected error occurred")
     }
   }

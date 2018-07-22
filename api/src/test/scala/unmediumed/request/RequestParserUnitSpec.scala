@@ -14,7 +14,7 @@ class RequestParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "Invalid medium url provided"
+    error.getMessage shouldBe "Invalid Medium URL provided"
   }
 
   it should "throw a RequestParseFailedException when no url has been provided" in {
@@ -28,7 +28,7 @@ class RequestParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "Please provide a medium url or path"
+    error.getMessage shouldBe "Please provide a Medium URL or path"
   }
 
   it should "get the post url for a custom domain path with http" in {

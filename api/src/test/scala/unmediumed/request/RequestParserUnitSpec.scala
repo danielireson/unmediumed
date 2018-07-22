@@ -17,6 +17,20 @@ class RequestParserUnitSpec extends TestHelpers {
     error.getMessage shouldBe "Invalid medium url provided"
   }
 
+  it should "throw a RequestParseFailedException when no url has been provided" in {
+    // given
+    val testSubject = new RequestParser
+    val request = Request("GET", "/")
+
+    // when
+    val error = the[RequestParseFailedException] thrownBy {
+      testSubject.getPostUrl(request)
+    }
+
+    // then
+    error.getMessage shouldBe "Please provide a medium url or path"
+  }
+
   it should "get the post url for a custom domain path with http" in {
     // given
     val testSubject = new RequestParser

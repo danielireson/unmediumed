@@ -5,7 +5,7 @@ import unmediumed.request.Input
 import unmediumed.response.Output
 
 class ApplicationTest extends TestHelpers {
-  it should "return a 200 response for a valid medium post" in {
+  it should "return the expected response for a known medium post" in {
     // given
     val testSubject = new Handler
     val context: Context = mock[Context]

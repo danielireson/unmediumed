@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if aws s3 sync --delete static s3://unmediumed.com; then
+    echo "Static deploy succeeded"
+else
+    echo "Static deploy failed"
+fi

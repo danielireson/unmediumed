@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-cd web
-
-if scala build.scala; then
-    echo "Web build succeeded"
-else
-    echo "Web build failed"
-fi

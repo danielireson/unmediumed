@@ -64,7 +64,6 @@ class ApplicationTest extends TestHelpers {
       |
       |#### Download all assets
       |If you have any further questions about our brand elements, please drop us a line at yourfriends@medium.com.
-      |From a quick cheer to a standing ovation, clap to show how much you enjoyed this story.
     """.stripMargin.trim
   }
 }

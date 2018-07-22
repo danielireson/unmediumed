@@ -266,6 +266,18 @@ class HtmlParserUnitSpec extends TestHelpers {
       """.stripMargin.trim
   }
 
+  it should "remove the footer" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+    val footerText = "From a quick cheer to a standing ovation, clap to show how much you enjoyed this story."
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    post.markdown contains footerText shouldBe false
+  }
+
   private def getValidHtml: String = {
     """
       |<html>
@@ -300,6 +312,7 @@ class HtmlParserUnitSpec extends TestHelpers {
       |        </ol>
       |        <blockquote>Quote</blockquote>
       |        <pre>Code</pre>
+      |        <p>From a quick cheer to a standing ovation, clap to show how much you enjoyed this story.</p>
       |      </section>
       |    </article>
       |  </main>

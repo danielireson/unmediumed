@@ -15,3 +15,39 @@ functions:
     events:
       - http: ANY /
       - http: ANY /{proxy+}
+
+resources:
+  Resources:
+    DomainBucketRoot:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: unmediumed.com
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          RoutingRules:
+          - RedirectRule:
+              HttpRedirectCode: 302
+              HostName: md.unmediumed.com
+              Protocol: https
+            RoutingRuleCondition:
+              HttpErrorCodeReturnedEquals: 404
+    DomainBucketWWW:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: www.unmediumed.com
+        WebsiteConfiguration:
+          RedirectAllRequestsTo:
+            HostName: unmediumed.com
+            Protocol: https
+    DomainBucketRootPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: unmediumed.com
+        PolicyDocument:
+          Statement:
+          - Action:
+            - s3:GetObject
+            Effect: Allow
+            Resource:
+            - arn:aws:s3:::unmediumed.com/*
+            Principal: "*"

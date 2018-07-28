@@ -24,6 +24,25 @@ class ApplicationTest extends TestHelpers {
     output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
 
+  it should "return the expected response for a pay wall protected medium post" in {
+    // given
+    val testSubject = new Handler
+    val context: Context = mock[Context]
+
+    val testPostPath: String = "/https://medium.com/s/futurehuman/how-different-will-humans-be-in-a-century-d4543e09f9ff"
+    val input = new Input
+    input.setHttpMethod("GET")
+    input.setPath(testPostPath)
+
+    // when
+    val output: Output = testSubject.handleRequest(input, context)
+
+    // then
+    output.body shouldBe "Unable to parse Medium post"
+    output.statusCode shouldBe 500
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
+  }
+
   private def getTestPostMarkdown: String = {
     """
       |# Medium Branding Guidelines

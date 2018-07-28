@@ -37,7 +37,7 @@ class HtmlParser {
 
   private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
     (rootElement \\ "main" \\ "article" \\ "section" \\ "_").collect {
-      case e if e.label == "p" & !HtmlParser.omittable.contains(e.text) => ParagraphMarkdownElement(e.text)
+      case e if e.label == "p" => ParagraphMarkdownElement(e.text)
       case e if e.label == "h1" => HeaderMarkdownElement(1, e.text)
       case e if e.label == "h2" => HeaderMarkdownElement(2, e.text)
       case e if e.label == "h3" => HeaderMarkdownElement(3, e.text)
@@ -49,6 +49,9 @@ class HtmlParser {
       case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(_.text))
       case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
       case e if e.label == "pre" => CodeblockMarkdownElement(e.text)
+    } filter {
+      case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.content)
+      case _ => true
     }
   }
 

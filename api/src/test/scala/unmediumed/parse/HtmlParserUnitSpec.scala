@@ -275,17 +275,19 @@ class HtmlParserUnitSpec extends TestHelpers {
   it should "parse code block elements" in {
     // given
     val testSubject = new HtmlParser
-    val html = buildValidHtml("<pre>Code</pre>")
+    val html = buildValidHtml("<pre>{<br>  \"message\": \"hello world\"<br>}</pre>")
 
     // when
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(CodeblockMarkdownElement("Code")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[CodeblockMarkdownElement]) getOrElse fail()
     el.markdown shouldBe
       """
         |```
-        |Code
+        |{
+        |  "message": "hello world"
+        |}
         |```
       """.stripMargin.trim
   }

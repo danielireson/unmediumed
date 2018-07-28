@@ -43,18 +43,33 @@ class HtmlParser {
 
   private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
     (rootElement \\ "main" \\ "article" \\ "section" \\ "_").collect {
-      case e if e.label == "p" => ParagraphMarkdownElement(e.text)
-      case e if e.label == "h1" => HeaderMarkdownElement(1, e.text)
-      case e if e.label == "h2" => HeaderMarkdownElement(2, e.text)
-      case e if e.label == "h3" => HeaderMarkdownElement(3, e.text)
-      case e if e.label == "h4" => HeaderMarkdownElement(4, e.text)
-      case e if e.label == "h5" => HeaderMarkdownElement(5, e.text)
-      case e if e.label == "h6" => HeaderMarkdownElement(6, e.text)
-      case e if e.label == "img" => ImageMarkdownElement(getAttribute("src", e))
-      case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(_.text))
-      case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(_.text))
-      case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
-      case e if e.label == "pre" => CodeblockMarkdownElement(e.text)
+      case e if e.label == "p" =>
+        ParagraphMarkdownElement(e.text)
+      case e if e.label == "h1" =>
+        HeaderMarkdownElement(1, e.text)
+      case e if e.label == "h2" =>
+        HeaderMarkdownElement(2, e.text)
+      case e if e.label == "h3" =>
+        HeaderMarkdownElement(3, e.text)
+      case e if e.label == "h4" =>
+        HeaderMarkdownElement(4, e.text)
+      case e if e.label == "h5" =>
+        HeaderMarkdownElement(5, e.text)
+      case e if e.label == "h6" =>
+        HeaderMarkdownElement(6, e.text)
+      case e if e.label == "img" =>
+        ImageMarkdownElement(getAttribute("src", e))
+      case e if e.label == "ul" =>
+        UnorderedMarkdownElement((e \\ "li").map(_.text))
+      case e if e.label == "ol" =>
+        OrderedMarkdownElement((e \\ "li").map(_.text))
+      case e if e.label == "blockquote" =>
+        BlockquoteMarkdownElement(e.text)
+      case e if e.label == "pre" =>
+        CodeblockMarkdownElement(e.child.map {
+          case c if c.label == "br" => "\n"
+          case c => c.text
+        }.mkString)
     } filter {
       case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.content)
       case _ => true

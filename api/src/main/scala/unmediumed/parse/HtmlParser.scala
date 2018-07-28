@@ -75,7 +75,7 @@ class HtmlParser {
           case c => c.text
         }.mkString)
     } filter {
-      case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.content)
+      case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.text)
       case _ => true
     }
   }

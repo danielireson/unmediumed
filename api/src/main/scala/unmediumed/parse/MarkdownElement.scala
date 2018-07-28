@@ -4,13 +4,13 @@ trait MarkdownElement {
   def markdown: String
 }
 
-sealed case class HeaderMarkdownElement(size: Int, content: String) extends MarkdownElement {
-  def markdown: String = "#" * size + " " + content
+sealed case class HeaderMarkdownElement(size: Int, text: String) extends MarkdownElement {
+  def markdown: String = "#" * size + " " + text
 }
 
-sealed case class ParagraphMarkdownElement(content: String) extends MarkdownElement {
+sealed case class ParagraphMarkdownElement(text: String) extends MarkdownElement {
   def markdown: String =
-    content
+    text
       .replaceAll("<strong>", "**")
       .replaceAll("</strong>", "**")
       .replaceAll("<em>", "*")
@@ -35,10 +35,10 @@ sealed case class OrderedMarkdownElement(items: Seq[String]) extends MarkdownEle
     }.mkString("\n")
 }
 
-sealed case class BlockquoteMarkdownElement(content: String) extends MarkdownElement {
-  def markdown: String = "> " + content
+sealed case class BlockquoteMarkdownElement(text: String) extends MarkdownElement {
+  def markdown: String = "> " + text
 }
 
-sealed case class CodeblockMarkdownElement(content: String) extends MarkdownElement {
-  def markdown: String = "```\n" + content + "\n```"
+sealed case class CodeblockMarkdownElement(text: String) extends MarkdownElement {
+  def markdown: String = "```\n" + text + "\n```"
 }

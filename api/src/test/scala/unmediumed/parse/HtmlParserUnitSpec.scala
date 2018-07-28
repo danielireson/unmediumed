@@ -337,7 +337,7 @@ class HtmlParserUnitSpec extends TestHelpers {
 
     val footerText = "From a quick cheer to a standing ovation, clap to show how much you enjoyed this story."
     val html = buildValidHtml(s"""
-        |<p>Content>
+        |<p>Content</p>
         |<p>$footerText</p>
       """.stripMargin)
 

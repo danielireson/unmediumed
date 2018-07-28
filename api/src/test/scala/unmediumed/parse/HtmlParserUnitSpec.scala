@@ -116,7 +116,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(1, "Header one")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "# Header one"
   }
 
@@ -129,7 +129,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(2, "Header two")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "## Header two"
   }
 
@@ -142,7 +142,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(3, "Header three")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "### Header three"
   }
 
@@ -155,7 +155,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(4, "Header four")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "#### Header four"
   }
 
@@ -168,7 +168,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(5, "Header five")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "##### Header five"
   }
 
@@ -181,7 +181,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(HeaderMarkdownElement(6, "Header six")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "###### Header six"
   }
 
@@ -194,7 +194,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(ParagraphMarkdownElement("Paragraph")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ParagraphMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "Paragraph"
   }
 
@@ -207,7 +207,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(ImageMarkdownElement("http://example.com")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ImageMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "![](http://example.com)"
   }
 
@@ -226,7 +226,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(UnorderedMarkdownElement(List("One", "Two", "Three"))) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[UnorderedMarkdownElement]) getOrElse fail()
     el.markdown shouldBe
       """
         |* One
@@ -250,7 +250,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(OrderedMarkdownElement(List("One", "Two", "Three"))) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[OrderedMarkdownElement]) getOrElse fail()
     el.markdown shouldBe
       """
         |1. One
@@ -268,7 +268,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(BlockquoteMarkdownElement("Quote")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[BlockquoteMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "> Quote"
   }
 
@@ -301,7 +301,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    val el: MarkdownElement = post.findElement(ParagraphMarkdownElement("Ich hiesße unmediumed")) getOrElse fail()
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ParagraphMarkdownElement]) getOrElse fail()
     el.markdown shouldBe "Ich hiesße unmediumed"
   }
 

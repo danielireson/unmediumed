@@ -266,6 +266,18 @@ class HtmlParserUnitSpec extends TestHelpers {
       """.stripMargin.trim
   }
 
+  it should "parse foreign characters" in new HtmlParserFixture {
+    // given
+    val testSubject = new HtmlParser
+
+    // when
+    val post: MediumPost = testSubject.parse(validHtml)
+
+    // then
+    val el: MarkdownElement = post.findElement(ParagraphMarkdownElement("Ich hiesße unmediumed")) getOrElse fail()
+    el.markdown shouldBe "Ich hiesße unmediumed"
+  }
+
   it should "remove the footer" in new HtmlParserFixture {
     // given
     val testSubject = new HtmlParser
@@ -297,6 +309,7 @@ class HtmlParserUnitSpec extends TestHelpers {
       |        <h5>Header five</h5>
       |        <h6>Header six</h6>
       |        <p>Paragraph</p>
+      |        <p>Ich hiesße unmediumed</p>
       |        <p><strong>Bold</strong></p>
       |        <p><em>Italics</em></p>
       |        <img src="http://example.com" />

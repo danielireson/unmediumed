@@ -21,7 +21,7 @@ class ApplicationTest extends TestHelpers {
     // then
     output.body shouldBe getTestPostMarkdown
     output.statusCode shouldBe 200
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
 
   private def getTestPostMarkdown: String = {

@@ -8,7 +8,7 @@ class Response(
     customHeaders: Map[String, String] = Map(),
     base64Encoded: Boolean = true) {
 
-  val commonHeaders: Map[String, String] = Map("content-type" -> "text/markdown")
+  val commonHeaders: Map[String, String] = Map("content-type" -> "text/markdown; charset=utf-8")
   val responseHeaders: Map[String, String] = commonHeaders ++ customHeaders
 
   def toOutput: Output = new Output(statusCode, body, responseHeaders.asJava, base64Encoded)

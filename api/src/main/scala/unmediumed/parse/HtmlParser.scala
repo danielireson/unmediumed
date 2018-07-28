@@ -44,7 +44,11 @@ class HtmlParser {
   private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
     (rootElement \\ "main" \\ "article" \\ "section" \\ "_").collect {
       case e if e.label == "p" =>
-        ParagraphMarkdownElement(e.text)
+        ParagraphMarkdownElement(e.child.map {
+          case c if c.label == "strong" => "<strong>" + c.text + "</strong>"
+          case c if c.label == "em" => "<em>" + c.text + "</em>"
+          case c => c.text
+        }.mkString)
       case e if e.label == "h1" =>
         HeaderMarkdownElement(1, e.text)
       case e if e.label == "h2" =>

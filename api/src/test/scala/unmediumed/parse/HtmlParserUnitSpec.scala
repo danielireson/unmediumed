@@ -305,6 +305,32 @@ class HtmlParserUnitSpec extends TestHelpers {
     el.markdown shouldBe "Ich hiesße unmediumed"
   }
 
+  it should "parse bold elements" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<p><strong>Bold</strong></p>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ParagraphMarkdownElement]) getOrElse fail()
+    el.markdown shouldBe "**Bold**"
+  }
+
+  it should "parse italic elements" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<p><em>Italics</em></p>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ParagraphMarkdownElement]) getOrElse fail()
+    el.markdown shouldBe "*Italics*"
+  }
+
   it should "remove the footer" in {
     // given
     val testSubject = new HtmlParser

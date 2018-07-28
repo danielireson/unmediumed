@@ -9,12 +9,7 @@ sealed case class HeaderMarkdownElement(size: Int, text: String) extends Markdow
 }
 
 sealed case class ParagraphMarkdownElement(text: String) extends MarkdownElement {
-  def markdown: String =
-    text
-      .replaceAll("<strong>", "**")
-      .replaceAll("</strong>", "**")
-      .replaceAll("<em>", "*")
-      .replaceAll("</em>", "*")
+  def markdown: String = text.replaceAll("<strong>|</strong>", "**").replaceAll("<em>|</em>", "*")
 }
 
 sealed case class ImageMarkdownElement(src: String) extends MarkdownElement {

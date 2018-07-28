@@ -33,7 +33,7 @@ class RouterUnitSpec extends TestHelpers {
     val output: Output = testSubject.routeRequest(request)
 
     output.statusCode shouldBe 500
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
 
   it should "return a markdown response when request is valid" in {
@@ -50,7 +50,7 @@ class RouterUnitSpec extends TestHelpers {
 
     // then
     output.statusCode shouldBe 200
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
 
   it should "return an unprocessable entity response for an invalid medium url" in {
@@ -64,6 +64,6 @@ class RouterUnitSpec extends TestHelpers {
 
     // then
     output.statusCode shouldBe 422
-    output.headers.get("content-type") shouldBe "text/markdown"
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
 }

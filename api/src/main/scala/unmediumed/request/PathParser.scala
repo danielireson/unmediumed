@@ -14,7 +14,7 @@ class PathParser {
     val path = request.path.substring(1)
 
     path match {
-      case p if p.length == 0 => throw new PathParseFailedException("Please provide a Medium URL or path")
+      case p if p == "" => throw new PathParseFailedException("Please provide a Medium URL or path")
       case HttpUrl(_) | HttpsUrl(_) => path
       case PathWithMediumDomain(_) => "https://" + path
       case PathWithoutMediumDomain(_) => "https://medium.com/" + path

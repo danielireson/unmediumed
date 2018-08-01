@@ -2,7 +2,7 @@ package unmediumed.request
 
 import scala.util.matching.Regex
 
-class RequestParser {
+class PathParser {
   private val SafeCharacters: String = "([-a-zA-Z0-9._%#?&=@\\+\\/])*"
 
   private val HttpUrl: Regex = new Regex("http://" + SafeCharacters)
@@ -14,13 +14,13 @@ class RequestParser {
     val path = request.path.substring(1)
 
     path match {
-      case p if p.length == 0 => throw new RequestParseFailedException("Please provide a Medium URL or path")
+      case p if p.length == 0 => throw new PathParseFailedException("Please provide a Medium URL or path")
       case HttpUrl(_) | HttpsUrl(_) => path
       case PathWithMediumDomain(_) => "https://" + path
       case PathWithoutMediumDomain(_) => "https://medium.com/" + path
-      case _ => throw new RequestParseFailedException("Invalid Medium URL provided")
+      case _ => throw new PathParseFailedException("Invalid Medium URL provided")
     }
   }
 }
 
-class RequestParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)
+class PathParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

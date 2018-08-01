@@ -21,7 +21,7 @@ class Router(mediumService: MediumService) {
   }
 
   private def buildMarkdownPost(request: Request): Response = {
-    val url = new RequestParser().getPostUrl(request)
+    val url = new PathParser().getPostUrl(request)
     val post = mediumService.getPost(url)
 
     OkResponse(post)
@@ -29,7 +29,7 @@ class Router(mediumService: MediumService) {
 
   private def mapFailure(caught: Throwable): Response = {
     caught match {
-      case t: RequestParseFailedException => UnprocessableEntityResponse(t.getMessage)
+      case t: PathParseFailedException => UnprocessableEntityResponse(t.getMessage)
       case _: WebsiteScrapeFailedException => BadGatewayResponse("Unable to fetch Medium post")
       case _: ParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
       case _ => InternalServerErrorResponse("An unexpected error occurred")

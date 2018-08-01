@@ -21,6 +21,10 @@ body {
   overflow-x: hidden;
 }
 
+h1 {
+  line-height: 1;
+}
+
 a {
   color: white;
   border-bottom: dashed 2px rgba(255,255,255,0.5);
@@ -29,6 +33,18 @@ a {
 
 h1 a {
   border-bottom: none;
+}
+
+h1 img {
+  float: right;
+  height: 1em;
+  opacity: 0.2;
+  transition: opacity .5s ease-out;
+  width: 1em;
+}
+
+h1 img:hover {
+  opacity: 1;
 }
 
 .container {

@@ -3,12 +3,12 @@ package unmediumed.request
 import scala.util.matching.Regex
 
 class RequestParser {
-  val SafeCharacters: String = "([-a-zA-Z0-9._%#?&=@\\+\\/])*"
+  private val SafeCharacters: String = "([-a-zA-Z0-9._%#?&=@\\+\\/])*"
 
-  val HttpUrl: Regex = new Regex("http://" + SafeCharacters)
-  val HttpsUrl: Regex = new Regex("https://" + SafeCharacters)
-  val PathWithMediumDomain: Regex = new Regex("medium.com/" + SafeCharacters)
-  val PathWithoutMediumDomain: Regex = new Regex(SafeCharacters)
+  private val HttpUrl: Regex = new Regex("http://" + SafeCharacters)
+  private val HttpsUrl: Regex = new Regex("https://" + SafeCharacters)
+  private val PathWithMediumDomain: Regex = new Regex("medium.com/" + SafeCharacters)
+  private val PathWithoutMediumDomain: Regex = new Regex(SafeCharacters)
 
   def getPostUrl(request: Request): String = {
     val path = request.path.substring(1)

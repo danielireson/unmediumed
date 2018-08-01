@@ -46,7 +46,7 @@ class ApplicationTest extends TestHelpers {
   private def getTestPostMarkdown: String = {
     """
       |# Medium Branding Guidelines
-      |These few simple rules will help you use our branding elements to communicate the Medium brand most effectively. Download all assets
+      |These few simple rules will help you use our branding elements to communicate the Medium brand most effectively. [Download all assets](https://github.com/Medium/medium-logos/archive/master.zip)
       |
       |#### Wordmark
       |The Medium wordmark is an important expression of our brand identity. It should in no way be distorted or redrawn when applied to communications. Because the wordmark is such a recognizable and highly visible brand asset, it is vital that it is always applied consistently.
@@ -81,8 +81,8 @@ class ApplicationTest extends TestHelpers {
       |The examples shown here illustrate incorrect uses of the wordmark.
       |![](https://cdn-images-1.medium.com/max/2000/1*C_tIv5LgGBK4RxorcZhOoA.png)
       |
-      |#### Download all assets
-      |If you have any further questions about our brand elements, please drop us a line at yourfriends@medium.com.
+      |#### [Download all assets](https://github.com/Medium/medium-logos/archive/master.zip)
+      |If you have any further questions about our brand elements, please drop us a line at [yourfriends@medium.com](mailto:yourfriends@medium.com).
     """.stripMargin.trim
   }
 }

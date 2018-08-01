@@ -331,6 +331,32 @@ class HtmlParserUnitSpec extends TestHelpers {
     el.markdown shouldBe "*Italics*"
   }
 
+  it should "parse links in paragraphs" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<p><a href=\"http://example.com\">Example</a></p>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[ParagraphMarkdownElement]) getOrElse fail()
+    el.markdown shouldBe "[Example](http://example.com)"
+  }
+
+  it should "parse links in headers" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<h1><a href=\"http://example.com\">Example</a></h1>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    val el: MarkdownElement = post.elements.find(_.isInstanceOf[HeaderMarkdownElement]) getOrElse fail()
+    el.markdown shouldBe "# [Example](http://example.com)"
+  }
+
   it should "remove the footer" in {
     // given
     val testSubject = new HtmlParser

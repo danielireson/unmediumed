@@ -1,5 +1,7 @@
 package unmediumed.response
 
+import unmediumed.parse.MediumPost
+
 import scala.collection.JavaConverters._
 
 class Response(
@@ -14,7 +16,7 @@ class Response(
   def toOutput: Output = new Output(statusCode, body, responseHeaders.asJava, base64Encoded)
 }
 
-case class OkResponse(body: String) extends Response(200, body)
+case class OkResponse(post: MediumPost) extends Response(200, post.markdown)
 
 case class UnprocessableEntityResponse(message: String) extends Response(422, message)
 

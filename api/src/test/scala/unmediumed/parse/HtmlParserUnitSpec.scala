@@ -116,7 +116,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "# Header one"
+    post.elements should contain (HeaderMarkdownElement(1, "Header one"))
   }
 
   it should "parse h2 elements" in {
@@ -128,7 +128,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "## Header two"
+    post.elements should contain (HeaderMarkdownElement(2, "Header two"))
   }
 
   it should "parse h3 elements" in {
@@ -140,7 +140,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "### Header three"
+    post.elements should contain (HeaderMarkdownElement(3, "Header three"))
   }
 
   it should "parse h4 elements" in {
@@ -152,7 +152,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "#### Header four"
+    post.elements should contain (HeaderMarkdownElement(4, "Header four"))
   }
 
   it should "parse h5 elements" in {
@@ -164,7 +164,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "##### Header five"
+    post.elements should contain (HeaderMarkdownElement(5, "Header five"))
   }
 
   it should "parse h6 elements" in {
@@ -176,7 +176,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "###### Header six"
+    post.elements should contain (HeaderMarkdownElement(6, "Header six"))
   }
 
   it should "parse paragraph elements" in {
@@ -188,7 +188,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "Paragraph"
+    post.elements should contain (ParagraphMarkdownElement("Paragraph"))
   }
 
   it should "parse image elements" in {
@@ -200,7 +200,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "![](http://example.com)"
+    post.elements should contain (ImageMarkdownElement("http://example.com"))
   }
 
   it should "parse unordered list elements" in {
@@ -218,12 +218,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe
-      """
-        |* One
-        |* Two
-        |* Three
-      """.stripMargin.trim
+    post.elements should contain (UnorderedMarkdownElement(List("One", "Two", "Three")))
   }
 
   it should "parse ordered list elements" in {
@@ -241,12 +236,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe
-      """
-        |1. One
-        |2. Two
-        |3. Three
-      """.stripMargin.trim
+    post.elements should contain (OrderedMarkdownElement(List("One", "Two", "Three")))
   }
 
   it should "parse blockquote elements" in {
@@ -258,26 +248,19 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "> Quote"
+    post.elements should contain (BlockquoteMarkdownElement("Quote"))
   }
 
   it should "parse code block elements" in {
     // given
     val testSubject = new HtmlParser
-    val html = buildValidHtml("<pre>{<br>  \"message\": \"hello world\"<br>}</pre>")
+    val html = buildValidHtml("<pre>{<br>\"message\": \"hello world\"<br>}</pre>")
 
     // when
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe
-      """
-        |```
-        |{
-        |  "message": "hello world"
-        |}
-        |```
-      """.stripMargin.trim
+    post.elements should contain (CodeblockMarkdownElement("{\n\"message\": \"hello world\"\n}"))
   }
 
   it should "parse foreign characters" in {
@@ -289,7 +272,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "Ich hiesße unmediumed"
+    post.elements should contain (ParagraphMarkdownElement("Ich hiesße unmediumed"))
   }
 
   it should "parse bold elements" in {
@@ -301,19 +284,19 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "**Bold**"
+    post.elements should contain (ParagraphMarkdownElement("<strong>Bold</strong>"))
   }
 
   it should "parse italic elements" in {
     // given
     val testSubject = new HtmlParser
-    val html = buildValidHtml("<p><em>Italics</em></p>")
+    val html = buildValidHtml("<p><em>Italic</em></p>")
 
     // when
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "*Italics*"
+    post.elements should contain (ParagraphMarkdownElement("<em>Italic</em>"))
   }
 
   it should "parse links in paragraphs" in {
@@ -325,7 +308,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "[Example](http://example.com)"
+    post.elements should contain (ParagraphMarkdownElement("<a href=\"http://example.com\">Example</a>"))
   }
 
   it should "parse links in headers" in {
@@ -337,7 +320,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements.head.markdown shouldBe "# [Example](http://example.com)"
+    post.elements should contain (HeaderMarkdownElement(1, "<a href=\"http://example.com\">Example</a>"))
   }
 
   it should "remove the footer" in {
@@ -354,7 +337,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.markdown contains footerText shouldBe false
+    post.markdown should not include footerText
   }
 
   private def buildValidHtml(innerHtml: String = "<p>Content</p>"): String = {

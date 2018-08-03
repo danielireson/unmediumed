@@ -17,7 +17,7 @@ class HandlerUnitSpec extends TestHelpers {
     doReturn("", "").when(websiteScraper).scrape(anyString())
 
     val htmlParser: HtmlParser = mock[HtmlParser]
-    val post = new MediumPost(Map(), List())
+    val post = MediumPost(Map(), List())
     doReturn(post, post).when(htmlParser).parse(anyString())
   }
 

@@ -6,11 +6,10 @@ class PathParserUnitSpec extends TestHelpers {
   "PathParser" should "throw a PathParseFailedException for an invalid url" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "$$$")
 
     // when
     val error = the[PathParseFailedException] thrownBy {
-      testSubject.parse(request)
+      testSubject.parse("$$$")
     }
 
     // then
@@ -20,11 +19,10 @@ class PathParserUnitSpec extends TestHelpers {
   it should "throw a PathParseFailedException when no url has been provided" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/")
 
     // when
     val error = the[PathParseFailedException] thrownBy {
-      testSubject.parse(request)
+      testSubject.parse("/")
     }
 
     // then
@@ -34,10 +32,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for a custom domain path with http" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/http://example.com/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/http://example.com/title")
 
     // then
     url shouldBe "http://example.com/title"
@@ -46,10 +43,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for a custom domain path with https" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/https://example.com/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/https://example.com/title")
 
     // then
     url shouldBe "https://example.com/title"
@@ -58,10 +54,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for a medium domain path with http" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/http://medium.com/author/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/http://medium.com/author/title")
 
     // then
     url shouldBe "http://medium.com/author/title"
@@ -70,10 +65,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for a medium domain path with https" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/https://medium.com/author/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/https://medium.com/author/title")
 
     // then
     url shouldBe "https://medium.com/author/title"
@@ -82,10 +76,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for an author path" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/@author/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/@author/title")
 
     // then
     url shouldBe "https://medium.com/@author/title"
@@ -94,10 +87,9 @@ class PathParserUnitSpec extends TestHelpers {
   it should "get the post url for a publication path" in {
     // given
     val testSubject = new PathParser
-    val request = Request("GET", "/publication/title")
 
     // when
-    val url = testSubject.parse(request)
+    val url = testSubject.parse("/publication/title")
 
     // then
     url shouldBe "https://medium.com/publication/title"

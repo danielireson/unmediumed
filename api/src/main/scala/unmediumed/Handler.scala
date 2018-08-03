@@ -12,7 +12,7 @@ class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser
   def handleRequest(input: Input, context: Context): Output = {
     Try {
       val request = input.toRequest
-      val postUrl = pathParser.parse(request)
+      val postUrl = pathParser.parse(request.path)
       val postHtml = websiteScraper.scrape(postUrl)
       val post = htmlParser.parse(postHtml)
       OkResponse(post)

@@ -10,8 +10,8 @@ class PathParser {
   private val PathWithMediumDomain: Regex = new Regex("medium.com/" + SafeCharacters)
   private val PathWithoutMediumDomain: Regex = new Regex(SafeCharacters)
 
-  def parse(request: Request): String = {
-    val path = request.path.substring(1)
+  def parse(pathWithRoot: String): String = {
+    val path = pathWithRoot.substring(1)
 
     path match {
       case p if p == "" => throw new PathParseFailedException("Please provide a Medium URL or path")

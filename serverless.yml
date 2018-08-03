@@ -11,7 +11,7 @@ package:
 
 functions:
   unmediumed:
-    handler: unmediumed.Handler
+    handler: unmediumed.Bootstrap
     events:
       - http: ANY /
       - http: ANY /{proxy+}

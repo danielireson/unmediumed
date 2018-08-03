@@ -7,7 +7,7 @@ import unmediumed.response.Output
 class ApplicationTest extends TestHelpers {
   it should "return the expected response for a known medium post" in {
     // given
-    val testSubject = new Handler
+    val testSubject = new Bootstrap
     val context: Context = mock[Context]
 
     val testPostPath: String = "/https://medium.design/logos-and-brand-guidelines-f1a01a733592"
@@ -26,7 +26,7 @@ class ApplicationTest extends TestHelpers {
 
   it should "return the expected response for a pay wall protected medium post" in {
     // given
-    val testSubject = new Handler
+    val testSubject = new Bootstrap
     val context: Context = mock[Context]
 
     val testPostPath: String = "/https://medium.com/s/futurehuman/how-different-will-humans-be-in-a-century-d4543e09f9ff"

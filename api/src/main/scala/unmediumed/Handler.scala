@@ -1,18 +1,38 @@
 package unmediumed
 
-import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
-import unmediumed.request.{Input, Router}
-import unmediumed.response.Output
-import unmediumed.source.{MediumService, WebsiteScraper}
+import com.amazonaws.services.lambda.runtime.Context
+import unmediumed.parse.{HtmlParser, ParseFailedException}
+import unmediumed.request.{Input, PathParseFailedException, PathParser}
+import unmediumed.response._
+import unmediumed.source.{WebsiteScrapeFailedException, WebsiteScraper}
 
-class Handler extends RequestHandler[Input, Output] {
-  val websiteScraper = new WebsiteScraper
-  val mediumService = new MediumService(websiteScraper)
-  val router = new Router(mediumService)
+import scala.util.{Failure, Success, Try}
 
+class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser: HtmlParser) {
   def handleRequest(input: Input, context: Context): Output = {
-    Option(input).map(_.toRequest).map(router.routeRequest).getOrElse {
-      throw new IllegalArgumentException("Invalid input passed to application handler")
+    Try {
+      val request = Option(input).map(_.toRequest).getOrElse {
+        throw new IllegalArgumentException("Invalid input passed to application handler")
+      }
+
+      val postUrl = pathParser.getPostUrl(request)
+      val postHtml = websiteScraper.scrape(postUrl)
+      val post = htmlParser.parse(postHtml)
+
+      OkResponse(post)
+
+    } match {
+      case Success(r) => r.toOutput
+      case Failure(t) => mapFailure(t).toOutput
+    }
+  }
+
+  private def mapFailure(caught: Throwable): Response = {
+    caught match {
+      case t: PathParseFailedException => UnprocessableEntityResponse(t.getMessage)
+      case _: WebsiteScrapeFailedException => BadGatewayResponse("Unable to fetch Medium post")
+      case _: ParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
+      case _ => InternalServerErrorResponse("An unexpected error occurred")
     }
   }
 }

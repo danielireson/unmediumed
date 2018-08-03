@@ -1,7 +1,7 @@
 package unmediumed
 
 import com.amazonaws.services.lambda.runtime.Context
-import unmediumed.parse.{HtmlParser, ParseFailedException}
+import unmediumed.parse.{HtmlParser, HtmlParseFailedException}
 import unmediumed.request.{Input, PathParseFailedException, PathParser}
 import unmediumed.response._
 import unmediumed.source.{WebsiteScrapeFailedException, WebsiteScraper}
@@ -31,7 +31,7 @@ class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser
     caught match {
       case t: PathParseFailedException => UnprocessableEntityResponse(t.getMessage)
       case _: WebsiteScrapeFailedException => BadGatewayResponse("Unable to fetch Medium post")
-      case _: ParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
+      case _: HtmlParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
       case _ => InternalServerErrorResponse("An unexpected error occurred")
     }
   }

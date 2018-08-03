@@ -9,7 +9,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val html = null
 
     // when
-    val error: Exception = the[ParseFailedException] thrownBy {
+    val error: Exception = the[HtmlParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
@@ -23,7 +23,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val html = buildValidHtml().replaceFirst("<title>", "").replaceFirst("</title>", "")
 
     // when
-    val error: Exception = the[ParseFailedException] thrownBy {
+    val error: Exception = the[HtmlParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
@@ -37,7 +37,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val html = buildValidHtml().replaceFirst("<meta name=\"description\"", "")
 
     // when
-    val error: Exception = the[ParseFailedException] thrownBy {
+    val error: Exception = the[HtmlParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 
@@ -51,7 +51,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     val html = buildValidHtml().replaceFirst("<link rel=\"canonical\"", "")
 
     // when
-    val error: Exception = the[ParseFailedException] thrownBy {
+    val error: Exception = the[HtmlParseFailedException] thrownBy {
       testSubject.parse(html)
     }
 

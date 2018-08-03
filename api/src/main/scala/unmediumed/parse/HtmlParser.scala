@@ -14,12 +14,12 @@ class HtmlParser {
       val post = MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
 
       if (post.markdown == "") {
-        throw new ParseFailedException("Could not parse markdown")
+        throw new HtmlParseFailedException("Could not parse markdown")
       }
 
       post
     } catch {
-      case e: NoSuchElementException => throw new ParseFailedException("HTML is not a valid Medium post", e)
+      case e: NoSuchElementException => throw new HtmlParseFailedException("HTML is not a valid Medium post", e)
     }
   }
 
@@ -82,4 +82,4 @@ object HtmlParser {
   )
 }
 
-class ParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)
+class HtmlParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

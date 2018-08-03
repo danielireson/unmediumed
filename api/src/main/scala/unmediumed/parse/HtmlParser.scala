@@ -2,24 +2,19 @@ package unmediumed.parse
 
 import org.ccil.cowan.tagsoup.jaxp.SAXParserImpl
 
+import scala.util.Try
 import scala.xml._
 
 class HtmlParser {
   private val parser: SAXParser = SAXParserImpl.newInstance(null)
 
   def parse(html: String): MediumPost = {
-    try {
+    Try {
       val source: InputSource = Source.fromString(Option(html).getOrElse(""))
       val rootElement: Elem = XML.loadXML(source, parser)
-      val post = MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
-
-      if (post.markdown == "") {
-        throw new HtmlParseFailedException("Could not parse markdown")
-      }
-
-      post
-    } catch {
-      case e: NoSuchElementException => throw new HtmlParseFailedException("HTML is not a valid Medium post", e)
+      MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
+    }.getOrElse {
+      throw new HtmlParseFailedException("Unable to parse Medium post")
     }
   }
 

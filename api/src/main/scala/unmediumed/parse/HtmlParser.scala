@@ -13,7 +13,7 @@ class HtmlParser {
       val source: InputSource = Source.fromString(Option(html).getOrElse(""))
       val rootElement: Elem = XML.loadXML(source, parser)
       MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
-    }.getOrElse {
+    } getOrElse {
       throw new HtmlParseFailedException("Unable to parse Medium post")
     }
   }

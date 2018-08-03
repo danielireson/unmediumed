@@ -34,7 +34,7 @@ class WebsiteScraper {
       connection.setReadTimeout(Timeout)
       connection.setRequestProperty("User-Agent", UserAgent)
       Some(connection.getInputStream)
-    }.getOrElse(None)
+    } getOrElse None
   }
 }
 

@@ -10,7 +10,7 @@ class PathParserUnitSpec extends TestHelpers {
 
     // when
     val error = the[PathParseFailedException] thrownBy {
-      testSubject.getPostUrl(request)
+      testSubject.parse(request)
     }
 
     // then
@@ -24,7 +24,7 @@ class PathParserUnitSpec extends TestHelpers {
 
     // when
     val error = the[PathParseFailedException] thrownBy {
-      testSubject.getPostUrl(request)
+      testSubject.parse(request)
     }
 
     // then
@@ -37,7 +37,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/http://example.com/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "http://example.com/title"
@@ -49,7 +49,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/https://example.com/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "https://example.com/title"
@@ -61,7 +61,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/http://medium.com/author/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "http://medium.com/author/title"
@@ -73,7 +73,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/https://medium.com/author/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "https://medium.com/author/title"
@@ -85,7 +85,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/@author/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "https://medium.com/@author/title"
@@ -97,7 +97,7 @@ class PathParserUnitSpec extends TestHelpers {
     val request = Request("GET", "/publication/title")
 
     // when
-    val url = testSubject.getPostUrl(request)
+    val url = testSubject.parse(request)
 
     // then
     url shouldBe "https://medium.com/publication/title"

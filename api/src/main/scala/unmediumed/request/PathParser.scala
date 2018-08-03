@@ -10,7 +10,7 @@ class PathParser {
   private val PathWithMediumDomain: Regex = new Regex("medium.com/" + SafeCharacters)
   private val PathWithoutMediumDomain: Regex = new Regex(SafeCharacters)
 
-  def getPostUrl(request: Request): String = {
+  def parse(request: Request): String = {
     val path = request.path.substring(1)
 
     path match {

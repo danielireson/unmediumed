@@ -11,7 +11,7 @@ import unmediumed.source.WebsiteScraper
 class HandlerUnitSpec extends TestHelpers {
   private trait HandlerFixture {
     val pathParser: PathParser = mock[PathParser]
-    doReturn("", "").when(pathParser).getPostUrl(any())
+    doReturn("", "").when(pathParser).parse(any())
 
     val websiteScraper: WebsiteScraper = mock[WebsiteScraper]
     doReturn("", "").when(websiteScraper).scrape(anyString())

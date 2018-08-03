@@ -15,7 +15,7 @@ class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser
         throw new IllegalArgumentException("Invalid input passed to application handler")
       }
 
-      val postUrl = pathParser.getPostUrl(request)
+      val postUrl = pathParser.parse(request)
       val postHtml = websiteScraper.scrape(postUrl)
       val post = htmlParser.parse(postHtml)
 

@@ -53,6 +53,9 @@ class HtmlParser {
     } filter {
       case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.text)
       case _ => true
+    } match {
+      case elements if elements.nonEmpty => elements
+      case _ => throw new HtmlParseFailedException("Unable to extract markdown elements")
     }
   }
 

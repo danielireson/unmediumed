@@ -8,6 +8,7 @@ import scala.xml._
 class HtmlParser {
   private val parser: SAXParser = SAXParserImpl.newInstance(null)
 
+  @throws(classOf[HtmlParseFailedException])
   def parse(html: String): MediumPost = {
     Try {
       val source: InputSource = Source.fromString(Option(html).getOrElse(""))

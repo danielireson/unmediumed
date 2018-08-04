@@ -10,6 +10,7 @@ class PathParser {
   private val PathWithMediumDomain: Regex = new Regex("medium.com/" + SafeCharacters)
   private val PathWithoutMediumDomain: Regex = new Regex(SafeCharacters)
 
+  @throws(classOf[PathParseFailedException])
   def parse(pathWithRoot: String): String = {
     val path = pathWithRoot.substring(1)
 

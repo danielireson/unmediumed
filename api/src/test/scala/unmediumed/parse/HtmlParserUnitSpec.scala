@@ -326,18 +326,13 @@ class HtmlParserUnitSpec extends TestHelpers {
   it should "remove the footer" in {
     // given
     val testSubject = new HtmlParser
-
-    val footerText = "From a quick cheer to a standing ovation, clap to show how much you enjoyed this story."
-    val html = buildValidHtml(s"""
-        |<p>Content</p>
-        |<p>$footerText</p>
-      """.stripMargin)
+    val html = buildValidHtml()
 
     // when
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.markdown should not include footerText
+    post.markdown should not include "Footer"
   }
 
   private def buildValidHtml(innerHtml: String = "<p>Content</p>"): String = {
@@ -351,7 +346,10 @@ class HtmlParserUnitSpec extends TestHelpers {
       |<body>
       |  <main>
       |    <article>
-      |      <section>$innerHtml</section>
+      |      <section>
+      |        $innerHtml
+      |        <p>Footer</p>
+      |      </section>
       |    </article>
       |  </main>
       |</body>

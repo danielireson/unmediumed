@@ -50,11 +50,9 @@ class HtmlParser {
       case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(getText))
       case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
       case e if e.label == "pre" => CodeblockMarkdownElement(getText(e))
-    } filter {
-      case e: ParagraphMarkdownElement => !HtmlParser.omittable.contains(e.text)
-      case _ => true
     } match {
-      case elements if elements.nonEmpty => elements
+      // drop the footer and return markdown elements if non empty
+      case elements if elements.nonEmpty => elements.dropRight(1)
       case _ => throw new HtmlParseFailedException("Unable to extract markdown elements")
     }
   }
@@ -72,12 +70,6 @@ class HtmlParser {
   private def getAttribute(name: String, element: Node, default: String = ""): String = {
     element.attribute(name).map(_.toString).getOrElse(default)
   }
-}
-
-object HtmlParser {
-  val omittable: List[String] = List(
-    "From a quick cheer to a standing ovation, clap to show how much you enjoyed this story."
-  )
 }
 
 class HtmlParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

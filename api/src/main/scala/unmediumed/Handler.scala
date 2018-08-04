@@ -24,7 +24,7 @@ class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser
 
   private def mapFailure(caught: Throwable): Response = {
     caught match {
-      case t: PathParseFailedException => UnprocessableEntityResponse(t.getMessage)
+      case _: PathParseFailedException => UnprocessableEntityResponse("Please provide a valid Medium URL or path")
       case _: WebsiteScrapeFailedException => BadGatewayResponse("Unable to fetch Medium post")
       case _: HtmlParseFailedException => InternalServerErrorResponse("Unable to parse Medium post")
       case _ => InternalServerErrorResponse("An unexpected error occurred")

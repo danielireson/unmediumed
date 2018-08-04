@@ -14,7 +14,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "HTML is not a valid Medium post"
+    error.getMessage shouldBe "Unable to parse Medium post"
   }
 
   it should "throw a ParseFailedException when there's no title tag" in {
@@ -28,7 +28,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "HTML is not a valid Medium post"
+    error.getMessage shouldBe "Unable to parse Medium post"
   }
 
   it should "throw a ParseFailedException when there's no opening description meta tag" in {
@@ -42,7 +42,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "HTML is not a valid Medium post"
+    error.getMessage shouldBe "Unable to parse Medium post"
   }
 
   it should "throw a ParseFailedException when there's no canonical link tag" in {
@@ -56,7 +56,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "HTML is not a valid Medium post"
+    error.getMessage shouldBe "Unable to parse Medium post"
   }
 
   it should "return a MediumPost" in {

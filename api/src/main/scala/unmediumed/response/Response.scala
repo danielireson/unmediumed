@@ -22,4 +22,4 @@ case class UnprocessableEntityResponse(message: String) extends Response(422, me
 
 case class InternalServerErrorResponse(message: String) extends Response(500, message)
 
-case class BadGatewayResponse(message: String) extends Response(500, message)
+case class BadGatewayResponse(message: String) extends Response(502, message)

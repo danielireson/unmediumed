@@ -10,10 +10,9 @@ class ApplicationTest extends TestHelpers {
     val testSubject = new Bootstrap
     val context: Context = mock[Context]
 
-    val testPostPath: String = "/https://medium.design/logos-and-brand-guidelines-f1a01a733592"
     val input = new Input
     input.setHttpMethod("GET")
-    input.setPath(testPostPath)
+    input.setPath("/https://medium.design/logos-and-brand-guidelines-f1a01a733592")
 
     // when
     val output: Output = testSubject.handleRequest(input, context)

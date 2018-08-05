@@ -5,7 +5,7 @@ import java.net.{HttpURLConnection, URL}
 
 class HttpGetRequest(url: String) {
   private val Timeout: Int = 5000
-  private val UserAgent: String = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"
+  private val UserAgent: String = "unmediumed/1"
 
   val connection: HttpURLConnection = new URL(url).openConnection.asInstanceOf[HttpURLConnection]
   connection.setRequestMethod("GET")

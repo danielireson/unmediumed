@@ -7,7 +7,7 @@ import unmediumed.response.Output
 class HandlerUnitSpec extends TestHelpers {
   "Handler" should "return an api gateway formatted output" in {
     // given
-    val testSubject = new Handler(null, null, null)
+    val testSubject = new Handler(null, null, null, null)
 
     val input = new Input
     input.setHttpMethod("GET")

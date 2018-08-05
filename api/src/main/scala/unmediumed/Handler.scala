@@ -4,17 +4,25 @@ import com.amazonaws.services.lambda.runtime.Context
 import unmediumed.parse.{HtmlParseFailedException, HtmlParser}
 import unmediumed.request.{Input, PathParseFailedException, PathParser}
 import unmediumed.response._
-import unmediumed.source.{WebsiteScrapeFailedException, WebsiteScraper}
+import unmediumed.source.{AnalyticsTracker, WebsiteScrapeFailedException, WebsiteScraper}
 
 import scala.util.{Failure, Success, Try}
 
-class Handler(pathParser: PathParser, websiteScraper: WebsiteScraper, htmlParser: HtmlParser) {
+class Handler(
+    pathParser: PathParser,
+    websiteScraper: WebsiteScraper,
+    htmlParser: HtmlParser,
+    analyticsTracker: AnalyticsTracker) {
+
   def handleRequest(input: Input, context: Context): Output = {
     Try {
       val request = input.toRequest
+      analyticsTracker.track(request)
+
       val postUrl = pathParser.parse(request.path)
       val postHtml = websiteScraper.scrape(postUrl)
       val post = htmlParser.parse(postHtml)
+
       OkResponse(post)
     } match {
       case Success(r) => r.toOutput

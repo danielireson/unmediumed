@@ -3,7 +3,7 @@ package unmediumed.source
 import scala.util.Try
 
 class AnalyticsTracker {
-  private val TrackingEndpoint: String = "https://www.google-analytics.com?v=1&t=pageview&tid={tId}&dh={dh}&dp={dp}"
+  private val TrackingEndpoint: String = "https://www.google-analytics.com/collect?v=1&t=pageview&tid={tId}&dh={dh}&dp={dp}"
 
   def track(path: String): Unit = {
     val config = new AnalyticsConfig

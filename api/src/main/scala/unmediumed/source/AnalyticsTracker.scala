@@ -6,16 +6,16 @@ import scala.util.Try
 
 class AnalyticsTracker {
   private val TrackingEndpoint: String =
-    "https://www.google-analytics.com/collect?v=1&t=pageview&tid={tId}&dh={dh}&cid={cId}&dp={dp}"
+    "https://www.google-analytics.com/collect?v=1&t=pageview&tid={tid}&dh={dh}&cid={cid}&dp={dp}"
 
   def track(request: Request): Unit = {
     val config = new AnalyticsConfig
 
     if (config.isEnabled) {
       val trackingUrl = TrackingEndpoint
-        .replace("{tId}", config.trackingId)
+        .replace("{tid}", config.trackingId)
         .replace("{dh}", config.trackingHost)
-        .replace("{cId}", request.requestId)
+        .replace("{cid}", request.requestId)
         .replace("{dp}", request.path)
 
       Try {

@@ -8,6 +8,7 @@ resolvers += Resolver.sonatypeRepo("public")
 scalaVersion := "2.12.2"
 releaseNextVersion := { ver => Version(ver).map(_.bumpMinor.string).getOrElse("Error") }
 assemblyJarName in assembly := "unmediumed.jar"
+parallelExecution in Test := false
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "1.1.0",

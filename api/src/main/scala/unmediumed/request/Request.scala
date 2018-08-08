@@ -1,10 +1,10 @@
 package unmediumed.request
 
 sealed case class Request(
+    id: String,
     httpMethod: String,
     path: String,
-    body: String = "",
-    requestId: String,
-    headers: Map[String, Object] = Map(),
-    pathParameters: Map[String, Object] = Map(),
-    queryStringParameters: Map[String, Object] = Map())
+    body: String,
+    headers: Map[String, Object],
+    pathParameters: Map[String, Object],
+    queryStringParameters: Map[String, Object])

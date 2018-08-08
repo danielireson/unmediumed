@@ -15,7 +15,7 @@ class AnalyticsTracker {
       val trackingUrl = TrackingEndpoint
         .replace("{tid}", config.trackingId)
         .replace("{dh}", config.trackingHost)
-        .replace("{cid}", request.requestId)
+        .replace("{cid}", request.id)
         .replace("{dp}", request.path)
 
       Try {

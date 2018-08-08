@@ -17,10 +17,10 @@ class Input(
 
   def toRequest(context: Context): Request =
     Request(
+      Option(context.getAwsRequestId).getOrElse(""),
       Option(httpMethod).getOrElse(""),
       Option(path).getOrElse(""),
       Option(body).getOrElse(""),
-      Option(context.getAwsRequestId).getOrElse(""),
       Option(headers).map(_.asScala.toMap).getOrElse(Map()),
       Option(pathParameters).map(_.asScala.toMap).getOrElse(Map()),
       Option(queryStringParameters).map(_.asScala.toMap).getOrElse(Map())

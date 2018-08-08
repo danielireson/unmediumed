@@ -1,20 +1,18 @@
 package unmediumed.source
 
-import unmediumed.request.Request
-
 import scala.util.Try
 
 class AnalyticsTracker {
   private val TrackingEndpoint: String = "https://www.google-analytics.com?v=1&t=pageview&tid={tId}&dh={dh}&dp={dp}"
 
-  def track(request: Request): Unit = {
+  def track(path: String): Unit = {
     val config = new AnalyticsConfig
 
     if (config.isEnabled) {
       val trackingUrl = TrackingEndpoint
         .replace("{tId}", config.trackingId)
         .replace("{dh}", config.trackingHost)
-        .replace("{dp}", request.path)
+        .replace("{dp}", path)
 
       Try {
         val request = new HttpPostRequest(trackingUrl)

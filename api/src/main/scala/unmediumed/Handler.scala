@@ -17,7 +17,7 @@ class Handler(
   def handleRequest(input: Input, context: Context): Output = {
     Try {
       val request = input.toRequest
-      analyticsTracker.track(request)
+      analyticsTracker.track(request.path)
 
       val postUrl = pathParser.parse(request.path)
       val postHtml = websiteScraper.scrape(postUrl)

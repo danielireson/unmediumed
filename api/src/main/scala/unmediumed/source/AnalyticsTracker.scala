@@ -17,7 +17,7 @@ class AnalyticsTracker {
         .replace("{dp}", request.path)
 
       Try {
-        val request = new HttpGetRequest(trackingUrl)
+        val request = new HttpPostRequest(trackingUrl)
         request.send()
       }
     }

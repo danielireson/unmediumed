@@ -29,6 +29,8 @@ class HttpGetRequest(val url: String) extends HttpRequest {
 
 class HttpPostRequest(url: String) extends HttpRequest {
   val connection: HttpURLConnection = createConnection("POST", url)
+  connection.setFixedLengthStreamingMode(0)
+  connection.setDoOutput(true)
 
   def send(): Unit = connection.connect()
   def inputStream: InputStream = connection.getInputStream

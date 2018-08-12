@@ -1,5 +1,7 @@
 package unmediumed.source
 
+import java.net.URLEncoder
+
 import unmediumed.request.Request
 
 import scala.util.Try
@@ -13,10 +15,10 @@ class AnalyticsTracker {
 
     if (config.isEnabled) {
       val trackingUrl = TrackingEndpoint
-        .replace("{tid}", config.trackingId)
-        .replace("{dh}", config.trackingHost)
-        .replace("{cid}", request.id)
-        .replace("{dp}", request.path)
+        .replace("{tid}", encodeParameter(config.trackingId))
+        .replace("{dh}", encodeParameter(config.trackingHost))
+        .replace("{cid}", encodeParameter(request.id))
+        .replace("{dp}", encodeParameter(request.path))
 
       Try {
         val request = new HttpPostRequest(trackingUrl)
@@ -24,6 +26,8 @@ class AnalyticsTracker {
       }
     }
   }
+
+  private def encodeParameter(value: Any): String = URLEncoder.encode(value.toString, "UTF-8")
 }
 
 class AnalyticsConfig {

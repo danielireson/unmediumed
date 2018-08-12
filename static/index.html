@@ -16,8 +16,7 @@
       </a>
     </h1>
     <p>
-      A Markdown API for Medium. Enter the post URL or path in the box below, or alternatively 
-      view a post on Medium and change the domain to unmediumed.com.
+      The Markdown API for Medium. Append a post URL or path to unmediumed.com, or alternatively view a post on Medium and change the domain to unmediumed.com.
     </p>
     <form>
       <input type="text" placeholder="URL or Path" autofocus>
@@ -32,6 +31,8 @@
     var link = document.getElementsByClassName('markdown-link')[0];
 
     if (form && input && link) {
+      form.className = 'js-enabled';
+
       input.addEventListener('keyup', function (event) {
         var url = event.target.value;
         url = url.replace('https://', '');

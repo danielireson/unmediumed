@@ -68,7 +68,12 @@ h1 img:hover {
 }
 
 form {
+  display: none;
   margin: 2em 0;
+}
+
+form.js-enabled {
+  display: block;
 }
 
 input {

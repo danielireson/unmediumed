@@ -26,7 +26,7 @@ class WebsiteScraper {
   private def createInputStream(url: String): Option[InputStream] = {
     Try {
       val request = new HttpGetRequest(url)
-      Some(request.inputStream)
+      Some(request.send)
     } getOrElse None
   }
 }

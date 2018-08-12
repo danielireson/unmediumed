@@ -22,7 +22,7 @@ class AnalyticsTracker {
 
       Try {
         val request = new HttpPostRequest(trackingUrl)
-        request.send()
+        request.send
       }
     }
   }

@@ -16,15 +16,13 @@ trait HttpRequest {
     connection
   }
 
-  def send(): Unit
-  def inputStream: InputStream
+  def send: InputStream
 }
 
 class HttpGetRequest(val url: String) extends HttpRequest {
   val connection: HttpURLConnection = createConnection("GET", url)
 
-  def send(): Unit = connection.connect()
-  def inputStream: InputStream = connection.getInputStream
+  def send: InputStream = connection.getInputStream
 }
 
 class HttpPostRequest(url: String) extends HttpRequest {
@@ -32,6 +30,5 @@ class HttpPostRequest(url: String) extends HttpRequest {
   connection.setFixedLengthStreamingMode(0)
   connection.setDoOutput(true)
 
-  def send(): Unit = connection.connect()
-  def inputStream: InputStream = connection.getInputStream
+  def send: InputStream = connection.getInputStream
 }

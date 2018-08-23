@@ -14,7 +14,35 @@ class HtmlParserUnitSpec extends TestHelpers {
     }
 
     // then
-    error.getMessage shouldBe "Unable to parse Medium post"
+    error.getMessage shouldBe "Unable to parse null html"
+  }
+
+  it should "throw a HtmlParseProtectedPostException when the html contains 'js-lockedPostHeader'" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<div class=\"js-lockedPostHeader\"></div>")
+
+    // when
+    val error: Exception = the[HtmlParseProtectedPostException] thrownBy {
+      testSubject.parse(html)
+    }
+
+    // then
+    error.getMessage shouldBe "Unable to parse members only Medium post"
+  }
+
+  it should "throw a HtmlParseProtectedPostException when the html contains 'js-upgradeMembershipAction'" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<div class=\"js-lockedPostHeader\"></div>")
+
+    // when
+    val error: Exception = the[HtmlParseProtectedPostException] thrownBy {
+      testSubject.parse(html)
+    }
+
+    // then
+    error.getMessage shouldBe "Unable to parse members only Medium post"
   }
 
   it should "throw a ParseFailedException when there's no title tag" in {

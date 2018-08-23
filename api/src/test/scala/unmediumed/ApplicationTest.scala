@@ -86,4 +86,22 @@ class ApplicationTest extends TestHelpers {
     output.statusCode shouldBe 200
     output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
+
+  it should "return the expected response for a members only medium post" in {
+    // given
+    val testSubject = new Bootstrap
+    val context: Context = mock[Context]
+
+    val input = new Input
+    input.setHttpMethod("GET")
+    input.setPath("/https://medium.com/the-new-york-times/want-to-be-happy-think-like-an-old-person-e209933f6227")
+
+    // when
+    val output: Output = testSubject.handleRequest(input, context)
+
+    // then
+    output.body shouldBe "Unable to parse members only Medium post"
+    output.statusCode shouldBe 422
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
+  }
 }

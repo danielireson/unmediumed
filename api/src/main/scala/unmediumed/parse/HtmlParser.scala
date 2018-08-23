@@ -8,14 +8,22 @@ import scala.xml._
 class HtmlParser {
   private val parser: SAXParser = SAXParserImpl.newInstance(null)
 
+  @throws(classOf[HtmlParseProtectedPostException])
   @throws(classOf[HtmlParseFailedException])
   def parse(html: String): MediumPost = {
-    Try {
-      val source: InputSource = Source.fromString(Option(html).getOrElse(""))
-      val rootElement: Elem = XML.loadXML(source, parser)
-      MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
-    } getOrElse {
-      throw new HtmlParseFailedException("Unable to parse Medium post")
+    Option(html) match {
+      case None =>
+        throw new HtmlParseFailedException("Unable to parse null html")
+      case Some(h) if h.contains("js-lockedPostHeader") | h.contains("js-upgradeMembershipAction") =>
+        throw new HtmlParseProtectedPostException("Unable to parse members only Medium post")
+      case Some(h) =>
+        Try {
+          val source: InputSource = Source.fromString(h)
+          val rootElement: Elem = XML.loadXML(source, parser)
+          MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
+        } getOrElse {
+          throw new HtmlParseFailedException("Unable to parse Medium post")
+        }
     }
   }
 
@@ -74,3 +82,4 @@ class HtmlParser {
 }
 
 class HtmlParseFailedException(message: String = null, cause: Throwable = null) extends Exception(message, cause)
+class HtmlParseProtectedPostException(message: String = null, cause: Throwable = null) extends Exception(message, cause)

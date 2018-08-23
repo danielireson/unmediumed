@@ -3,7 +3,7 @@ package unmediumed.parse
 import unmediumed.TestHelpers
 
 class HtmlParserUnitSpec extends TestHelpers {
-  "HtmlParser" should "throw a ParseFailedException when html is null" in {
+  "HtmlParser" should "throw a HtmlParseFailedException when html is null" in {
     // given
     val testSubject = new HtmlParser
     val html = null
@@ -45,7 +45,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     error.getMessage shouldBe "Unable to parse members only Medium post"
   }
 
-  it should "throw a ParseFailedException when there's no title tag" in {
+  it should "throw a HtmlParseFailedException when there's no title tag" in {
     // given
     val testSubject = new HtmlParser
     val html = buildValidHtml().replaceFirst("<title>", "").replaceFirst("</title>", "")
@@ -59,7 +59,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     error.getMessage shouldBe "Unable to parse Medium post"
   }
 
-  it should "throw a ParseFailedException when there's no opening description meta tag" in {
+  it should "throw a HtmlParseFailedException when there's no opening description meta tag" in {
     // given
     val testSubject = new HtmlParser
     val html = buildValidHtml().replaceFirst("<meta name=\"description\"", "")
@@ -73,7 +73,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     error.getMessage shouldBe "Unable to parse Medium post"
   }
 
-  it should "throw a ParseFailedException when there's no canonical link tag" in {
+  it should "throw a HtmlParseFailedException when there's no canonical link tag" in {
     // given
     val testSubject = new HtmlParser
     val html = buildValidHtml().replaceFirst("<link rel=\"canonical\"", "")

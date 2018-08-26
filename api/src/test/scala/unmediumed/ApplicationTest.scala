@@ -104,4 +104,22 @@ class ApplicationTest extends TestHelpers {
     output.statusCode shouldBe 422
     output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
   }
+
+  it should "return the expected response for a featured members only medium post" in {
+    // given
+    val testSubject = new Bootstrap
+    val context: Context = mock[Context]
+
+    val input = new Input
+    input.setHttpMethod("GET")
+    input.setPath("/https://medium.com/s/story/make-art-not-products-a-case-for-slow-design-ea53719c34a5")
+
+    // when
+    val output: Output = testSubject.handleRequest(input, context)
+
+    // then
+    output.body shouldBe "Unable to parse Medium post"
+    output.statusCode shouldBe 500
+    output.headers.get("content-type") shouldBe "text/markdown; charset=utf-8"
+  }
 }

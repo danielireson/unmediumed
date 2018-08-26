@@ -14,7 +14,7 @@ class HtmlParser {
     Option(html) match {
       case None =>
         throw new HtmlParseFailedException("Unable to parse null html")
-      case Some(h) if h.contains("js-lockedPostHeader") | h.contains("js-upgradeMembershipAction") =>
+      case Some(h) if h.contains("js-lockedPostHeader") =>
         throw new HtmlParseProtectedPostException("Unable to parse members only Medium post")
       case Some(h) =>
         Try {
@@ -46,7 +46,7 @@ class HtmlParser {
   }
 
   private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
-    (rootElement \\ "section" \\ "_").collect {
+    (rootElement \\ "article" \\ "section" \\ "_").collect {
       case e if e.label == "p" => ParagraphMarkdownElement(getText(e))
       case e if e.label == "h1" => HeaderMarkdownElement(1, getText(e))
       case e if e.label == "h2" => HeaderMarkdownElement(2, getText(e))

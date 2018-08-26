@@ -15,36 +15,16 @@
         <img src="github-icon.png">
       </a>
     </h1>
-    <p>
-      The Markdown API for Medium. Append a post URL or path to unmediumed.com, or alternatively view a post on Medium and change the domain to unmediumed.com.
-    </p>
-    <form>
-      <input type="text" placeholder="URL or Path" autofocus>
-      <a class="markdown-link">unmediumed.com/</a>
-    </form>
+    <section>
+      <h2>Usage</h2>
+      <p>
+        Append a Medium post URL to unmediumed.com to view in markdown. Alternatively view a post on medium.com and change the domain to unmediumed.com.
+      </p>
+    </section>
+    <section>
+      <h2>For example</h2>
+      <p><a class="example-url" href="https://unmediumed.com/https://medium.freecodecamp.org/how-to-build-a-serverless-url-shortener-using-aws-lambda-and-s3-4fbdf70cbf5c">https://unmediumed.com/https://medium.freecodecamp.org/how-to-build-a-serverless-url-shortener-using-aws-lambda-and-s3-4fbdf70cbf5c</a></p>  
+    </section>
   </div>
 </body>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var form = document.getElementsByTagName('form')[0];
-    var input = document.getElementsByTagName('input')[0];
-    var link = document.getElementsByClassName('markdown-link')[0];
-
-    if (form && input && link) {
-      form.className = 'js-enabled';
-
-      input.addEventListener('keyup', function (event) {
-        var url = event.target.value;
-        url = url.replace('https://', '');
-        url = url.replace('http://', '');
-        url = url.replace('medium.com/', '');
-        url = url.replace(/[^\w\d:/\._-]/g, '');
-
-        link.innerHTML = 'unmediumed.com/' + url;
-        link.href = 'https://unmediumed.com/' + url;
-        form.action = 'https://unmediumed.com/' + url;
-      });
-    }
-  });
-</script>
 </html>

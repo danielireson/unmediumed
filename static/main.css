@@ -21,18 +21,20 @@ body {
   overflow-x: hidden;
 }
 
+.container {
+  margin: 2em 0;
+  max-width: 900px;
+  width: 90%;
+}
+
 h1 {
+  font-size: 2em;
   line-height: 1;
 }
 
 a {
   color: white;
-  border-bottom: dashed 2px rgba(255,255,255,0.5);
   text-decoration: none;
-}
-
-h1 a {
-  border-bottom: none;
 }
 
 h1 img {
@@ -47,59 +49,16 @@ h1 img:hover {
   opacity: 1;
 }
 
-.container {
-  margin: 2em 0;
-  width: 90%;
-}
-
-.container > p {
+p, p > a {
   color: rgba(255,255,255,0.7);
 }
 
-.box {
-  background: rgba(255,255,255,0.1);
-  border-radius: 5px;
-  margin-top: 2em;
-  padding: 1em;
-}
-
-.box ul {
-  margin: 0;
-}
-
-form {
-  display: none;
-  margin: 2em 0;
-}
-
-form.js-enabled {
-  display: block;
-}
-
-input {
-  border-radius: 5px;
-  border: none;
+h2 {
   font-size: 1em;
-  outline: none;
-  padding: 1em;
-  width: 100%;
 }
 
-.markdown-link {
-  border: none;
-  display: inline-block;
-  margin-top: 1em;
-}
-
-.button {
-  background: rgba(255,255,255,0.2);
-  border-radius: 5px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 1em;
-  padding: 0.5em 1em;
+.example-url {
+  word-break: break-all;
 }
 
 @media(min-width:768px) {

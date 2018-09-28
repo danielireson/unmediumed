@@ -131,11 +131,19 @@ class MarkdownElementUnitSpec extends TestHelpers {
     testSubject.markdown shouldBe "> Quote"
   }
 
-  "CodeblockMarkdownElement" should "build code blocks" in {
+  "PreMarkdownElement" should "build preformatted code blocks" in {
     // given
-    val testSubject = CodeblockMarkdownElement("{\n\"message\": \"hello world\"\n}")
+    val testSubject = PreMarkdownElement("{\n\"message\": \"hello world\"\n}")
 
     // then
     testSubject.markdown shouldBe "```\n{\n\"message\": \"hello world\"\n}\n```"
+  }
+
+  "CodeMarkdownElement" should "build inline codee blocks" in {
+    // given
+    val testSubject = CodeMarkdownElement("Testing")
+
+    // then
+    testSubject.markdown shouldBe "`Testing`"
   }
 }

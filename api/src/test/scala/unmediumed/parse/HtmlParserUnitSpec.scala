@@ -279,7 +279,7 @@ class HtmlParserUnitSpec extends TestHelpers {
     post.elements should contain (BlockquoteMarkdownElement("Quote"))
   }
 
-  it should "parse code block elements" in {
+  it should "parse preformatted block elements" in {
     // given
     val testSubject = new HtmlParser
     val html = buildValidHtml("<pre>{<br>\"message\": \"hello world\"<br>}</pre>")
@@ -288,7 +288,19 @@ class HtmlParserUnitSpec extends TestHelpers {
     val post: MediumPost = testSubject.parse(html)
 
     // then
-    post.elements should contain (CodeblockMarkdownElement("{\n\"message\": \"hello world\"\n}"))
+    post.elements should contain (PreMarkdownElement("{\n\"message\": \"hello world\"\n}"))
+  }
+
+  it should "parse code elements" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<code>testing</code>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    post.elements should contain (CodeMarkdownElement("testing"))
   }
 
   it should "parse foreign characters" in {

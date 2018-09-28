@@ -58,7 +58,8 @@ class HtmlParser {
       case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(getText))
       case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(getText))
       case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
-      case e if e.label == "pre" => CodeblockMarkdownElement(getText(e))
+      case e if e.label == "code" => CodeMarkdownElement(getText(e))
+      case e if e.label == "pre" => PreMarkdownElement(getText(e))
     } match {
       // drop the footer and return markdown elements if non empty
       case elements if elements.nonEmpty => elements.dropRight(1)

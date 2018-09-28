@@ -41,6 +41,10 @@ sealed case class BlockquoteMarkdownElement(text: String) extends MarkdownElemen
   def markdown: String = "> " + text
 }
 
-sealed case class CodeblockMarkdownElement(text: String) extends MarkdownElement {
+sealed case class PreMarkdownElement(text: String) extends MarkdownElement {
   def markdown: String = "```\n" + text + "\n```"
+}
+
+sealed case class CodeMarkdownElement(text: String) extends MarkdownElement {
+  def markdown: String = "`" + text + "`"
 }

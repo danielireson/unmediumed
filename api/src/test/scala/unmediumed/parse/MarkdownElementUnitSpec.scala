@@ -83,6 +83,14 @@ class MarkdownElementUnitSpec extends TestHelpers {
     testSubject.markdown shouldBe "*Italic*"
   }
 
+  it should "build paragraphs with inline code" in {
+    // given
+    val testSubject = ParagraphMarkdownElement("<code>Code</code>")
+
+    // then
+    testSubject.markdown shouldBe "`Code`"
+  }
+
   it should "build paragraphs with links" in {
     // given
     val testSubject = ParagraphMarkdownElement("<a href=\"http://example.com\">Example</a>")
@@ -137,13 +145,5 @@ class MarkdownElementUnitSpec extends TestHelpers {
 
     // then
     testSubject.markdown shouldBe "```\n{\n\"message\": \"hello world\"\n}\n```"
-  }
-
-  "CodeMarkdownElement" should "build inline codee blocks" in {
-    // given
-    val testSubject = CodeMarkdownElement("Testing")
-
-    // then
-    testSubject.markdown shouldBe "`Testing`"
   }
 }

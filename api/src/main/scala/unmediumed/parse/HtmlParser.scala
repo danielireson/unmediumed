@@ -21,8 +21,8 @@ class HtmlParser {
           val source: InputSource = Source.fromString(h)
           val rootElement: Elem = XML.loadXML(source, parser)
           val meta = extractMeta(rootElement)
-          val elements = extractElements(rootElement)
-          val processedElements = processElements(elements)
+          val elements = extractBlockElements(rootElement)
+          val processedElements = processBlockElements(elements)
           MediumPost(meta, processedElements)
         } getOrElse {
           throw new HtmlParseFailedException("Unable to parse Medium post")
@@ -48,28 +48,27 @@ class HtmlParser {
     Map("title" -> title, "description" -> description, "canonical" -> canonical)
   }
 
-  private def extractElements(rootElement: Elem): Seq[MarkdownElement] = {
+  private def extractBlockElements(rootElement: Elem): Seq[MarkdownElement] = {
     (rootElement \\ "article" \\ "section" \\ "_").collect {
-      case e if e.label == "p" => ParagraphMarkdownElement(getText(e))
-      case e if e.label == "h1" => HeaderMarkdownElement(1, getText(e))
-      case e if e.label == "h2" => HeaderMarkdownElement(2, getText(e))
-      case e if e.label == "h3" => HeaderMarkdownElement(3, getText(e))
-      case e if e.label == "h4" => HeaderMarkdownElement(4, getText(e))
-      case e if e.label == "h5" => HeaderMarkdownElement(5, getText(e))
-      case e if e.label == "h6" => HeaderMarkdownElement(6, getText(e))
+      case e if e.label == "p" => ParagraphMarkdownElement(extractInlineElements(e))
+      case e if e.label == "h1" => HeaderMarkdownElement(1, extractInlineElements(e))
+      case e if e.label == "h2" => HeaderMarkdownElement(2, extractInlineElements(e))
+      case e if e.label == "h3" => HeaderMarkdownElement(3, extractInlineElements(e))
+      case e if e.label == "h4" => HeaderMarkdownElement(4, extractInlineElements(e))
+      case e if e.label == "h5" => HeaderMarkdownElement(5, extractInlineElements(e))
+      case e if e.label == "h6" => HeaderMarkdownElement(6, extractInlineElements(e))
       case e if e.label == "img" => ImageMarkdownElement(getAttribute("src", e))
-      case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(getText))
-      case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(getText))
+      case e if e.label == "ul" => UnorderedMarkdownElement((e \\ "li").map(extractInlineElements))
+      case e if e.label == "ol" => OrderedMarkdownElement((e \\ "li").map(extractInlineElements))
       case e if e.label == "blockquote" => BlockquoteMarkdownElement(e.text)
-      case e if e.label == "code" => CodeMarkdownElement(getText(e))
-      case e if e.label == "pre" => PreMarkdownElement(getText(e))
+      case e if e.label == "pre" => PreMarkdownElement(extractInlineElements(e))
     } match {
       case elements if elements.nonEmpty => elements
       case _ => throw new HtmlParseFailedException("Unable to extract markdown elements")
     }
   }
 
-  private def processElements(elements: Seq[MarkdownElement]): Seq[MarkdownElement] = {
+  private def processBlockElements(elements: Seq[MarkdownElement]): Seq[MarkdownElement] = {
     elements.foldLeft(Seq.empty[MarkdownElement]) { (elements, element) =>
       if (elements.isEmpty) {
         elements :+ element
@@ -85,8 +84,9 @@ class HtmlParser {
     }
   }
 
-  private def getText(element: Node): String = {
+  private def extractInlineElements(element: Node): String = {
     element.child.map {
+      case c if c.label == "code" => "<code>" + c.text + "</code>"
       case c if c.label == "strong" => "<strong>" + c.text + "</strong>"
       case c if c.label == "em" => "<em>" + c.text + "</em>"
       case c if c.label == "a" => "<a href=\"" + getAttribute("href", c) + "\">" + c.text + "</a>"

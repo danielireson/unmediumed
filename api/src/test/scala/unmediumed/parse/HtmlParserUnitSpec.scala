@@ -303,18 +303,6 @@ class HtmlParserUnitSpec extends TestHelpers {
     post.elements should contain (PreMarkdownElement("One\nTwo"))
   }
 
-  it should "parse code elements" in {
-    // given
-    val testSubject = new HtmlParser
-    val html = buildValidHtml("<code>testing</code>")
-
-    // when
-    val post: MediumPost = testSubject.parse(html)
-
-    // then
-    post.elements should contain (CodeMarkdownElement("testing"))
-  }
-
   it should "parse foreign characters" in {
     // given
     val testSubject = new HtmlParser
@@ -349,6 +337,18 @@ class HtmlParserUnitSpec extends TestHelpers {
 
     // then
     post.elements should contain (ParagraphMarkdownElement("<em>Italic</em>"))
+  }
+
+  it should "parse code elements" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<p><code>testing</code></p>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    post.elements should contain (ParagraphMarkdownElement("<code>testing</code>"))
   }
 
   it should "parse links in paragraphs" in {

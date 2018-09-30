@@ -3,8 +3,9 @@ package unmediumed.parse
 trait MarkdownElement {
   def markdown: String
 
-  protected def parseText(text: String): String = {
+  protected def renderInlineElements(text: String): String = {
     text
+      .replaceAll("<code>|</code>", "`")
       .replaceAll("<strong>|</strong>", "**")
       .replaceAll("<em>|</em>", "*")
       .replaceAll("<a href=\"(.*)\">(.*)</a>", "[$2]($1)")
@@ -12,11 +13,11 @@ trait MarkdownElement {
 }
 
 sealed case class HeaderMarkdownElement(size: Int, text: String) extends MarkdownElement {
-  def markdown: String = "#" * size + " " + parseText(text)
+  def markdown: String = "#" * size + " " + renderInlineElements(text)
 }
 
 sealed case class ParagraphMarkdownElement(text: String) extends MarkdownElement {
-  def markdown: String = parseText(text)
+  def markdown: String = renderInlineElements(text)
 }
 
 sealed case class ImageMarkdownElement(src: String) extends MarkdownElement {
@@ -26,14 +27,14 @@ sealed case class ImageMarkdownElement(src: String) extends MarkdownElement {
 sealed case class UnorderedMarkdownElement(items: Seq[String]) extends MarkdownElement {
   def markdown: String =
     items.map { item =>
-      "* " + parseText(item)
+      "* " + renderInlineElements(item)
     }.mkString("\n")
 }
 
 sealed case class OrderedMarkdownElement(items: Seq[String]) extends MarkdownElement {
   def markdown: String =
     items.zipWithIndex.map { case (item, i) =>
-      (i + 1) + ". " + parseText(item)
+      (i + 1) + ". " + renderInlineElements(item)
     }.mkString("\n")
 }
 
@@ -43,8 +44,4 @@ sealed case class BlockquoteMarkdownElement(text: String) extends MarkdownElemen
 
 sealed case class PreMarkdownElement(text: String) extends MarkdownElement {
   def markdown: String = "```\n" + text + "\n```"
-}
-
-sealed case class CodeMarkdownElement(text: String) extends MarkdownElement {
-  def markdown: String = "`" + text + "`"
 }

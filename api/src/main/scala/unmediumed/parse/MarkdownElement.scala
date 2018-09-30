@@ -8,7 +8,7 @@ trait MarkdownElement {
       .replaceAll("<code>|</code>", "`")
       .replaceAll("<strong>|</strong>", "**")
       .replaceAll("<em>|</em>", "*")
-      .replaceAll("<a href=\"(.*)\">(.*)</a>", "[$2]($1)")
+      .replaceAll("<a href=\"([^\"]*)\">([^\"]*)</a>", "[$2]($1)")
   }
 }
 

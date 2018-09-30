@@ -91,12 +91,20 @@ class MarkdownElementUnitSpec extends TestHelpers {
     testSubject.markdown shouldBe "`Code`"
   }
 
-  it should "build paragraphs with links" in {
+  it should "build paragraphs with a single link" in {
     // given
     val testSubject = ParagraphMarkdownElement("<a href=\"http://example.com\">Example</a>")
 
     // then
     testSubject.markdown shouldBe "[Example](http://example.com)"
+  }
+
+  it should "build paragraphs with multiple links" in {
+    // given
+    val testSubject = ParagraphMarkdownElement("<a href=\"#\">one</a><a href=\"#\">two</a>")
+
+    // then
+    testSubject.markdown shouldBe "[one](#)[two](#)"
   }
 
   it should "build paragraphs with foreign characters" in {

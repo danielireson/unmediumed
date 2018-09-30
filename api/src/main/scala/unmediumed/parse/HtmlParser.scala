@@ -20,7 +20,10 @@ class HtmlParser {
         Try {
           val source: InputSource = Source.fromString(h)
           val rootElement: Elem = XML.loadXML(source, parser)
-          MediumPost(extractMeta(rootElement), extractMarkdown(rootElement))
+          val meta = extractMeta(rootElement)
+          val elements = extractElements(rootElement)
+          val processedElements = processElements(elements)
+          MediumPost(meta, processedElements)
         } getOrElse {
           throw new HtmlParseFailedException("Unable to parse Medium post")
         }
@@ -45,7 +48,7 @@ class HtmlParser {
     Map("title" -> title, "description" -> description, "canonical" -> canonical)
   }
 
-  private def extractMarkdown(rootElement: Elem): Seq[MarkdownElement] = {
+  private def extractElements(rootElement: Elem): Seq[MarkdownElement] = {
     (rootElement \\ "article" \\ "section" \\ "_").collect {
       case e if e.label == "p" => ParagraphMarkdownElement(getText(e))
       case e if e.label == "h1" => HeaderMarkdownElement(1, getText(e))
@@ -63,6 +66,22 @@ class HtmlParser {
     } match {
       case elements if elements.nonEmpty => elements
       case _ => throw new HtmlParseFailedException("Unable to extract markdown elements")
+    }
+  }
+
+  private def processElements(elements: Seq[MarkdownElement]): Seq[MarkdownElement] = {
+    elements.foldLeft(Seq.empty[MarkdownElement]) { (elements, element) =>
+      if (elements.isEmpty) {
+        elements :+ element
+      } else {
+        (elements.last, element) match {
+          // merge adjacent pre blocks
+          case (e1: PreMarkdownElement, e2: PreMarkdownElement) =>
+            elements.dropRight(1) :+ PreMarkdownElement(e1.text + e2.text)
+          case _ =>
+            elements :+ element
+        }
+      }
     }
   }
 

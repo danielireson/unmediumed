@@ -291,6 +291,18 @@ class HtmlParserUnitSpec extends TestHelpers {
     post.elements should contain (PreMarkdownElement("{\n\"message\": \"hello world\"\n}"))
   }
 
+  it should "merge adjacent preformatted block elements" in {
+    // given
+    val testSubject = new HtmlParser
+    val html = buildValidHtml("<pre>One\n</pre><pre>Two</pre>")
+
+    // when
+    val post: MediumPost = testSubject.parse(html)
+
+    // then
+    post.elements should contain (PreMarkdownElement("One\nTwo"))
+  }
+
   it should "parse code elements" in {
     // given
     val testSubject = new HtmlParser

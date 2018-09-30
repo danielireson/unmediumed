@@ -363,18 +363,6 @@ class HtmlParserUnitSpec extends TestHelpers {
     post.elements should contain (HeaderMarkdownElement(1, "<a href=\"http://example.com\">Example</a>"))
   }
 
-  it should "remove the footer" in {
-    // given
-    val testSubject = new HtmlParser
-    val html = buildValidHtml()
-
-    // when
-    val post: MediumPost = testSubject.parse(html)
-
-    // then
-    post.markdown should not include "Footer"
-  }
-
   private def buildValidHtml(innerHtml: String = "<p>Content</p>"): String = {
     s"""
       |<html>
@@ -388,7 +376,6 @@ class HtmlParserUnitSpec extends TestHelpers {
       |    <article>
       |      <section>
       |        $innerHtml
-      |        <p>Footer</p>
       |      </section>
       |    </article>
       |  </main>

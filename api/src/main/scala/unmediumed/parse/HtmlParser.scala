@@ -61,8 +61,7 @@ class HtmlParser {
       case e if e.label == "code" => CodeMarkdownElement(getText(e))
       case e if e.label == "pre" => PreMarkdownElement(getText(e))
     } match {
-      // drop the footer and return markdown elements if non empty
-      case elements if elements.nonEmpty => elements.dropRight(1)
+      case elements if elements.nonEmpty => elements
       case _ => throw new HtmlParseFailedException("Unable to extract markdown elements")
     }
   }
